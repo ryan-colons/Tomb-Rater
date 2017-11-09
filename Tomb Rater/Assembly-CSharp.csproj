@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\SpriteDrag.cs" />
+     <Compile Include="Assets\Scripts\SpriteDragDestination.cs" />
      <Compile Include="Assets\Scripts\SpriteMouseOver.cs" />
      <Compile Include="Assets\Scripts\SpriteSupervisor.cs" />
  <Reference Include="UnityEngine.UI">

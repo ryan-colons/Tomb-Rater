@@ -39,4 +39,8 @@ public class SpriteDrag : MonoBehaviour {
 		}
 	}
 
+	public void setEndPos (Vector3 newPos) {
+		this.endPos = newPos;
+	}
+
 }
