@@ -14,6 +14,7 @@ public class SpriteMouseOver : MonoBehaviour {
 
 	private void Start () {
 		sprRenderer = this.GetComponent<SpriteRenderer> ();
+		actualColor = sprRenderer.color;
 		sprSupervisor = GameObject.Find ("SpriteSupervisor").GetComponent<SpriteSupervisor> ();
 	}
 
@@ -28,7 +29,6 @@ public class SpriteMouseOver : MonoBehaviour {
 			popUp.transform.Find ("Panel/Text").GetComponent<Text> ().text = message;
 			popUp.SetActive (true);
 		}
-		actualColor = sprRenderer.color;
 		sprRenderer.color = Color.blue;
 	}
 
@@ -43,6 +43,11 @@ public class SpriteMouseOver : MonoBehaviour {
 
 	private bool hasMessage() {
 		return message != null && !message.Equals ("");
-	}	
+	}
+
+	public void setBaseSpriteColor (Color c) {
+		sprRenderer.color = c;
+		actualColor = c;
+	}
 
 }
