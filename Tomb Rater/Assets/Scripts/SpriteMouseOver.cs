@@ -7,12 +7,14 @@ public class SpriteMouseOver : MonoBehaviour {
 
 	private Color actualColor;
 	private SpriteRenderer sprRenderer;
+	private SpriteSupervisor sprSupervisor;
 
 	public string message;
 	private GameObject popUp;
 
 	private void Start () {
 		sprRenderer = this.GetComponent<SpriteRenderer> ();
+		sprSupervisor = GameObject.Find ("SpriteSupervisor").GetComponent<SpriteSupervisor> ();
 	}
 
 	private void OnMouseEnter () {
@@ -31,10 +33,12 @@ public class SpriteMouseOver : MonoBehaviour {
 	}
 
 	private void OnMouseExit () {
-		if (popUp != null) {
-			popUp.SetActive (false);
+		if (sprSupervisor.getDraggedSpr () != this.gameObject) {
+			if (popUp != null) {
+				popUp.SetActive (false);
+			}
+			sprRenderer.color = actualColor;
 		}
-		sprRenderer.color = actualColor;
 	}
 
 	private bool hasMessage() {
