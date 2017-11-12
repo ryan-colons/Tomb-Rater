@@ -45,9 +45,14 @@ public class SpriteMouseOver : MonoBehaviour {
 		return message != null && !message.Equals ("");
 	}
 
+	public void setMessage(string str) {
+		message = str;
+	}
+
 	public void setBaseSpriteColor (Color c) {
 		sprRenderer.color = c;
 		actualColor = c;
 	}
+		
 
 }

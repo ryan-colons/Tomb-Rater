@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class SpriteDrag : MonoBehaviour {
 
 	private bool dragging;
@@ -11,7 +12,7 @@ public class SpriteDrag : MonoBehaviour {
 	private string actualSortingLayer;
 
 	private void Start () {
-		endPos = this.transform.position;
+		setEndPos (this.transform.localPosition);
 		sprSupervisor = GameObject.Find ("SpriteSupervisor").GetComponent<SpriteSupervisor>();
 		actualSortingLayer = this.GetComponent<SpriteRenderer> ().sortingLayerName;
 	}
