@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: a3b2b4788e7a13a4ea62c4432f00bf45
+timeCreated: 1510708776
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Quicksand
+  fontNames:
+  - Quicksand
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 49c49208cd1d6c74fbe622bb033522d7, type: 3}
+  - {fileID: 12800000, guid: 26230bcddb5f15846a3d8a8f6bc222ae, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
