@@ -55,10 +55,17 @@
      <Compile Include="Assets\Scripts\GameLoader.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
      <Compile Include="Assets\Scripts\Site.cs" />
+     <Compile Include="Assets\Scripts\SpecialEvent.cs" />
+     <Compile Include="Assets\Scripts\SpecialEventUI.cs" />
      <Compile Include="Assets\Scripts\SpriteDrag.cs" />
      <Compile Include="Assets\Scripts\SpriteDragDestination.cs" />
      <Compile Include="Assets\Scripts\SpriteMouseOver.cs" />
      <Compile Include="Assets\Scripts\SpriteSupervisor.cs" />
+     <None Include="Assets\Fonts\Barlow\OFL.txt" />
+     <None Include="Assets\Fonts\Barlow_Condensed\OFL.txt" />
+     <None Include="Assets\Fonts\Montserrat\OFL.txt" />
+     <None Include="Assets\Fonts\Roboto\LICENSE.txt" />
+     <None Include="Assets\Fonts\Quicksand\OFL.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
