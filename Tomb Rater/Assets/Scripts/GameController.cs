@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 	private void Awake () {
 		DontDestroyOnLoad (this.gameObject);
 		SpecialEvent.gameController = this;
+		SpecialEventUI.gameController = this;
 	}
 
 	public void loadScene (string sceneName) {
