@@ -26,16 +26,20 @@ public class SpecialEventUI : MonoBehaviour {
 		return eventPanel;
 	}
 
-	public void setOptionsPanel (SpecialEvent specialEvent) {
+	public GameObject[] setOptionsPanel (SpecialEvent specialEvent) {
 		GameObject optionsPanel = (GameObject)Instantiate (Resources.Load ("OptionsPanel"), this.transform);
 		optionsPanel.transform.SetPositionAndRotation (new Vector3 (Screen.width - 200, Screen.height / 2, 0), Quaternion.identity);
 
 		string[] buttonTexts = specialEvent.getButtonTexts ();
+		GameObject[] buttonObjects = new GameObject[buttonTexts.Length];
 		for (int i = 0; i < buttonTexts.Length; i++) {
 			GameObject button = (GameObject)Instantiate (Resources.Load ("OptionButton"), optionsPanel.transform);
 			Text buttonLabel = button.transform.Find ("Text").GetComponent<Text> ();
 			buttonLabel.text = buttonTexts [i];
+			buttonObjects [i] = button;
 		}
+
+		return buttonObjects;
 	}
 
 }
