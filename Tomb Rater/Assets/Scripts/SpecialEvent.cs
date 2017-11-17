@@ -11,6 +11,7 @@ public class SpecialEvent {
 	private string message;
 	private string[] extraMessages = new string[0];
 	private int messageIndex = 0;
+	private string[] buttonTexts = new string[0];
 	private string sprite;
 
 	private bool reuse;
@@ -25,7 +26,16 @@ public class SpecialEvent {
 		this.extraMessages = new string[size];
 	}
 	public void setExtraMessage(string str, int index) {
-		extraMessages [index] = str;
+		this.extraMessages [index] = str;
+	}
+	public string[] getButtonTexts () {
+		return buttonTexts;
+	}
+	public void initialiseButtonTexts (int size) {
+		this.buttonTexts = new string[size];
+	}
+	public void setButtonText (string str, int index) {
+		this.buttonTexts [index] = str;
 	}
 
 	public void go() {
@@ -51,7 +61,7 @@ public class SpecialEvent {
 			panelScript.prepareToDestroyThis ();
 		} else {
 			//provide buttons for the 'options'
-
+			eventUI.setOptionsPanel(this);
 		}
 
 	}
@@ -76,5 +86,12 @@ public class Event_Introduction : SpecialEvent {
 		this.setExtraMessage ("You decide immediately that you will build a magnficient tomb, " +
 		" to carry your legacy through the ages.\n\n...", 0);
 		this.setExtraMessage ("And then a third, final panel with a question...", 1);
+
+		initialiseButtonTexts (5);
+		this.setButtonText ("Option one", 0);
+		this.setButtonText ("Two", 1);
+		this.setButtonText ("A third option with lots of words", 2);
+		this.setButtonText ("A fourth option with even more text on it, to test the limits", 3);
+		this.setButtonText ("Webster's dictionary defines fifth options as the longest of the long. Check out all this text. Does it even fit??", 4);
 	}
 }
