@@ -7,10 +7,17 @@ public class GameController : MonoBehaviour {
 
 	private SpecialEvent holsteredEvent;
 
-	private void Awake () {
-		DontDestroyOnLoad (this.gameObject);
+	private bool overmenuTutorial, workTutorial;
+
+	private void Start () {
 		SpecialEvent.gameController = this;
 		SpecialEventUI.gameController = this;
+		overmenuTutorial = true;
+		workTutorial = true;
+	}
+
+	private void Awake () {
+		DontDestroyOnLoad (this.gameObject);
 	}
 
 	public void loadScene (string sceneName) {
@@ -25,5 +32,19 @@ public class GameController : MonoBehaviour {
 	public SpecialEvent getHolsteredEvent () {
 		return holsteredEvent;
 	}
+
+	public bool overmenuTutorialNeeded () {
+		return overmenuTutorial;
+	}
+	public void setOvermenuTutorialNeeded (bool b) {
+		overmenuTutorial = b;
+	}
+	public bool workTutorialNeeded () {
+		return workTutorial;
+	}
+	public void setWorkTutorialNeeded (bool b) {
+		workTutorial = b;
+	}
+
 
 }

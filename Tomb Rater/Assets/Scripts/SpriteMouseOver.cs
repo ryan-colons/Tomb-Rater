@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class SpriteMouseOver : MonoBehaviour {
 
 	private Color actualColor;

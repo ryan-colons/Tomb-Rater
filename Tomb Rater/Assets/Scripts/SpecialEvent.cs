@@ -14,8 +14,6 @@ public class SpecialEvent {
 	private string[] buttonTexts = new string[0];
 	private string sprite;
 
-	private bool reuse;
-
 	public void setMessage(string str) {
 		message = str;
 	}
@@ -46,8 +44,6 @@ public class SpecialEvent {
 
 	public void next() {
 		//progress to next message
-		//old panel needs to be removed, so it can't be clicked
-		//add a next button if it's not the last one
 		GameObject panel = eventUI.setEventPanel(this.extraMessages[messageIndex]);
 		messageIndex += 1;
 		addButtons (panel);
@@ -55,12 +51,13 @@ public class SpecialEvent {
 
 	public void addButtons(GameObject panel) {
 		Button button = panel.GetComponent<Button> ();
-		if (messageIndex < extraMessages.Length - 1) {
+		if (messageIndex < extraMessages.Length) {
+			//if there are extra messages to see, prepare appropriately
 			button.onClick.AddListener (next);
 			EventPanel panelScript = panel.GetComponent<EventPanel> ();
 			panelScript.prepareToDestroyThis ();
 		} else {
-			//provide buttons for the 'options'
+			//provide buttons for the final decision
 			GameObject[] buttonObjects = eventUI.setOptionsPanel(this);
 			//add listeners to buttons
 			for (int i = 0; i < buttonObjects.Length; i++) {
@@ -100,13 +97,18 @@ public class SpecialEvent {
 public class Event_Introduction : SpecialEvent {
 	
 	public Event_Introduction () {
-		// need to set sprite
-		initialiseExtraMessageArray(3);
-		this.setMessage("Waking on your birthday, you think for the first time about " +
+		this.setMessage ("Waking on your birthday, you think for the first time about " +
 		"your own mortality. How will your people remember you when you are gone?\n\n...");
+		
+		initialiseExtraMessageArray(2);
 		this.setExtraMessage ("You decide immediately that you will build a magnficient tomb, " +
-		" to carry your legacy through the ages.\n\n...", 0);
+		"to carry your legacy through the ages.\n\n...", 0);
 		this.setExtraMessage ("And then a third, final panel with a question...", 1);
+
+		/* The extra messages here should explain the next menu, ideally.
+		 * i.e. make it clear that your talking to advisors about plans.
+		 * but also the next screen should have some tutorial panels
+		 */
 
 		initialiseButtonTexts (5);
 		this.setButtonText ("Go to main scene", 0);
@@ -117,7 +119,7 @@ public class Event_Introduction : SpecialEvent {
 	}
 
 	public override void option1 () {
-		gameController.loadScene ("main");
+		gameController.loadScene ("menu");
 	}
 	public override void option2 () {
 		Debug.Log ("2");
@@ -130,6 +132,24 @@ public class Event_Introduction : SpecialEvent {
 	}
 	public override void option5 () {
 		Debug.Log ("5");
+	}
+}
+
+public class Event_LabourAllocationTutorial : SpecialEvent {
+
+	public Event_LabourAllocationTutorial () {
+		this.setMessage ("Well met, Your Majesty! I am here to discuss your plans for " +
+		"managing our resources this year.");
+
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage ("Okay, well hopefully that explains everything.", 0);
+
+		initialiseButtonTexts (1);
+		this.setButtonText ("Let's begin.", 0);
+	}
+
+	public override void option1 () {
+		gameController.loadScene ("work_map");
 	}
 }
 

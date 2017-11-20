@@ -51,10 +51,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AdvisorButton.cs" />
      <Compile Include="Assets\Scripts\EventPanel.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GameLoader.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
+     <Compile Include="Assets\Scripts\Overmenu.cs" />
      <Compile Include="Assets\Scripts\Site.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\SpecialEventUI.cs" />

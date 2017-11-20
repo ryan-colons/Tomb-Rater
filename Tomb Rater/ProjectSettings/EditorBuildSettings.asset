@@ -12,5 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/event.unity
     guid: 08739188f0a877d45804e6205caf7401
   - enabled: 1
-    path: Assets/Scenes/main.unity
+    path: Assets/Scenes/menu.unity
     guid: 768e932739f38944090affd3128b6291
+  - enabled: 1
+    path: Assets/Scenes/work_map.unity
+    guid: 4ef06cf7c033ee14f907947d01ea259b

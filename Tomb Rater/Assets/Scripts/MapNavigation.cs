@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MapNavigation : MonoBehaviour {
 
+	/* This should probably be attached to the main camera */ 
+
 	//for constraining how far the map can be panned horizontally/vertically
 	public int horizBound, vertBound;
 
