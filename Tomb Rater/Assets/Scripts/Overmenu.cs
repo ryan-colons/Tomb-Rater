@@ -22,12 +22,12 @@ public class Overmenu : MonoBehaviour {
 		gameController.setOvermenuTutorialNeeded (false);
 	}
 
-	public void showHelpPanel () {
-		helpPanel.SetActive (true);
-	}
-
-	public void removeHelpPanel () {
-		helpPanel.SetActive (false);
+	public void toggleHelpPanel () {
+		if (helpPanel.activeSelf == true) {
+			helpPanel.SetActive (false);
+		} else {
+			helpPanel.SetActive (true);
+		}
 	}
 
 }

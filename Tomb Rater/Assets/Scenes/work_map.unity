@@ -237,7 +237,9 @@ Prefab:
     - target: {fileID: 114969311117401204, guid: 2984e9365d9475a4dad3e9a5cdfa69c8,
         type: 2}
       propertyPath: m_Text
-      value: Drag citizens onto work sites to assign jobs to them for the year!
+      value: 'Drag citizens onto work sites to assign jobs to them for the year!
+
+        Move view with the arrow keys.'
       objectReference: {fileID: 0}
     - target: {fileID: 1079503568924860, guid: 2984e9365d9475a4dad3e9a5cdfa69c8, type: 2}
       propertyPath: m_IsActive
@@ -291,7 +293,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 108001517}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.5, y: -1.3, z: 0}
+  m_LocalPosition: {x: 13.92, y: 3.07, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 1117943900}
@@ -406,7 +408,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 410978933}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.9701824, y: -0.979347, z: 0}
+  m_LocalPosition: {x: 4.22, y: 1.87, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 1117943900}
@@ -648,6 +650,48 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1001 &538091552
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1117943900}
+    m_Modifications:
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 6.5001817
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.649347
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 66b3cf5ffde627c4e9a9f6023820faef, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &686872021
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,116 +763,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &930252632
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 930252633}
-  - component: {fileID: 930252634}
-  - component: {fileID: 930252636}
-  - component: {fileID: 930252635}
-  m_Layer: 0
-  m_Name: workshop_helpsprite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &930252633
+--- !u!4 &930252633 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 930252632}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.69, y: 0.8, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_Children: []
-  m_Father: {fileID: 1117943900}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &930252634
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 930252632}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.19999993, g: 1, b: 0, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
---- !u!61 &930252635
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 930252632}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.2, y: 0.2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
---- !u!114 &930252636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 930252632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e10c1635dc8eb48b590c14cefde3a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  message: 'Lumber Camp: Generates wood for building'
+  m_PrefabParentObject: {fileID: 4684212805528054, guid: 66b3cf5ffde627c4e9a9f6023820faef,
+    type: 2}
+  m_PrefabInternal: {fileID: 538091552}
 --- !u!1001 &946988110
 Prefab:
   m_ObjectHideFlags: 0
@@ -963,7 +902,7 @@ Prefab:
     - target: {fileID: 114460648322706030, guid: 06b5d430e009da5489715750265a50b1,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: removeHelpPanel
+      value: toggleHelpPanel
       objectReference: {fileID: 0}
     - target: {fileID: 114509224804281484, guid: 06b5d430e009da5489715750265a50b1,
         type: 2}
@@ -1145,7 +1084,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1130754695}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 8, y: 4.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1269,7 +1208,7 @@ Prefab:
     - target: {fileID: 114956766687636066, guid: 9f5baa25c6602464fb5b56ae663577bc,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: showAdvicePanel
+      value: toggleAdvicePanel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9f5baa25c6602464fb5b56ae663577bc, type: 2}
@@ -1300,7 +1239,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1220297237}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.1, y: 0.77, z: 0}
+  m_LocalPosition: {x: 8.65, y: 6.11, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 1117943900}
@@ -1614,7 +1553,7 @@ Prefab:
     - target: {fileID: 114252658394782300, guid: 1d2c58df913ca6f4085086fb39a49192,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: showHelpPanel
+      value: toggleHelpPanel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d2c58df913ca6f4085086fb39a49192, type: 2}
@@ -1649,11 +1588,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4911885729379998, guid: 818fb352ed912f64a96374a033397e54, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.09
+      value: 11.51
       objectReference: {fileID: 0}
     - target: {fileID: 4911885729379998, guid: 818fb352ed912f64a96374a033397e54, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.97
+      value: 1.3999999
       objectReference: {fileID: 0}
     - target: {fileID: 4911885729379998, guid: 818fb352ed912f64a96374a033397e54, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2025,7 +1964,7 @@ Prefab:
     - target: {fileID: 114858358550922624, guid: 7021d8392ee853d479e9010f66133085,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: removeAdvicePanel
+      value: toggleAdvicePanel
       objectReference: {fileID: 0}
     - target: {fileID: 114858358550922624, guid: 7021d8392ee853d479e9010f66133085,
         type: 2}

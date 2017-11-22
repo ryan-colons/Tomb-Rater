@@ -22,22 +22,22 @@ public class WorkMenu : MonoBehaviour {
 		tutPanel.SetActive (false);
 	}
 
-	public void showHelpPanel () {
-		helpPanel.SetActive (true);
+	public void toggleHelpPanel () {
+		if (helpPanel.activeSelf == true) {
+			helpPanel.SetActive (false);
+		} else {
+			helpPanel.SetActive (true);
+		}
 	}
 
-	public void removeHelpPanel () {
-		helpPanel.SetActive (false);
-	}
-
-	public void showAdvicePanel () {
-		//get advice text from somewhere
-		//can probably cycle through 2-3 pieces of advice when the button is clicked
-		advicePanel.SetActive (true);
-	}
-
-	public void removeAdvicePanel () {
-		advicePanel.SetActive (false);
+	public void toggleAdvicePanel () {
+		if (advicePanel.activeSelf == true) {
+			advicePanel.SetActive (false);
+		} else {
+			//get advice text from somewhere
+			//can probably cycle through 2-3 pieces of advice when the button is clicked
+			advicePanel.SetActive (true);
+		}
 	}
 
 }

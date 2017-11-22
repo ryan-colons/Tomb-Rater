@@ -921,6 +921,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 91113435}
+    - target: {fileID: 114252658394782300, guid: 1d2c58df913ca6f4085086fb39a49192,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: toggleHelpPanel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d2c58df913ca6f4085086fb39a49192, type: 2}
   m_IsPrefabParent: 0
@@ -1230,6 +1235,21 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 91113435}
+    - target: {fileID: 114509224804281484, guid: 06b5d430e009da5489715750265a50b1,
+        type: 2}
+      propertyPath: m_Text
+      value: 'You need to make decisions about how your Kingdom will run this year.
+
+        Click on your Labour Advisor to decide how many workers to employee, as well
+        as how to use them and how much to pay them.
+
+        Click on your Building Advisor to work on building your tomb.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114460648322706030, guid: 06b5d430e009da5489715750265a50b1,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: toggleHelpPanel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06b5d430e009da5489715750265a50b1, type: 2}
   m_IsPrefabParent: 0
