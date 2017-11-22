@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\SpriteDragDestination.cs" />
      <Compile Include="Assets\Scripts\SpriteMouseOver.cs" />
      <Compile Include="Assets\Scripts\SpriteSupervisor.cs" />
+     <Compile Include="Assets\Scripts\WorkMenu.cs" />
      <None Include="Assets\Fonts\Barlow\OFL.txt" />
      <None Include="Assets\Fonts\Barlow_Condensed\OFL.txt" />
      <None Include="Assets\Fonts\Montserrat\OFL.txt" />
