@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\GameLoader.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
      <Compile Include="Assets\Scripts\Overmenu.cs" />
+     <Compile Include="Assets\Scripts\ResourcePanel.cs" />
      <Compile Include="Assets\Scripts\Site.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\SpecialEventUI.cs" />

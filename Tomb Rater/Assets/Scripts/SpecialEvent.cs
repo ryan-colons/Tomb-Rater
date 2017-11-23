@@ -153,6 +153,24 @@ public class Event_LabourAllocationTutorial : SpecialEvent {
 	}
 }
 
+public class Event_TombBuildingTutorial : SpecialEvent {
+
+	public Event_TombBuildingTutorial () {
+		this.setMessage ("Well met, Your Highness! I am here to discuss your plans for " +
+		"the construction of your tomb.");
+
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage ("Well, you probably know best, let's just dive in.", 0);
+
+		initialiseButtonTexts (1);
+		this.setButtonText ("Yes, let's go.", 0);
+	}
+
+	public override void option1 () {
+		gameController.loadScene ("building_map");
+	}
+}
+
 /* Checklist for writing a SpecialEvent
  * Constructor:
  * 		-initialise extra message array, and set extra messages

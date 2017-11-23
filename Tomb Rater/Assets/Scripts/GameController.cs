@@ -7,13 +7,14 @@ public class GameController : MonoBehaviour {
 
 	private SpecialEvent holsteredEvent;
 
-	private bool overmenuTutorial, workTutorial;
+	private bool overmenuTutorial, workTutorial,  buildTutorial;
 
 	private void Start () {
 		SpecialEvent.gameController = this;
 		SpecialEventUI.gameController = this;
 		overmenuTutorial = true;
 		workTutorial = true;
+		buildTutorial = true;
 	}
 
 	private void Awake () {
@@ -44,6 +45,12 @@ public class GameController : MonoBehaviour {
 	}
 	public void setWorkTutorialNeeded (bool b) {
 		workTutorial = b;
+	}
+	public bool buildTutorialNeeded () {
+		return buildTutorial;
+	}
+	public void setBuildTutorialNeeded (bool b) {
+		buildTutorial = b;
 	}
 
 
