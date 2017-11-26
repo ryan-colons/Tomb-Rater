@@ -52,12 +52,17 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AdvisorButton.cs" />
+     <Compile Include="Assets\Scripts\BuildingMenu.cs" />
      <Compile Include="Assets\Scripts\EventPanel.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GameLoader.cs" />
+     <Compile Include="Assets\Scripts\ManageLabour.cs" />
+     <Compile Include="Assets\Scripts\ManageResources.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
      <Compile Include="Assets\Scripts\Overmenu.cs" />
+     <Compile Include="Assets\Scripts\Resource.cs" />
      <Compile Include="Assets\Scripts\ResourcePanel.cs" />
+     <Compile Include="Assets\Scripts\ResourceSite.cs" />
      <Compile Include="Assets\Scripts\Site.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\SpecialEventUI.cs" />

@@ -9,12 +9,21 @@ public class GameController : MonoBehaviour {
 
 	private bool overmenuTutorial, workTutorial,  buildTutorial;
 
+	private ManageLabour labourManagement;
+	private ManageResources resourceManagement;
+
 	private void Start () {
 		SpecialEvent.gameController = this;
 		SpecialEventUI.gameController = this;
+		ResourceSite.gameController = this;
+
 		overmenuTutorial = true;
 		workTutorial = true;
 		buildTutorial = true;
+
+		//sites are currently added in the ManageLabour constructor
+		labourManagement = new ManageLabour ();
+		resourceManagement = new ManageResources ();
 	}
 
 	private void Awake () {
@@ -53,5 +62,10 @@ public class GameController : MonoBehaviour {
 		buildTutorial = b;
 	}
 
-
+	public ManageResources getResourceManagement() {
+		return resourceManagement;
+	}
+	public ManageLabour getLabourManagement () {
+		return labourManagement;
+	}
 }

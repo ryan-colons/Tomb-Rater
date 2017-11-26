@@ -5,13 +5,14 @@ using UnityEngine;
 public class WorkMenu : MonoBehaviour {
 
 	private GameController gameController;
+	private ManageResources resourceManagement;
 	public GameObject tutPanel;
 	public GameObject helpPanel;
 	public GameObject advicePanel;
 
 	private void Start () {
 		this.gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
-
+		this.resourceManagement = gameController.getResourceManagement ();
 		if (gameController.workTutorialNeeded ()) {
 			tutPanel.SetActive(true);
 			gameController.setWorkTutorialNeeded (false);
@@ -38,6 +39,10 @@ public class WorkMenu : MonoBehaviour {
 			//can probably cycle through 2-3 pieces of advice when the button is clicked
 			advicePanel.SetActive (true);
 		}
+	}
+
+	public void returnToOverMenu () {
+		gameController.loadScene ("menu");
 	}
 
 }
