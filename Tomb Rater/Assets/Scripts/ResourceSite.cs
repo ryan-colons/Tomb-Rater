@@ -23,13 +23,15 @@ public class ResourceSite {
 	 *	 0	 1	 2	 3
 	 * 	 4	 5	 6	 7
 	 * 	 8	 9	10	11
+	 * CURRENTLY RESERVING TOP RIGHT SPACE FOR PILE OF WORKER TOKENS
 	 */
 	private static Dictionary<int, float[]> coordLookUp = new Dictionary<int, float[]>(){
 		{0, new float[] {-10f, 5f}},
 		{1, new float[] {0f, 5f}},
-		{2, new float[] {10f, 5f}},
-		{3, new float[] {-10f, 0f}},
-		{4, new float[] {0f, 0f}}
+		//{EMPTY, new float[] {10f, 5f}},
+		{2, new float[] {-10f, 0f}},
+		{3, new float[] {0f, 0f}},
+		{4, new float[] {10f, 0f}}
 	};
 
 	public static float[] accessCoordLookUp (ResourceSite site) {

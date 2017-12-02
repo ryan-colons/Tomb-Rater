@@ -21,7 +21,7 @@ public class ManageLabour {
 		setSite (new Site_Woods (), 	2);
 		setSite (new Site_Quarry (),	3);
 
-		citizens = 100;
+		citizens = 5;
 	}
 
 	public void setSite (ResourceSite site, int index) {

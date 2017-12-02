@@ -27,10 +27,21 @@ public class WorkMenu : MonoBehaviour {
 		foreach (ResourceSite site in sites) {
 			float[] coords = ResourceSite.accessCoordLookUp (site);
 			instantiateSite (site, coords[0], coords[1]);
-			//put the right number of occupants at each site
 		}
-		//use labourManagement.getNumAvailable citizens to set out worker tokens
 
+		GameObject tokenParent = GameObject.Find ("Big Map");
+		if (tokenParent == null) {
+			Debug.Log ("Couldn't find Big Map! Something probably got renamed, easy to fix!");
+			Application.Quit ();
+		}
+
+		int workers = labourManagement.getNumAvailableCitizens();
+		for (int i = 0; i < workers; i++) {
+			GameObject token = (GameObject)Instantiate (Resources.Load ("WorkerToken"),
+				                   new Vector3 (10f, 5f, tokenParent.transform.position.z),
+				                   Quaternion.identity);
+			token.transform.SetParent (tokenParent.transform);
+		}
 	}
 
 	public void instantiateSite (ResourceSite resourceSite, float x, float y) {
@@ -46,6 +57,7 @@ public class WorkMenu : MonoBehaviour {
 		Site site = siteObj.GetComponent<Site> ();
 		site.moveTo (x, y);
 		site.setResourceSite (resourceSite);
+		site.setMouseOverMessage (resourceSite.getNumWorkers ().ToString ());
 		site.handleAvailability ();
 	}
 

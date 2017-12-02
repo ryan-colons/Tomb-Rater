@@ -15,16 +15,6 @@ public class Site : MonoBehaviour {
 	private float helpSpriteOffset = 2f;
 	public Sprite sprite;
 
-	private void Start () {
-		//make sure the SpriteDragDestination component knows this gameobject is a Site
-		this.GetComponent<SpriteDragDestination> ().setSite (true);
-		mouseOver = this.gameObject.AddComponent<SpriteMouseOver> ();
-		mouseOver.setMessage ("0");
-
-		SpriteRenderer sprRenderer = this.GetComponent<SpriteRenderer> ();
-		sprRenderer.sprite = this.sprite;
-	}
-
 	private void Awake () {
 		//set help sprite - this must be done in Awake, not Start (otherwise moveTo gets called first, resulting in NullPointerException problems
 		helpSprite = (GameObject)Instantiate (Resources.Load ("HelpSprite"), 
@@ -32,6 +22,16 @@ public class Site : MonoBehaviour {
 			Quaternion.identity);
 		//unfortunately, we can't easily make helpSprite a child of the site, because then mouseover doesn't work for both
 		helpSprite.transform.parent = this.transform.parent;
+
+		//mouseOver also needs to be set in Awake, so that setMouseOverMessage is not called before it is initialised
+		mouseOver = this.gameObject.AddComponent<SpriteMouseOver> ();
+		setMouseOverMessage ("0");
+
+		//make sure the SpriteDragDestination component knows this gameobject is a Site
+		this.GetComponent<SpriteDragDestination> ().setSite (true);
+
+		SpriteRenderer sprRenderer = this.GetComponent<SpriteRenderer> ();
+		sprRenderer.sprite = this.sprite;
 	}
 
 	public void moveTo (float x, float y) {
@@ -57,7 +57,11 @@ public class Site : MonoBehaviour {
 	public void handleDrop (GameObject obj) {
 		int prevWorkerCount = this.resourceSite.getNumWorkers ();
 		this.resourceSite.setNumWorkers (prevWorkerCount + 1);
-		mouseOver.setMessage (this.resourceSite.getNumWorkers().ToString());
+		setMouseOverMessage (this.resourceSite.getNumWorkers().ToString());
+	}
+
+	public void setMouseOverMessage (string str) {
+		mouseOver.setMessage (str);
 	}
 
 }
