@@ -26,3 +26,33 @@ public class Res_Oak : Resource {
 		this.value = 5;
 	}
 }
+
+public class Res_Stone : Resource {
+	public static Res_Stone self;
+	public Res_Stone () {
+		self = this;
+		this.name = "Stone";
+		this.type = resourceType.STONE;
+		this.value = 5;
+	}
+}
+
+public class Res_Iron : Resource {
+	public static Res_Iron self;
+	public Res_Iron () {
+		self = this;
+		this.name = "Iron";
+		this.type = resourceType.METAL;
+		this.value = 5;
+	}
+}
+
+public class Res_Food : Resource {
+	public static Res_Food self;
+	public Res_Food () {
+		self = this;
+		this.name = "Food";
+		this.type = resourceType.FOOD;
+		this.value = 5;
+	}
+}

@@ -27,6 +27,7 @@ public class GameLoader : MonoBehaviour {
 
 	public void continueGame () {
 		Debug.Log ("Continuing a previous game!");
+		gameController.loadScene ("menu");
 	}
 
 	public void exitApplication () {

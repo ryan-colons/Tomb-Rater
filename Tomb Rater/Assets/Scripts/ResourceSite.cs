@@ -3,15 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceSite {
-	private bool active;
+	public bool available;
+	private string message;
 	private int numWorkers;
+
+	//value for placing the site on the map
+	private int pos;
+
+	public int getPos () {
+		return this.pos;
+	}
+	public void setPos (int n) {
+		this.pos = n;
+	}
+
+	/*this is here so all ResourceSite coords can be kept in one place
+	 *each ResourceSite looks up coords according to which 'position' it should be in
+	 * e.g.
+	 *	 0	 1	 2	 3
+	 * 	 4	 5	 6	 7
+	 * 	 8	 9	10	11
+	 */
+	private static Dictionary<int, float[]> coordLookUp = new Dictionary<int, float[]>(){
+		{0, new float[] {-10f, 5f}},
+		{1, new float[] {0f, 5f}},
+		{2, new float[] {10f, 5f}},
+		{3, new float[] {-10f, 0f}},
+		{4, new float[] {0f, 0f}}
+	};
+
+	public static float[] accessCoordLookUp (ResourceSite site) {
+		return coordLookUp [site.pos];
+	}
+
+
 	public static GameController gameController;
 
-	public bool isActive () {
-		return active;
+	public bool isAvailable () {
+		return available;
 	}
-	public void setActive (bool b) {
-		active = b;
+	public void setAvailable (bool b) {
+		available = b;
 	}
 
 	public int getNumWorkers () {
@@ -19,6 +51,13 @@ public class ResourceSite {
 	}
 	public void setNumWorkers (int n) {
 		numWorkers = n;
+	}
+
+	public string getMessage () {
+		return message;
+	}
+	public void setMessage (string str) {
+		this.message = str;
 	}
 
 	public virtual string collectResources (int numWorkers) {
@@ -34,11 +73,5 @@ public class ResourceSite {
 		} else {
 			return "+" + n + " " + resource.name + "\n";
 		}
-	}
-}
-
-public class Site_Woods : ResourceSite {
-	public override string collectResources (int numWorkers) {
-		return addAndRecord(new Res_Oak(), numWorkers);
 	}
 }

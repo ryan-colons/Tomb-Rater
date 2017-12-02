@@ -63,6 +63,10 @@
      <Compile Include="Assets\Scripts\Resource.cs" />
      <Compile Include="Assets\Scripts\ResourcePanel.cs" />
      <Compile Include="Assets\Scripts\ResourceSite.cs" />
+     <Compile Include="Assets\Scripts\ResourceSites\Site_Farm.cs" />
+     <Compile Include="Assets\Scripts\ResourceSites\Site_Mine.cs" />
+     <Compile Include="Assets\Scripts\ResourceSites\Site_Quarry.cs" />
+     <Compile Include="Assets\Scripts\ResourceSites\Site_Woods.cs" />
      <Compile Include="Assets\Scripts\Site.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\SpecialEventUI.cs" />
