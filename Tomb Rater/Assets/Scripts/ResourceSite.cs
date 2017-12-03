@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceSite {
 	public bool available;
 	private string message;
-	private int numWorkers;
+	private int numWorkers = 0;
 
 	//value for placing the site on the map
 	private int pos;

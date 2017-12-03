@@ -64,4 +64,15 @@ public class Site : MonoBehaviour {
 		mouseOver.setMessage (str);
 	}
 
+	private void OnMouseDown () {
+		int numWorkers = this.resourceSite.getNumWorkers ();
+		if (numWorkers > 0) {
+			this.resourceSite.setNumWorkers (numWorkers - 1);
+			GameObject token = (GameObject)Instantiate (Resources.Load ("WorkerToken"), this.transform.position, Quaternion.identity);
+			token.transform.SetParent (GameObject.Find ("Big Map").transform);
+			setMouseOverMessage ((numWorkers - 1).ToString ());
+		}
+
+	}
+
 }
