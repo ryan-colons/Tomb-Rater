@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
+	//used for loadEvent(), which is how all special events should be entered
 	private SpecialEvent holsteredEvent;
 
 	private bool overmenuTutorial, workTutorial,  buildTutorial;
 
 	private ManageLabour labourManagement;
 	private ManageResources resourceManagement;
+	private ManageYears yearManagement;
 
 	private void Start () {
 		SpecialEvent.gameController = this;
@@ -24,6 +26,8 @@ public class GameController : MonoBehaviour {
 		//sites are currently added in the ManageLabour constructor
 		labourManagement = new ManageLabour ();
 		resourceManagement = new ManageResources ();
+		yearManagement = new ManageYears ();
+
 	}
 
 	private void Awake () {
@@ -37,6 +41,10 @@ public class GameController : MonoBehaviour {
 	public void loadEvent (SpecialEvent specialEvent) {
 		this.holsteredEvent = specialEvent;
 		loadScene ("event");
+	}
+
+	public void nextYear () {
+		yearManagement.progressThroughCurrentYear (this);
 	}
 
 	public SpecialEvent getHolsteredEvent () {
@@ -67,5 +75,8 @@ public class GameController : MonoBehaviour {
 	}
 	public ManageLabour getLabourManagement () {
 		return labourManagement;
+	}
+	public ManageYears getYearManagement () {
+		return yearManagement;
 	}
 }

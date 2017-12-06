@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\GameLoader.cs" />
      <Compile Include="Assets\Scripts\ManageLabour.cs" />
      <Compile Include="Assets\Scripts\ManageResources.cs" />
+     <Compile Include="Assets\Scripts\ManageYears.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
      <Compile Include="Assets\Scripts\Overmenu.cs" />
      <Compile Include="Assets\Scripts\Resource.cs" />
@@ -74,7 +75,9 @@
      <Compile Include="Assets\Scripts\SpriteDragDestination.cs" />
      <Compile Include="Assets\Scripts\SpriteMouseOver.cs" />
      <Compile Include="Assets\Scripts\SpriteSupervisor.cs" />
+     <Compile Include="Assets\Scripts\TurnoverScene.cs" />
      <Compile Include="Assets\Scripts\WorkMenu.cs" />
+     <Compile Include="Assets\Scripts\Year.cs" />
      <None Include="Assets\Fonts\Barlow\OFL.txt" />
      <None Include="Assets\Fonts\Barlow_Condensed\OFL.txt" />
      <None Include="Assets\Fonts\Montserrat\OFL.txt" />

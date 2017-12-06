@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222270346592238578}
   - component: {fileID: 114555478210192492}
   m_Layer: 5
-  m_Name: ResourceSubPanel (2)
+  m_Name: MetalSubPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 222848404333369292}
   - component: {fileID: 114468593830011458}
   m_Layer: 5
-  m_Name: ResourceSubPanel (3)
+  m_Name: FoodSubPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 222309354014664842}
   - component: {fileID: 114345374715708006}
   m_Layer: 5
-  m_Name: ResourceSubPanel (1)
+  m_Name: StoneSubPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 222681838636211944}
   - component: {fileID: 114543613006300628}
   m_Layer: 5
-  m_Name: ResourceSubPanel
+  m_Name: WoodSubPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -663,6 +663,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hiddenY: 70
   displayY: 0
+  woodSubPanel: {fileID: 1736149142556186}
+  stoneSubPanel: {fileID: 1697798494493810}
+  metalSubPanel: {fileID: 1266951822192742}
+  foodSubPanel: {fileID: 1476488730124942}
 --- !u!222 &222112706010121952
 CanvasRenderer:
   m_ObjectHideFlags: 1

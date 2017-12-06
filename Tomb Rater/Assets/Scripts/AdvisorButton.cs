@@ -27,6 +27,9 @@ public class AdvisorButton : MonoBehaviour {
 				gameController.loadEvent (new Event_TombBuildingTutorial ());
 			}
 			break;
+		case "annual_turnover":
+			gameController.nextYear ();
+			break;
 		case "default":
 			Debug.Log ("Couldn't handle this advisor button! " + sceneToLoad);
 			break;

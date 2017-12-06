@@ -8,6 +8,8 @@ public class ManageResources {
 
 	public ManageResources () {
 		resourceDict = new Dictionary<Resource, int> ();
+		incrementResource (Res_Iron.getSelf(), 500);
+		incrementResource (Res_Food.getSelf(), 200);
 	}
 
 	//return the number associated with a resource in the resource dictionary
@@ -31,5 +33,16 @@ public class ManageResources {
 			Debug.Log ("Something tried to lower resource " + r.name + " below 0.");
 			resourceDict [r] = 0;
 		}
+	}
+
+	public int getResourceTypeAmount (ResourceType rType) {
+		int count = 0;
+		foreach (KeyValuePair<Resource, int> kvp in resourceDict) {
+			Debug.Log (kvp.Key.type);
+			if (kvp.Key.type == rType) {
+				count += kvp.Value;
+			}
+		}
+		return count;
 	}
 }
