@@ -11,6 +11,6 @@ public class Site_Farm : ResourceSite {
 	}
 
 	public override string collectResources (int numWorkers) {
-		return addAndRecord(Res_Food.self, numWorkers * 2);
+		return addAndRecord(Res.food, numWorkers * 2);
 	}
 }

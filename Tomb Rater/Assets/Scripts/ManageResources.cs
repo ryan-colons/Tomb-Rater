@@ -8,8 +8,8 @@ public class ManageResources {
 
 	public ManageResources () {
 		resourceDict = new Dictionary<Resource, int> ();
-		incrementResource (Res_Iron.getSelf(), 500);
-		incrementResource (Res_Food.getSelf(), 200);
+		incrementResource (Res.iron, 500);
+		incrementResource (Res.oak, 200);
 	}
 
 	//return the number associated with a resource in the resource dictionary

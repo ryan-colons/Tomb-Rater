@@ -11,6 +11,6 @@ public class Site_Woods : ResourceSite {
 	}
 
 	public override string collectResources (int numWorkers) {
-		return addAndRecord(Res_Oak.self, numWorkers);
+		return addAndRecord(Res.oak, numWorkers);
 	}
 }

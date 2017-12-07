@@ -11,6 +11,6 @@ public class Site_Quarry : ResourceSite {
 	}
 
 	public override string collectResources (int numWorkers) {
-		return addAndRecord (Res_Stone.self, numWorkers);
+		return addAndRecord (Res.stone, numWorkers);
 	}
 }

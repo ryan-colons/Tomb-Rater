@@ -11,6 +11,6 @@ public class Site_Mine : ResourceSite {
 	}
 
 	public override string collectResources (int numWorkers) {
-		return addAndRecord(Res_Iron.self, numWorkers);
+		return addAndRecord(Res.iron, numWorkers);
 	}
 }
