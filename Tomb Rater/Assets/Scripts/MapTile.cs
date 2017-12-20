@@ -26,7 +26,7 @@ public class MapTile : MonoBehaviour {
 		if (!Application.isPlaying) {
 			this.name = xCoord + " " + yCoord;
 			float xOffset = (float)gridSize * xSize * 0.5f;
-			float yOffset = (float)gridSize * ySize * 0.5f;
+			//float yOffset = (float)gridSize * ySize * 0.5f;
 
 			float xPos = (xCoord + yCoord) * (xSize / 2f);
 			float yPos = (xCoord - yCoord) * (ySize / 2f);
@@ -94,6 +94,13 @@ public class MapTile : MonoBehaviour {
 				tile.GetComponent<MapTile> ().setHighlight (false);
 			}
 		}
+	}
+
+	public int getX () {
+		return xCoord;
+	}
+	public int getY () {
+		return yCoord;
 	}
 
 }

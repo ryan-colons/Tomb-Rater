@@ -20,7 +20,7 @@ using UnityEngine;
 public class ManageBuilding {
 
 	private BuildTile[,] map;
-	private int sizeX = 30, sizeY = 60;
+	private int sizeX = MapTile.gridSize + 1, sizeY = MapTile.gridSize + 1;
 
 	public ManageBuilding () {
 		map = new BuildTile[sizeX, sizeY];
@@ -31,20 +31,68 @@ public class ManageBuilding {
 		}
 
 		//chuck a room in just for testing
-		//addRectangularRoom (new TombRoom(), 1, 1, 3, 2);
+		addRectangularRoom (new TombRoom(), 1, 1, 2, 3);
+		addRectangularRoom (new TombRoom(), 6, 1, 2, 2);
+		addRectangularRoom (new TombRoom(), 3, 2, 3, 1);
 	}
 
 	public BuildTile getTileAtCoord (int x, int y) {
 		if (!(x < 0 || y < 0 || x >= sizeX || y >= sizeY)) {
 			return map [x, y];
 		} else {
-			Debug.Log ("Bad coords!");
+			Debug.Log ("Bad coords! x: " + x + ", y: " + y);
 			return null;
 		}
 	}
 
 	public int[] getSizes () {
 		return new int[]{ sizeX, sizeY };
+	}
+
+	//returns true if successful, false otherwise
+	//does 3 loops through array. Should these loops be separate? I *think* so.
+	public bool addRoom (TombRoom room, MapTile[] tiles) {
+		//error checking!
+		if (tiles.Length < room.getMinSize ()) {
+			Debug.Log ("More space is required!");
+			return false;
+		}
+		foreach (MapTile tile in tiles) {
+			int posX = tile.getX ();
+			int posY = tile.getY ();
+			bool positionOutOfBounds = (posX < 0 || posY < 0 || posX >= sizeX || posY >= sizeY);
+			bool sizeCannotFit = posX >= sizeX || posY >= sizeY;
+			bool coordAlreadyOccupied = map [posX, posY].getRoom () != null;
+			//should we check for contiguity here??
+			if (positionOutOfBounds || sizeCannotFit || coordAlreadyOccupied) {
+				Debug.Log ("Bad coords! Failed to add room!");
+				return false;
+			}
+		}
+		//error checking finished
+		//set rooms
+		foreach (MapTile tile in tiles) {
+			int posX = tile.getX ();
+			int posY = tile.getY ();
+			map [posX, posY].setRoom (room);
+		}
+		//set walls (done separately so that we know where each part of the room has ended up
+		foreach (MapTile tile in tiles) {
+			int posX = tile.getX ();
+			int posY = tile.getY ();
+			BuildTile[] adjacentTiles = getAdjacentTiles (posX, posY);
+			WallsToShow walls = WallsToShow.NONE;
+			if (adjacentTiles [0].getRoom() != room) {
+				walls = WallsToShow.LEFT;
+				if (adjacentTiles [1].getRoom () != room) {
+					walls = WallsToShow.BOTH;
+				}
+			} else if (adjacentTiles [1].getRoom () != room) {
+				walls = WallsToShow.RIGHT;
+			}
+			map [posX, posY].getSection ().setWalls (walls);
+		}
+		return true;
 	}
 
 	public void addRectangularRoom (TombRoom room, int posX, int posY, int width, int height) {
@@ -67,12 +115,20 @@ public class ManageBuilding {
 		for (int x = posX; x < posX + width; x++) {
 			for (int y = posY; y < posY + height; y++) {
 				RoomSection section = new RoomSection ();
-				bool[] walls = new bool[4];
 				BuildTile[] adjacentTiles = getAdjacentTiles (x, y);
-				for (int i = 0; i < walls.Length; i++) {
-					walls [i] = adjacentTiles != null;
+				//adjacent tiles is ordered 'N-E-W-S'
+				//any walls to show will be "South" (left wall) / "West" (right wall)
+				WallsToShow walls = WallsToShow.NONE;
+				if (adjacentTiles [0].getRoom() != room) {
+					walls = WallsToShow.LEFT;
+					if (adjacentTiles [1].getRoom () != room) {
+						walls = WallsToShow.BOTH;
+					}
+				} else if (adjacentTiles [1].getRoom () != room) {
+					walls = WallsToShow.RIGHT;
 				}
 				section.setWalls (walls);
+				map [x, y].setSection (section);
 			}
 		}
 	}
@@ -134,23 +190,27 @@ public class BuildTile {
 
 }
 
-public class RoomSection {
-	//indicates which sides have walls
-	private bool[] walls = { false, false, false, false };
-	private Resource wallResource;
-	private Resource floorResource;
+public enum WallsToShow {
+	LEFT,
+	RIGHT,
+	BOTH,
+	NONE
+}
 
-	public bool[] getWalls () {
+public class RoomSection {
+	private WallsToShow walls;
+
+	public WallsToShow getWalls () {
 		return walls;
 	}
-	public void setWalls (bool[] b) {
-		if (b.Length == 4) {
-			walls = b;
-		} else {
-			Debug.Log ("Something has probably gone wrong! Does this tile really not have exactly 4 sides?");
-			Application.Quit ();
-		}
+	public void setWalls (WallsToShow w) {
+		this.walls = w;
 	}
+
+	// Wall and floor resources will probably be used with some shader or something
+	/*
+	private Resource wallResource;
+	private Resource floorResource;
 
 	public Resource getFloorResource () {
 		return floorResource;
@@ -165,4 +225,5 @@ public class RoomSection {
 	public void setWallResource (Resource res) {
 		this.wallResource = res;
 	}
+	*/
 }

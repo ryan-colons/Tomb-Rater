@@ -7,6 +7,7 @@ public class TombRoom {
 	private string name;
 	private string description;
 	private RoomFeature[] features;
+	private int minSize = 1;
 
 	public string getName() {
 		return name;
@@ -27,6 +28,10 @@ public class TombRoom {
 	}
 	public void setParts (RoomFeature[] newFeatures) {
 		this.features = (RoomFeature[]) newFeatures.Clone();
+	}
+
+	public int getMinSize () {
+		return minSize;
 	}
 
 }

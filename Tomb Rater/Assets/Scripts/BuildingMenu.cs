@@ -13,9 +13,7 @@ public class BuildingMenu : MonoBehaviour {
 	public GameObject tilePrefab;
 	public Sprite wallSpr0, wallSpr1, wallSpr2, wallSpr3;
 
-
-
-	private const int MAP_SIZE = 10;
+	private static int MAP_SIZE = MapTile.gridSize + 1;
 	private GameObject[,] tileMap = new GameObject[MAP_SIZE, MAP_SIZE];
 
 	public void setTileAtCoord (GameObject obj, int x, int y) {
@@ -39,7 +37,26 @@ public class BuildingMenu : MonoBehaviour {
 		setTileAdjacencies ();
 
 		//need to set sprites (etc?) for tiles based on info from buildingManagement.map
+		for (int x = 0; x < MAP_SIZE; x++) {
+			for (int y = 0; y < MAP_SIZE; y++) {
+				BuildTile buildTile = buildingManagement.getTileAtCoord (x, y);
+				MapTile mapTile = getMapTileAtCoord (x, y);
+				// buildTile and mapTile should correspond
+				// buildTile has game info, mapTile handles the graphical representation (basically)
+				if (buildTile.getRoom () != null) {
+					WallsToShow tileWalls = buildTile.getSection ().getWalls ();
+					Sprite spriteToUse = wallSpr0;
+					if (tileWalls == WallsToShow.LEFT)
+						spriteToUse = wallSpr1;
+					else if (tileWalls == WallsToShow.RIGHT)
+						spriteToUse = wallSpr2;
+					else if (tileWalls == WallsToShow.BOTH)
+						spriteToUse = wallSpr3;
+					mapTile.setSprite (spriteToUse);
+				}
 
+			}
+		}
 
 		/* THERE NEEDS TO BE SOME TUTORIAL EVENTUALLY!
 		if (gameController.buildTutorialNeeded ()) {
