@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
 
 	private ManageLabour labourManagement;
 	private ManageResources resourceManagement;
+	private ManageBuilding buildingManagement;
 	private ManageYears yearManagement;
 
 	private void Start () {
@@ -26,8 +27,10 @@ public class GameController : MonoBehaviour {
 		//sites are currently added in the ManageLabour constructor
 		labourManagement = new ManageLabour ();
 		resourceManagement = new ManageResources ();
+		buildingManagement = new ManageBuilding ();
 		yearManagement = new ManageYears ();
 
+		yearManagement.getYear (0).addSpecialEvent (new Event_SpecialEventTest ());
 	}
 
 	private void Awake () {
@@ -75,6 +78,9 @@ public class GameController : MonoBehaviour {
 	}
 	public ManageLabour getLabourManagement () {
 		return labourManagement;
+	}
+	public ManageBuilding getBuildingManagement () {
+		return buildingManagement;
 	}
 	public ManageYears getYearManagement () {
 		return yearManagement;

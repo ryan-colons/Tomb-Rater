@@ -27,6 +27,9 @@ public class GameLoader : MonoBehaviour {
 
 	public void continueGame () {
 		Debug.Log ("Continuing a previous game!");
+		gameController.setBuildTutorialNeeded (false);
+		gameController.setOvermenuTutorialNeeded (false);
+		gameController.setWorkTutorialNeeded (false);
 		gameController.loadScene ("menu");
 	}
 

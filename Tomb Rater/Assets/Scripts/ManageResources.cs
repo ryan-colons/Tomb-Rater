@@ -38,7 +38,6 @@ public class ManageResources {
 	public int getResourceTypeAmount (ResourceType rType) {
 		int count = 0;
 		foreach (KeyValuePair<Resource, int> kvp in resourceDict) {
-			Debug.Log (kvp.Key.type);
 			if (kvp.Key.type == rType) {
 				count += kvp.Value;
 			}

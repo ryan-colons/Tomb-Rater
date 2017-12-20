@@ -49,6 +49,10 @@ public class SpecialEvent {
 		addButtons (panel);
 	}
 
+	public void exit() {
+		gameController.loadScene ("turn");
+	}
+
 	public void addButtons(GameObject panel) {
 		Button button = panel.GetComponent<Button> ();
 		if (messageIndex < extraMessages.Length) {
@@ -132,6 +136,20 @@ public class Event_Introduction : SpecialEvent {
 	}
 	public override void option5 () {
 		Debug.Log ("5");
+	}
+}
+
+public class Event_SpecialEventTest : SpecialEvent {
+	public Event_SpecialEventTest () {
+		this.setMessage ("This is just a test, to make sure the Special Event " +
+		"system is working!");
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage ("Looks like everything is in order... Carry on!", 0);
+		initialiseButtonTexts (1);
+		this.setButtonText ("Okey dokey", 0);
+	}
+	public override void option1 () {
+		exit ();
 	}
 }
 

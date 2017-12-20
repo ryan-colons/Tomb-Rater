@@ -61,5 +61,17 @@ public class ManageLabour {
 		return availableCitizens;
 	}
 
+	/* this is not finished! */
+	public void incrementCitizens (int num) {
+		int newNumberOfCitizens = citizens + num;
+		int availableCitizens = getNumAvailableCitizens ();
+
+		while (newNumberOfCitizens - availableCitizens - totalWorkersThisYear () < 0) {
+			//we can't end up with negative citizens
+		}
+
+		citizens = newNumberOfCitizens;
+	}
+
 
 }

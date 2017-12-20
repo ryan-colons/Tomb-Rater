@@ -21,6 +21,10 @@ public class ManageYears  {
 		}
 	}
 
+	public Year getCurrentYear () {
+		return calendar [yearIndex];
+	}
+
 	public Year getYear (int yearNum) {
 		if (yearNum < CALENDAR_SIZE) {
 			return calendar [yearNum];
@@ -45,13 +49,11 @@ public class ManageYears  {
 		//Builders - build
 
 
-		//run special events
-		//load scene with basic 'year-lapse' animations
-		//store in that scene an array of special events and an index
-		//iterate through events; move to event scene, and back
-		//once all events are done, move on
+		//run special events, move on once they're all done
+		//shift to "turn" scene, give script all the info it needs
 		TurnoverScene.specialEvents = currentYear.getEvents().ToArray();
 		TurnoverScene.eventIndex = 0;
+		TurnoverScene.yearlyReport = yearReport;
 		gameController.loadScene ("turn");
 
 	}
@@ -69,8 +71,5 @@ public class ManageYears  {
 			bufferCalendar = null;
 			yearIndex = 0;
 		}
-		Debug.Log ("Happy Birthday Your Majesty! It is now the year " + calendar [yearIndex].getYearName ());
-		Debug.Log ("Stock report this year:\n" + yearReport);
-		gameController.loadScene ("menu");
 	}
 }
