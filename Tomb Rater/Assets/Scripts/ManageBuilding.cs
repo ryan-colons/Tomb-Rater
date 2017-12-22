@@ -21,6 +21,7 @@ public class ManageBuilding {
 
 	private BuildTile[,] map;
 	private int sizeX = MapTile.gridSize + 1, sizeY = MapTile.gridSize + 1;
+	private List<TombRoom> roomsToBuild;
 
 	public ManageBuilding () {
 		map = new BuildTile[sizeX, sizeY];
@@ -34,6 +35,24 @@ public class ManageBuilding {
 		addRectangularRoom (new TombRoom(), 1, 1, 2, 3);
 		addRectangularRoom (new TombRoom(), 6, 1, 2, 2);
 		addRectangularRoom (new TombRoom(), 3, 2, 3, 1);
+
+		roomsToBuild = new List<TombRoom> ();
+		makeRoomAvailableToBuild (new Room_Hallway ());
+		makeRoomAvailableToBuild (new Room_BurialChamber ());
+	}
+
+	public void makeRoomAvailableToBuild (TombRoom room) {
+		if (!roomsToBuild.Contains (room)) {
+			roomsToBuild.Add (room);
+		}
+	}
+	public void makeRoomUnavailableToBuild (TombRoom room) {
+		if (roomsToBuild.Contains (room)) {
+			roomsToBuild.Remove (room);
+		}
+	}
+	public TombRoom[] getAvailableRooms () {
+		return roomsToBuild.ToArray ();
 	}
 
 	public BuildTile getTileAtCoord (int x, int y) {

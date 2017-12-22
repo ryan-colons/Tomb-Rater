@@ -33,6 +33,9 @@ public class TombRoom {
 	public int getMinSize () {
 		return minSize;
 	}
+	public void setMinSize (int newSize) {
+		this.minSize = newSize;
+	}
 
 }
 
@@ -55,4 +58,21 @@ public class RoomFeature {
 		this.cost = n;
 	}
 
+}
+
+//*ROOMS************************************************************
+public class Room_Hallway : TombRoom {
+	public Room_Hallway () {
+		setName ("Hallway");
+		setDescription ("A hallway, for connecting rooms.");
+		setMinSize (1);
+	}
+}
+
+public class Room_BurialChamber : TombRoom {
+	public Room_BurialChamber () {
+		setName ("Burial Chamber");
+		setDescription ("A chamber designed to house the sarchophagus of our Glorious Leader.");
+		setMinSize (6);
+	}
 }

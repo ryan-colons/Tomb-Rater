@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildingMenu : MonoBehaviour {
 
@@ -9,6 +10,12 @@ public class BuildingMenu : MonoBehaviour {
 	//public GameObject tutPanel;
 	public GameObject helpPanel;
 	//public GameObject advicePanel;
+	public GameObject roomPanel;
+	public GameObject confirmBuildButton;
+	public Text errorMessageText;
+
+	public static TombRoom currentlyBuilding = null;
+	public static List<MapTile> selectedTiles = new List<MapTile> ();
 
 	public GameObject tilePrefab;
 	public Sprite wallSpr0, wallSpr1, wallSpr2, wallSpr3;
@@ -96,41 +103,94 @@ public class BuildingMenu : MonoBehaviour {
 		}
 	}
 
+	public void openRoomPanel (TombRoom room) {
+		roomPanel.SetActive (true);
+		Text nameText = roomPanel.transform.Find ("Name Text").GetComponent<Text>();
+		Text descText = roomPanel.transform.Find ("Description Text").GetComponent<Text> ();
+		nameText.text = room.getName ();
+		descText.text = room.getDescription ();
+		Button buildButton = roomPanel.transform.Find ("Build Button").GetComponent<Button> ();
+		buildButton.onClick.AddListener (delegate {
+			closeRoomPanel();
+			openBuildingMenu(room);
+		});
+	}
+	public void closeRoomPanel () {
+		roomPanel.SetActive (false);
+	}
+
+	public void openBuildingMenu (TombRoom room) {
+		selectedTiles.Clear();
+		currentlyBuilding = room;
+		confirmBuildButton.SetActive (true);
+	}
+	public void closeBuildingMenu () {
+		foreach (MapTile mapTile in selectedTiles) {
+			mapTile.setHighlight (false);
+		}
+		selectedTiles.Clear ();
+		currentlyBuilding = null;
+		confirmBuildButton.SetActive (false);
+	}
+
+	public void confirmSelectedTiles () {
+		bool passedTests = validateSelectedTiles ();
+		if (!passedTests) {
+			Debug.Log ("Bad tile selection!");
+		} else {
+			Debug.Log (currentlyBuilding + ": " + selectedTiles.Count);
+		}
+		closeBuildingMenu ();
+	}
+
+	public bool validateSelectedTiles () {
+		if (currentlyBuilding == null || selectedTiles.Count == 0) {
+			reportBuildError ("You haven't selected anything to build!");
+			return false;
+		}
+		//check if enough tiles have been selected
+		if (selectedTiles.Count < currentlyBuilding.getMinSize ()) {
+			reportBuildError ("You haven't selected enough tiles (" + selectedTiles.Count + "/" + currentlyBuilding.getMinSize() + ").");
+			return false;
+		}
+		foreach (MapTile mapTile in selectedTiles) {
+			BuildTile buildTile = buildingManagement.getTileAtCoord (mapTile.getX (), mapTile.getY ());
+			//check all tiles are unoccupied
+			if (buildTile.getRoom () != null) {
+				reportBuildError ("You cannot build on tiles that have already been built on.");
+				return false;
+			}
+			//check for contiguity
+			MapTile[] adjacentMapTiles = mapTile.getAdjacentTiles();
+			bool hasContiguity = false;
+			foreach (MapTile neighbour in adjacentMapTiles) {
+				if (neighbour != null && selectedTiles.Contains(neighbour)) {
+					hasContiguity = true;
+					break;
+				}
+			}
+			if (!hasContiguity) {
+				reportBuildError ("You need to select a single, contiguous set of tiles.");
+				return false;
+			}
+		}
+		// all tests passed!
+		return true;
+	}
+
+	public void reportBuildError (string errorMessage) {
+		StopCoroutine ("displayErrorMessage");
+		StartCoroutine ("displayErrorMessage", errorMessage);
+	}
+
+	public IEnumerator displayErrorMessage (string errorMessage) {
+		errorMessageText.text = errorMessage;
+		yield return new WaitForSeconds (2f);
+		errorMessageText.text = "";
+	}
+
 	public void returnToOverMenu () {
 		gameController.loadScene ("menu");
 	}
 }
 
-/* THIS IS OLD CODE FOR DYNAMIC TILE PLACEMENT; IT CAN PROBABLY BE DELETED
-//private MapTile[,] tiledMap;
-//public int tileSizeX, tileSizeY;
-//instatiate tiles according to buildingManagement
-int[] maxSizes = buildingManagement.getSizes();
-Transform tileParent = GameObject.Find ("Map Tiles").transform;
-for (int x = 0; x < maxSizes [0]; x++) {
-	for (int y = 0; y < maxSizes [1]; y++) {
-		//instatiate at position
-		GameObject newTile = (GameObject)Instantiate (tilePrefab, tileParent);
-		if (y % 2 == 0) {
-			newTile.transform.position = new Vector3 (x * tileSizeX + (tileSizeX * 0.5f), y * tileSizeY, 0);
-		} else {
-			newTile.transform.position = new Vector3 (x * tileSizeX, y * tileSizeY, 0);
-		}
-		//set appropriate sprite
-		BuildTile buildTile = buildingManagement.getTileAtCoord (x, y);
-		if (buildTile.getRoom () != null) {
-			bool[] tileWalls = buildTile.getSection ().getWalls ();
-			Sprite spriteToUse = wallSpr0;
-			if (tileWalls [0]) {
-				spriteToUse = wallSpr1;
-				if (tileWalls [1]) {
-					spriteToUse = wallSpr3;
-				}
-			} else {
-				spriteToUse = wallSpr2;
-			}
-			MapTile mapTile = newTile.GetComponent<MapTile> ();
-			mapTile.setSprite (spriteToUse);
-		}
-	}
-}*/

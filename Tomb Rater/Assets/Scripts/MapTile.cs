@@ -1,6 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
+/* How to select tiles for building:
+ * have a static variable in ManageBuilding (or just MapTile?) that shows when it's selecting time
+ * also need to have a button up for cancelling probably?
+ */
 
 [RequireComponent(typeof(SpriteRenderer))]
 [ExecuteInEditMode]
@@ -79,19 +85,17 @@ public class MapTile : MonoBehaviour {
 	}
 
 	private void OnMouseDown () {
-		GameObject[] neighbours = getAdjacentObjects ();
-		foreach (GameObject tile in neighbours) {
-			if (tile != null) {
-				tile.GetComponent<MapTile> ().setHighlight (true);
-			}
-		}
-	}
-
-	private void OnMouseUp () {
-		GameObject[] neighbours = getAdjacentObjects ();
-		foreach (GameObject tile in neighbours) {
-			if (tile != null) {
-				tile.GetComponent<MapTile> ().setHighlight (false);
+		if (!EventSystem.current.IsPointerOverGameObject ()) {
+			if (BuildingMenu.currentlyBuilding != null) {
+				if (!BuildingMenu.selectedTiles.Contains (this)) {
+					//add to selected tiles
+					setHighlight (true);
+					BuildingMenu.selectedTiles.Add (this);
+				} else {
+					//remove from selected tiles
+					setHighlight(false);
+					BuildingMenu.selectedTiles.Remove (this);
+				}
 			}
 		}
 	}
