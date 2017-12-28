@@ -24,6 +24,9 @@ public class ManageYears  {
 	public Year getCurrentYear () {
 		return calendar [yearIndex];
 	}
+	public int getYearIndex () {
+		return yearIndex;
+	}
 
 	public Year getYear (int yearNum) {
 		if (yearNum < CALENDAR_SIZE) {
@@ -38,19 +41,39 @@ public class ManageYears  {
 		}
 	}
 
+	public void addSpecialEventInXYears (SpecialEvent specialEvent, int numYears) {
+		Year year = getYear (yearIndex + numYears);
+		year.addSpecialEvent (specialEvent);
+	}
+
 	public void progressThroughCurrentYear (GameController gameController) {
 		Year currentYear = calendar [yearIndex];
 
 		//Labour - get resources
 		ManageLabour labourManagement = gameController.getLabourManagement ();
 		yearReport = labourManagement.collectAllResources ();
-		//print string somewhere once we're done
 
 		//Builders - build
+		ManageBuilding buildingManagement = gameController.getBuildingManagement();
+		if (BuildingMenu.currentlyBuilding != null) {
+			bool success = buildingManagement.addRoom (BuildingMenu.currentlyBuilding, BuildingMenu.selectedTiles.ToArray ());
+			if (!success) {
+				Debug.Log ("Something went wrong in the building process! Error!");
+			}
+			BuildingMenu.currentlyBuilding = null;
+			BuildingMenu.selectedTiles.Clear ();
+		}
 
+		//need to subtract money (etc?) for worker/builder costs (etc?)
 
 		//run special events, move on once they're all done
 		//shift to "turn" scene, give script all the info it needs
+		//current picking just 1 random event each year
+		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement();
+		SpecialEvent randEvent = specialEventManagement.chooseSpecialEventRandomly ();
+		if (randEvent != null) {
+			currentYear.addSpecialEvent (randEvent);
+		}
 		TurnoverScene.specialEvents = currentYear.getEvents().ToArray();
 		TurnoverScene.eventIndex = 0;
 		TurnoverScene.yearlyReport = yearReport;

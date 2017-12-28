@@ -8,6 +8,8 @@ public class SpecialEvent {
 	public static SpecialEventUI eventUI;
 	public static GameController gameController;
 
+	private bool reuse;
+	private int probability = 5;
 	private string message;
 	private string[] extraMessages = new string[0];
 	private int messageIndex = 0;
@@ -34,6 +36,32 @@ public class SpecialEvent {
 	}
 	public void setButtonText (string str, int index) {
 		this.buttonTexts [index] = str;
+	}
+	public void setReuse (bool b) {
+		this.reuse = b;
+	}
+	public bool getReuse () {
+		return this.reuse;
+	}
+	public void setProbability (int n) {
+		this.probability = n;
+	}
+	public int getProbability () {
+		return this.probability;
+	}
+
+	/* this needs testing - important that it doesn't think two events
+	are the same simply in virtue of them both inheriting from SpecialEvent*/
+	public bool isSameAs (SpecialEvent otherEvent) {
+		if (this.GetType() == otherEvent.GetType()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public virtual bool prereq () {
+		return true;
 	}
 
 	public void go() {
@@ -186,6 +214,36 @@ public class Event_TombBuildingTutorial : SpecialEvent {
 
 	public override void option1 () {
 		gameController.loadScene ("building_map");
+	}
+}
+
+public class Event_IncurableTerminalIllness : SpecialEvent {
+
+	public Event_IncurableTerminalIllness () {
+		this.setMessage ("Your physician brings terrible news! You have been diagnosed with " +
+		"a terminal disease, for which there is absolutely no cure.");
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage ("You have exactly 5 years to live. Best get that tomb finished...", 0);
+		initialiseButtonTexts (1);
+		this.setButtonText ("Persevere", 0);
+	}
+	public override void option1 () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears(new Event_Death ("You were felled by an incurable disease. A physician " +
+			"overseeing the autopsy observed your body and immediately invented an easy cure - tough break!"), 5);
+		exit ();
+	}
+}
+
+public class Event_Death : SpecialEvent {
+	public Event_Death (string deathSummary) {
+		this.setMessage ("You have died. " + deathSummary);
+		initialiseExtraMessageArray (0);
+		initialiseButtonTexts (1);
+		this.setButtonText ("View legacy", 0);
+	}
+	public override void option1 () {
+		//go to final scene, where you see your legacy etc
 	}
 }
 

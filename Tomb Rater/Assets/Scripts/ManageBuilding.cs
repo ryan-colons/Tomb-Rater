@@ -31,11 +31,6 @@ public class ManageBuilding {
 			}
 		}
 
-		//chuck a room in just for testing
-		addRectangularRoom (new TombRoom(), 1, 1, 2, 3);
-		addRectangularRoom (new TombRoom(), 6, 1, 2, 2);
-		addRectangularRoom (new TombRoom(), 3, 2, 3, 1);
-
 		roomsToBuild = new List<TombRoom> ();
 		makeRoomAvailableToBuild (new Room_Hallway ());
 		makeRoomAvailableToBuild (new Room_BurialChamber ());
@@ -72,6 +67,9 @@ public class ManageBuilding {
 	//does 3 loops through array. Should these loops be separate? I *think* so.
 	public bool addRoom (TombRoom room, MapTile[] tiles) {
 		//error checking!
+		if (room == null || tiles == null) {
+			return false;
+		}
 		if (tiles.Length < room.getMinSize ()) {
 			Debug.Log ("More space is required!");
 			return false;
@@ -101,55 +99,19 @@ public class ManageBuilding {
 			int posY = tile.getY ();
 			BuildTile[] adjacentTiles = getAdjacentTiles (posX, posY);
 			WallsToShow walls = WallsToShow.NONE;
-			if (adjacentTiles [0].getRoom() != room) {
+			if (adjacentTiles[0] == null || adjacentTiles [0].getRoom() != room) {
 				walls = WallsToShow.LEFT;
-				if (adjacentTiles [1].getRoom () != room) {
+				if (adjacentTiles[1] == null || adjacentTiles [1].getRoom () != room) {
 					walls = WallsToShow.BOTH;
 				}
-			} else if (adjacentTiles [1].getRoom () != room) {
+			} else if (adjacentTiles[1] == null || adjacentTiles [1].getRoom () != room) {
 				walls = WallsToShow.RIGHT;
 			}
-			map [posX, posY].getSection ().setWalls (walls);
+			RoomSection newSection = new RoomSection ();
+			newSection.setWalls (walls);
+			map [posX, posY].setSection(newSection);
 		}
 		return true;
-	}
-
-	public void addRectangularRoom (TombRoom room, int posX, int posY, int width, int height) {
-		bool positionOutOfBounds = (posX < 0 || posY < 0 || posX >= sizeX || posY >= sizeY);
-		bool sizeCannotFit = posX + width >= sizeX || posY + height >= sizeY;
-		bool valuesTooLow = width <= 0 || height <= 0;
-		if (positionOutOfBounds || sizeCannotFit || valuesTooLow) {
-			Debug.Log ("Bad coords! Failed to add room!");
-			return;
-		}
-
-		//set rooms
-		for (int x = posX; x < posX + width; x++) {
-			for (int y = posY; y < posY + height; y++) {
-				map [x, y].setRoom (room);
-			}
-		}
-		//add floors and walls
-		//this is done separately so we're sure where all the tiles have ended up (could be worth changing eventually)
-		for (int x = posX; x < posX + width; x++) {
-			for (int y = posY; y < posY + height; y++) {
-				RoomSection section = new RoomSection ();
-				BuildTile[] adjacentTiles = getAdjacentTiles (x, y);
-				//adjacent tiles is ordered 'N-E-W-S'
-				//any walls to show will be "South" (left wall) / "West" (right wall)
-				WallsToShow walls = WallsToShow.NONE;
-				if (adjacentTiles [0].getRoom() != room) {
-					walls = WallsToShow.LEFT;
-					if (adjacentTiles [1].getRoom () != room) {
-						walls = WallsToShow.BOTH;
-					}
-				} else if (adjacentTiles [1].getRoom () != room) {
-					walls = WallsToShow.RIGHT;
-				}
-				section.setWalls (walls);
-				map [x, y].setSection (section);
-			}
-		}
 	}
 
 	/* x and y specify a tile by coordinates
@@ -246,3 +208,45 @@ public class RoomSection {
 	}
 	*/
 }
+
+
+
+/* PROBABLY NOT GOING TO NEED THIS ANYMORE
+	public void addRectangularRoom (TombRoom room, int posX, int posY, int width, int height) {
+		bool positionOutOfBounds = (posX < 0 || posY < 0 || posX >= sizeX || posY >= sizeY);
+		bool sizeCannotFit = posX + width >= sizeX || posY + height >= sizeY;
+		bool valuesTooLow = width <= 0 || height <= 0;
+		if (positionOutOfBounds || sizeCannotFit || valuesTooLow) {
+			Debug.Log ("Bad coords! Failed to add room!");
+			return;
+		}
+
+		//set rooms
+		for (int x = posX; x < posX + width; x++) {
+			for (int y = posY; y < posY + height; y++) {
+				map [x, y].setRoom (room);
+			}
+		}
+		//add floors and walls
+		//this is done separately so we're sure where all the tiles have ended up (could be worth changing eventually)
+		for (int x = posX; x < posX + width; x++) {
+			for (int y = posY; y < posY + height; y++) {
+				RoomSection section = new RoomSection ();
+				BuildTile[] adjacentTiles = getAdjacentTiles (x, y);
+				//adjacent tiles is ordered 'N-E-W-S'
+				//any walls to show will be "South" (left wall) / "West" (right wall)
+				WallsToShow walls = WallsToShow.NONE;
+				if (adjacentTiles [0].getRoom() != room) {
+					walls = WallsToShow.LEFT;
+					if (adjacentTiles [1].getRoom () != room) {
+						walls = WallsToShow.BOTH;
+					}
+				} else if (adjacentTiles [1].getRoom () != room) {
+					walls = WallsToShow.RIGHT;
+				}
+				section.setWalls (walls);
+				map [x, y].setSection (section);
+			}
+		}
+	}
+	*/

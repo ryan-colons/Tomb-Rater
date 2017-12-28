@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\ManageBuilding.cs" />
      <Compile Include="Assets\Scripts\ManageLabour.cs" />
      <Compile Include="Assets\Scripts\ManageResources.cs" />
+     <Compile Include="Assets\Scripts\ManageSpecialEvents.cs" />
      <Compile Include="Assets\Scripts\ManageYears.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
      <Compile Include="Assets\Scripts\MapTile.cs" />

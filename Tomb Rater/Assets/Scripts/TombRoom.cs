@@ -9,6 +9,12 @@ public class TombRoom {
 	private RoomFeature[] features;
 	private int minSize = 1;
 
+	//return an error message if the requirements are not met
+	//return "" otherwise
+	public virtual string meetsRequirements () {
+		return "";
+	}
+
 	public string getName() {
 		return name;
 	}

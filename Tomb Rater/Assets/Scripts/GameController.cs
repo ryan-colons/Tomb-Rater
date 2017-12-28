@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 	private ManageResources resourceManagement;
 	private ManageBuilding buildingManagement;
 	private ManageYears yearManagement;
+	private ManageSpecialEvents specialEventManagement;
 
 	private void Start () {
 		SpecialEvent.gameController = this;
@@ -29,6 +30,7 @@ public class GameController : MonoBehaviour {
 		resourceManagement = new ManageResources ();
 		buildingManagement = new ManageBuilding ();
 		yearManagement = new ManageYears ();
+		specialEventManagement = new ManageSpecialEvents ();
 
 		yearManagement.getYear (0).addSpecialEvent (new Event_SpecialEventTest ());
 	}
@@ -84,5 +86,26 @@ public class GameController : MonoBehaviour {
 	}
 	public ManageYears getYearManagement () {
 		return yearManagement;
+	}
+	public ManageSpecialEvents getSpecialEventManagement () {
+		return specialEventManagement;
+	}
+
+	//this method returns your score
+	public int rateTomb () {
+		int score = 0;
+
+		int sizeX = buildingManagement.getSizes() [0];
+		int sizeY = buildingManagement.getSizes() [1];
+		for (int x = 0; x < sizeX; x++) {
+			for (int y = 0; y < sizeY; y++) {
+				BuildTile tile = buildingManagement.getTileAtCoord (x, y);
+				if (tile.getRoom () != null) {
+					score += 1;
+				}
+			}
+		}
+
+		return score;
 	}
 }

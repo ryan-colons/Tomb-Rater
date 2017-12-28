@@ -61,8 +61,13 @@ public class BuildingMenu : MonoBehaviour {
 						spriteToUse = wallSpr3;
 					mapTile.setSprite (spriteToUse);
 				}
-
 			}
+		}
+		//set highlights according to what has been selected
+		foreach (MapTile mapTile in selectedTiles) {
+			int x = mapTile.getX ();
+			int y = mapTile.getY ();
+			getMapTileAtCoord (x, y).setHighlight (true);
 		}
 
 		/* THERE NEEDS TO BE SOME TUTORIAL EVENTUALLY!
@@ -120,27 +125,36 @@ public class BuildingMenu : MonoBehaviour {
 	}
 
 	public void openBuildingMenu (TombRoom room) {
+		setHighlightForSelectedTiles (false);
 		selectedTiles.Clear();
 		currentlyBuilding = room;
 		confirmBuildButton.SetActive (true);
 	}
+
 	public void closeBuildingMenu () {
-		foreach (MapTile mapTile in selectedTiles) {
-			mapTile.setHighlight (false);
-		}
+		setHighlightForSelectedTiles (false);
 		selectedTiles.Clear ();
 		currentlyBuilding = null;
 		confirmBuildButton.SetActive (false);
+	}
+
+	public void setHighlightForSelectedTiles (bool b) {
+		foreach (MapTile mapTile in selectedTiles) {
+			int x = mapTile.getX ();
+			int y = mapTile.getY ();
+			getMapTileAtCoord (x, y).setHighlight (b);
+		}
 	}
 
 	public void confirmSelectedTiles () {
 		bool passedTests = validateSelectedTiles ();
 		if (!passedTests) {
 			Debug.Log ("Bad tile selection!");
+			closeBuildingMenu ();
 		} else {
 			Debug.Log (currentlyBuilding + ": " + selectedTiles.Count);
+			confirmBuildButton.SetActive (false);
 		}
-		closeBuildingMenu ();
 	}
 
 	public bool validateSelectedTiles () {
@@ -153,6 +167,9 @@ public class BuildingMenu : MonoBehaviour {
 			reportBuildError ("You haven't selected enough tiles (" + selectedTiles.Count + "/" + currentlyBuilding.getMinSize() + ").");
 			return false;
 		}
+		//check for external contiguity (i.e. attached to all other rooms)
+		//can check for this just by seeing if the room is attached to any other room
+		bool attachedToOtherRooms = false;
 		foreach (MapTile mapTile in selectedTiles) {
 			BuildTile buildTile = buildingManagement.getTileAtCoord (mapTile.getX (), mapTile.getY ());
 			//check all tiles are unoccupied
@@ -160,7 +177,7 @@ public class BuildingMenu : MonoBehaviour {
 				reportBuildError ("You cannot build on tiles that have already been built on.");
 				return false;
 			}
-			//check for contiguity
+			//check for internal contiguity
 			MapTile[] adjacentMapTiles = mapTile.getAdjacentTiles();
 			bool hasContiguity = false;
 			foreach (MapTile neighbour in adjacentMapTiles) {
@@ -168,11 +185,19 @@ public class BuildingMenu : MonoBehaviour {
 					hasContiguity = true;
 					break;
 				}
+				if (neighbour != null && !selectedTiles.Contains (neighbour)) {
+					attachedToOtherRooms = true;
+				}
 			}
-			if (!hasContiguity) {
+			if (!hasContiguity && selectedTiles.Count > 1) {
 				reportBuildError ("You need to select a single, contiguous set of tiles.");
 				return false;
 			}
+		}
+		if (!attachedToOtherRooms) {
+			//maybe put in an exception for the first room or something
+			reportBuildError("All rooms must be connected!");
+			return false;
 		}
 		// all tests passed!
 		return true;
@@ -190,6 +215,11 @@ public class BuildingMenu : MonoBehaviour {
 	}
 
 	public void returnToOverMenu () {
+		//if the confirm button is active, selected tiles haven't been confirmed
+		//therefore, selected tiles should be forgotten
+		if (confirmBuildButton.activeSelf) {
+			selectedTiles.Clear ();
+		}
 		gameController.loadScene ("menu");
 	}
 }
