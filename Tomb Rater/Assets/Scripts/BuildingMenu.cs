@@ -109,6 +109,7 @@ public class BuildingMenu : MonoBehaviour {
 	}
 
 	public void openRoomPanel (TombRoom room) {
+		closeBuildingMenu ();
 		roomPanel.SetActive (true);
 		Text nameText = roomPanel.transform.Find ("Name Text").GetComponent<Text>();
 		Text descText = roomPanel.transform.Find ("Description Text").GetComponent<Text> ();
@@ -190,7 +191,7 @@ public class BuildingMenu : MonoBehaviour {
 				}
 			}
 			if (!hasContiguity && selectedTiles.Count > 1) {
-				reportBuildError ("You need to select a single, contiguous set of tiles.");
+				reportBuildError ("You need to select a single, contiguous set of tiles. (Tiles selected: " + selectedTiles.Count + ")");
 				return false;
 			}
 		}

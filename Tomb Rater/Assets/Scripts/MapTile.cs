@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 /* How to select tiles for building:
@@ -85,17 +86,29 @@ public class MapTile : MonoBehaviour {
 	}
 
 	private void OnMouseDown () {
-		if (!EventSystem.current.IsPointerOverGameObject ()) {
-			if (BuildingMenu.currentlyBuilding != null) {
-				if (!BuildingMenu.selectedTiles.Contains (this)) {
-					//add to selected tiles
-					setHighlight (true);
-					BuildingMenu.selectedTiles.Add (this);
-				} else {
-					//remove from selected tiles
-					setHighlight(false);
-					BuildingMenu.selectedTiles.Remove (this);
-				}
+		//this block is here to allow clicking through the Error Message text
+		//it's a bit silly, but hopefully makes for better UI experiences?
+		GameObject canvas = GameObject.Find ("Canvas");
+		GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster> ();
+		PointerEventData pointer = new PointerEventData (EventSystem.current);
+		pointer.position = Input.mousePosition;
+		List<RaycastResult> resultsList = new List<RaycastResult> ();
+		raycaster.Raycast (pointer, resultsList);
+		foreach (RaycastResult result in resultsList) {
+			if (!result.gameObject.tag.Equals ("Error Message")) {
+				return;
+			}
+		}
+
+		if (BuildingMenu.currentlyBuilding != null) {
+			if (!BuildingMenu.selectedTiles.Contains (this)) {
+				//add to selected tiles
+				setHighlight (true);
+				BuildingMenu.selectedTiles.Add (this);
+			} else {
+				//remove from selected tiles
+				setHighlight (false);
+				BuildingMenu.selectedTiles.Remove (this);
 			}
 		}
 	}
