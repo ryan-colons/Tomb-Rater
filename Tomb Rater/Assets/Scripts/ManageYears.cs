@@ -12,11 +12,10 @@ public class ManageYears  {
 
 	private string yearReport;
 
-	public ManageYears () {
+	public ManageYears (int currentYear) {
 		calendar = new Year[CALENDAR_SIZE];
 		yearIndex = 0;
-		int currentYear = 50;
-		for (int n = 0; n < 100; n++) {
+		for (int n = 0; n < CALENDAR_SIZE; n++) {
 			calendar [n] = new Year (n + currentYear);
 		}
 	}
@@ -81,14 +80,18 @@ public class ManageYears  {
 
 	}
 
-	public void progressToNextYear (GameController gameController) {
+	public void progressToNextYear () {
 		//move index to the next year
+		int currentYearName = getCurrentYear().getYearName() + 1;
 		yearIndex++;
 		if (yearIndex >= CALENDAR_SIZE) {
 			//this is just handling for cases where the game goes for lots of turns
 			//this will probably never happen
 			if (bufferCalendar == null) {
 				bufferCalendar = new Year[CALENDAR_SIZE];
+				for (int n = 0; n < CALENDAR_SIZE; n++) {
+					bufferCalendar [n] = new Year (n + currentYearName);
+				}
 			}
 			calendar = bufferCalendar;
 			bufferCalendar = null;

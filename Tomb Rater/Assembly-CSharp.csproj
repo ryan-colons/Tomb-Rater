@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\SpriteDragDestination.cs" />
      <Compile Include="Assets\Scripts\SpriteMouseOver.cs" />
      <Compile Include="Assets\Scripts\SpriteSupervisor.cs" />
+     <Compile Include="Assets\Scripts\TestRunner.cs" />
      <Compile Include="Assets\Scripts\TombRoom.cs" />
      <Compile Include="Assets\Scripts\TurnoverScene.cs" />
      <Compile Include="Assets\Scripts\WorkMenu.cs" />

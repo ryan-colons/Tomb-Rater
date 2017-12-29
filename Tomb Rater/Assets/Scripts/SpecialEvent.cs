@@ -220,6 +220,8 @@ public class Event_TombBuildingTutorial : SpecialEvent {
 public class Event_IncurableTerminalIllness : SpecialEvent {
 
 	public Event_IncurableTerminalIllness () {
+		this.setProbability (1);
+		this.setReuse (false);
 		this.setMessage ("Your physician brings terrible news! You have been diagnosed with " +
 		"a terminal disease, for which there is absolutely no cure.");
 		initialiseExtraMessageArray (1);
@@ -249,6 +251,7 @@ public class Event_Death : SpecialEvent {
 
 /* Checklist for writing a SpecialEvent
  * Constructor:
+ *      -set probability and reusability
  * 		-initialise extra message array, and set extra messages
  * 		-initialise button texts array, and set button texts
  * 		-set the sprite (??)

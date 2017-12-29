@@ -47,7 +47,7 @@ public class TurnoverScene : MonoBehaviour {
 
 
 
-		yearManagement.progressToNextYear (gameController);
+		yearManagement.progressToNextYear ();
 	}
 
 	public void goToOvermenu () {

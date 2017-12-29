@@ -21,6 +21,9 @@ public class ManageSpecialEvents {
 	}
 
 	public SpecialEvent chooseSpecialEventRandomly () {
+		if (possibleEvents == null) {
+			return null;
+		}
 		int sum = 0;
 		foreach (SpecialEvent specialEvent in possibleEvents) {
 			sum += specialEvent.getProbability ();
@@ -30,7 +33,7 @@ public class ManageSpecialEvents {
 		foreach (SpecialEvent specialEvent in possibleEvents) {
 			sum += specialEvent.getProbability ();
 			if (randNum < sum && specialEvent.prereq()) {
-				if (specialEvent.getReuse ()) {
+				if (!specialEvent.getReuse ()) {
 					removePossibleEvent (specialEvent);
 				}
 				return specialEvent;
@@ -44,16 +47,22 @@ public class ManageSpecialEvents {
 	public void addPossibleEvent (SpecialEvent specialEvent) {
 		//should we allow multiple instances of the same event?
 		//for now, let's say yes
+		if (possibleEvents == null) {
+			possibleEvents = new List<SpecialEvent> ();
+		}
 		possibleEvents.Add(specialEvent);
 	}
 	public void removePossibleEvent (SpecialEvent specialEvent) {
 		//remove all instances of the event
-		foreach (SpecialEvent listEvent in possibleEvents) {
-			if (specialEvent.isSameAs (listEvent)) {
-				possibleEvents.Remove (listEvent);
+		if (possibleEvents != null) {
+			foreach (SpecialEvent listEvent in possibleEvents) {
+				if (specialEvent.isSameAs (listEvent)) {
+					possibleEvents.Remove (listEvent);
+					removePossibleEvent (specialEvent);
+					return;
+				}
 			}
 		}
-
 	}
 	public bool listContainsEvent (SpecialEvent specialEvent) {
 		foreach (SpecialEvent listEvent in possibleEvents) {
@@ -62,6 +71,19 @@ public class ManageSpecialEvents {
 			}
 		}
 		return false;
+	}
+
+	public void clearPossibleEvents () {
+		if (possibleEvents != null) {
+			possibleEvents.Clear ();
+		}
+	}
+	public int getPossibleEventCount () {
+		if (possibleEvents != null) {
+			return possibleEvents.Count; 
+		} else {
+			return 0;
+		}
 	}
 
 }

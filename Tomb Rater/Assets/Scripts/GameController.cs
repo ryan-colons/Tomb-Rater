@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
 		labourManagement = new ManageLabour ();
 		resourceManagement = new ManageResources ();
 		buildingManagement = new ManageBuilding ();
-		yearManagement = new ManageYears ();
+		yearManagement = new ManageYears (50);
 		specialEventManagement = new ManageSpecialEvents ();
 
 		yearManagement.getYear (0).addSpecialEvent (new Event_SpecialEventTest ());
