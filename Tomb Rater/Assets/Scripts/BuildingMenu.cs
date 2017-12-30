@@ -76,6 +76,7 @@ public class BuildingMenu : MonoBehaviour {
 			gameController.setBuildTutorialNeeded (false);
 		}
 		*/
+		gameController.setBuildTutorialNeeded (false);
 	}
 
 	public void setTileAdjacencies () {

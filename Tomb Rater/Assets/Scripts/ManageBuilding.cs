@@ -99,12 +99,12 @@ public class ManageBuilding {
 			int posY = tile.getY ();
 			BuildTile[] adjacentTiles = getAdjacentTiles (posX, posY);
 			WallsToShow walls = WallsToShow.NONE;
-			if (adjacentTiles[0] == null || adjacentTiles [0].getRoom() != room) {
+			if (adjacentTiles[0] == null/* || adjacentTiles [0].getRoom() != room*/) {
 				walls = WallsToShow.LEFT;
-				if (adjacentTiles[1] == null || adjacentTiles [1].getRoom () != room) {
+				if (adjacentTiles[1] == null/* || adjacentTiles [1].getRoom () != room*/) {
 					walls = WallsToShow.BOTH;
 				}
-			} else if (adjacentTiles[1] == null || adjacentTiles [1].getRoom () != room) {
+			} else if (adjacentTiles[1] == null/* || adjacentTiles [1].getRoom () != room*/) {
 				walls = WallsToShow.RIGHT;
 			}
 			RoomSection newSection = new RoomSection ();
