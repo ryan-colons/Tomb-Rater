@@ -16,6 +16,7 @@ public class BuildingMenu : MonoBehaviour {
 
 	public static TombRoom currentlyBuilding = null;
 	public static List<MapTile> selectedTiles = new List<MapTile> ();
+	public static BuildMaterial materialToUse = null;
 
 	public GameObject tilePrefab;
 	public Sprite wallSpr0, wallSpr1, wallSpr2, wallSpr3;
@@ -114,22 +115,63 @@ public class BuildingMenu : MonoBehaviour {
 		roomPanel.SetActive (true);
 		Text nameText = roomPanel.transform.Find ("Name Text").GetComponent<Text>();
 		Text descText = roomPanel.transform.Find ("Description Text").GetComponent<Text> ();
+		Dropdown materialDropdown = roomPanel.transform.Find ("Material Dropdown").GetComponent<Dropdown> ();
+
 		nameText.text = room.getName ();
 		descText.text = room.getDescription ();
+		materialDropdown.ClearOptions ();
+		List<string> matNames = new List<string> ();
+		foreach (BuildMaterial mat in buildingManagement.getAvailableMaterials()) {
+			matNames.Add (mat.getName ());
+		}
+		if (matNames.Count == 0) {
+			matNames.Add ("No available building materials!");
+		}
+		materialDropdown.AddOptions (matNames);
+		setCostText ();
+
 		Button buildButton = roomPanel.transform.Find ("Build Button").GetComponent<Button> ();
 		buildButton.onClick.AddListener (delegate {
-			closeRoomPanel();
-			openBuildingMenu(room);
+			BuildMaterial mat = getSelectedMaterialFromDropdown ();
+			if (mat != null) {
+				closeRoomPanel ();
+				openBuildingMenu (room, mat);
+			}
 		});
 	}
 	public void closeRoomPanel () {
 		roomPanel.SetActive (false);
 	}
 
-	public void openBuildingMenu (TombRoom room) {
+	public BuildMaterial getSelectedMaterialFromDropdown () {
+		Dropdown materialDropdown = roomPanel.transform.Find ("Material Dropdown").GetComponent<Dropdown> ();
+		string matName = materialDropdown.options [materialDropdown.value].text;
+		BuildMaterial mat = null;
+		foreach (BuildMaterial availableMat in buildingManagement.getAvailableMaterials()) {
+			if (availableMat.getName ().Equals (matName)) {
+				mat = availableMat;
+			}
+		}
+		return mat;
+	}
+
+	public void setCostText () {
+		//set cost text based on currently selected material in dropdown
+		Text costText = roomPanel.transform.Find ("Cost Text").GetComponent<Text> ();
+
+		BuildMaterial mat = getSelectedMaterialFromDropdown ();
+		if (mat == null) {
+			costText.text = "";
+		} else {
+			costText.text = "Using " + mat.getName () + ", this construction will cost " + mat.getCostPerTile () + "g per tile.";
+		}
+	}
+
+	public void openBuildingMenu (TombRoom room, BuildMaterial mat) {
 		setHighlightForSelectedTiles (false);
 		selectedTiles.Clear();
 		currentlyBuilding = room;
+		materialToUse = mat;
 		confirmBuildButton.SetActive (true);
 	}
 
@@ -137,6 +179,7 @@ public class BuildingMenu : MonoBehaviour {
 		setHighlightForSelectedTiles (false);
 		selectedTiles.Clear ();
 		currentlyBuilding = null;
+		materialToUse = null;
 		confirmBuildButton.SetActive (false);
 	}
 

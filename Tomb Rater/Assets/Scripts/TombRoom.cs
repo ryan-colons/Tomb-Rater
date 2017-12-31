@@ -6,13 +6,17 @@ public class TombRoom {
 
 	private string name;
 	private string description;
-	private RoomFeature[] features;
 	private int minSize = 1;
+	private BuildMaterial material;
 
 	//return an error message if the requirements are not met
 	//return "" otherwise
 	public virtual string meetsRequirements () {
 		return "";
+	}
+
+	public virtual void onBuild () {
+		//gets called once the room is built
 	}
 
 	public string getName() {
@@ -29,13 +33,6 @@ public class TombRoom {
 		this.description = str;
 	}
 
-	public RoomFeature[] getFeatures() {
-		return features;
-	}
-	public void setParts (RoomFeature[] newFeatures) {
-		this.features = (RoomFeature[]) newFeatures.Clone();
-	}
-
 	public int getMinSize () {
 		return minSize;
 	}
@@ -43,25 +40,11 @@ public class TombRoom {
 		this.minSize = newSize;
 	}
 
-}
-
-public class RoomFeature {
-
-	private string name;
-	private int cost;
-
-	public string getName() {
-		return name;
+	public BuildMaterial getMaterial () {
+		return material;
 	}
-	public void setName (string str) {
-		this.name = str;
-	}
-
-	public int getCost () {
-		return cost;
-	}
-	public void setCost (int n) {
-		this.cost = n;
+	public void setMaterial (BuildMaterial mat) {
+		this.material = mat;
 	}
 
 }

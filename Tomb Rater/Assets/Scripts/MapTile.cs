@@ -85,6 +85,16 @@ public class MapTile : MonoBehaviour {
 		sprRenderer.sprite = newSprite;
 	}
 
+	private void OnMouseEnter () {
+		GameController gameController = GameObject.FindWithTag ("GameController").GetComponent<GameController> ();
+		ManageBuilding buildingManagement = gameController.getBuildingManagement ();
+		BuildTile buildTile = buildingManagement.getTileAtCoord (this.getX (), this.getY ());
+		TombRoom room = buildTile.getRoom ();
+		if (room != null) {
+			Debug.Log (room.getName () + ": " + room.getMaterial ().getName ());
+		}
+	}
+
 	private void OnMouseDown () {
 		//this block is here to allow clicking through the Error Message text
 		//it's a bit silly, but hopefully makes for better UI experiences?

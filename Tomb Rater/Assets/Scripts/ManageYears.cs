@@ -55,7 +55,7 @@ public class ManageYears  {
 		//Builders - build
 		ManageBuilding buildingManagement = gameController.getBuildingManagement();
 		if (BuildingMenu.currentlyBuilding != null) {
-			bool success = buildingManagement.addRoom (BuildingMenu.currentlyBuilding, BuildingMenu.selectedTiles.ToArray ());
+			bool success = buildingManagement.addRoom (BuildingMenu.currentlyBuilding, BuildingMenu.selectedTiles.ToArray (), BuildingMenu.materialToUse);
 			if (!success) {
 				Debug.Log ("Something went wrong in the building process! Error!");
 			}

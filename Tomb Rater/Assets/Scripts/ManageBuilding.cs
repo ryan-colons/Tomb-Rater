@@ -22,6 +22,7 @@ public class ManageBuilding {
 	private BuildTile[,] map;
 	private int sizeX = MapTile.gridSize + 1, sizeY = MapTile.gridSize + 1;
 	private List<TombRoom> roomsToBuild;
+	private List<BuildMaterial> availableMaterials;
 
 	public ManageBuilding () {
 		map = new BuildTile[sizeX, sizeY];
@@ -34,6 +35,10 @@ public class ManageBuilding {
 		roomsToBuild = new List<TombRoom> ();
 		makeRoomAvailableToBuild (new Room_Hallway ());
 		makeRoomAvailableToBuild (new Room_BurialChamber ());
+
+		availableMaterials = new List<BuildMaterial> ();
+		addAvailableMaterial (new Mat_Clay ());
+		addAvailableMaterial (new Mat_Marble ());
 	}
 
 	public void makeRoomAvailableToBuild (TombRoom room) {
@@ -48,6 +53,40 @@ public class ManageBuilding {
 	}
 	public TombRoom[] getAvailableRooms () {
 		return roomsToBuild.ToArray ();
+	}
+
+	public void addAvailableMaterial (BuildMaterial mat) {
+		if (!isMaterialAvailable (mat)) {
+			availableMaterials.Add (mat);
+		}
+	}
+	public void removeAvailableMaterial (BuildMaterial mat) {
+		foreach (BuildMaterial availableMat in availableMaterials) {
+			if (mat.isSameAs (availableMat)) {
+				availableMaterials.Remove (availableMat);
+				removeAvailableMaterial (mat);
+				return;
+			}
+		}
+	}
+	public BuildMaterial[] getAvailableMaterials () {
+		return availableMaterials.ToArray ();
+	}
+	public void changeMaterialCost (BuildMaterial mat, int newCost) {
+		foreach (BuildMaterial availableMat in availableMaterials) {
+			if (mat.isSameAs (availableMat)) {
+				availableMat.setCostPerTile (newCost);
+				return;
+			}
+		}
+	}
+	public bool isMaterialAvailable (BuildMaterial mat) {
+		foreach (BuildMaterial availableMat in availableMaterials) {
+			if (mat.isSameAs (availableMat)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public BuildTile getTileAtCoord (int x, int y) {
@@ -65,7 +104,7 @@ public class ManageBuilding {
 
 	//returns true if successful, false otherwise
 	//does 3 loops through array. Should these loops be separate? I *think* so.
-	public bool addRoom (TombRoom room, MapTile[] tiles) {
+	public bool addRoom (TombRoom room, MapTile[] tiles, BuildMaterial mat) {
 		//error checking!
 		if (room == null || tiles == null) {
 			return false;
@@ -92,6 +131,7 @@ public class ManageBuilding {
 			int posX = tile.getX ();
 			int posY = tile.getY ();
 			map [posX, posY].setRoom (room);
+			room.setMaterial (mat);
 		}
 		//set walls (done separately so that we know where each part of the room has ended up
 		foreach (MapTile tile in tiles) {
@@ -187,27 +227,8 @@ public class RoomSection {
 	public void setWalls (WallsToShow w) {
 		this.walls = w;
 	}
-
-	// Wall and floor resources will probably be used with some shader or something
-	/*
-	private Resource wallResource;
-	private Resource floorResource;
-
-	public Resource getFloorResource () {
-		return floorResource;
-	}
-	public void setFloorResource (Resource res) {
-		this.floorResource = res;
-	}
-
-	public Resource getWallResource () {
-		return wallResource;
-	}
-	public void setWallResource (Resource res) {
-		this.wallResource = res;
-	}
-	*/
 }
+
 
 
 
