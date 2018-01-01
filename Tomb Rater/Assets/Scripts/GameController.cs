@@ -10,24 +10,22 @@ public class GameController : MonoBehaviour {
 
 	private bool overmenuTutorial, workTutorial,  buildTutorial;
 
-	private ManageLabour labourManagement;
-	private ManageResources resourceManagement;
+	private ManageAdvisors advisorManagement;
 	private ManageBuilding buildingManagement;
 	private ManageYears yearManagement;
 	private ManageSpecialEvents specialEventManagement;
 
+	private int money = 100;
+
 	private void Start () {
 		SpecialEvent.gameController = this;
 		SpecialEventUI.gameController = this;
-		ResourceSite.gameController = this;
 
 		overmenuTutorial = true;
 		workTutorial = true;
 		buildTutorial = true;
 
-		//sites are currently added in the ManageLabour constructor
-		labourManagement = new ManageLabour ();
-		resourceManagement = new ManageResources ();
+		advisorManagement = new ManageAdvisors();
 		buildingManagement = new ManageBuilding ();
 		yearManagement = new ManageYears (50);
 		specialEventManagement = new ManageSpecialEvents ();
@@ -74,12 +72,9 @@ public class GameController : MonoBehaviour {
 	public void setBuildTutorialNeeded (bool b) {
 		buildTutorial = b;
 	}
-
-	public ManageResources getResourceManagement() {
-		return resourceManagement;
-	}
-	public ManageLabour getLabourManagement () {
-		return labourManagement;
+		
+	public ManageAdvisors getAdvisorManagement () {
+		return advisorManagement;
 	}
 	public ManageBuilding getBuildingManagement () {
 		return buildingManagement;
@@ -89,6 +84,14 @@ public class GameController : MonoBehaviour {
 	}
 	public ManageSpecialEvents getSpecialEventManagement () {
 		return specialEventManagement;
+	}
+
+	public int getMoney () {
+		return this.money;
+	}
+	public void setMoney (int n) {
+		this.money = n;
+		Debug.Log ("Money: " + n);
 	}
 
 	//this method returns your score

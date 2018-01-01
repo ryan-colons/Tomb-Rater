@@ -85,6 +85,7 @@ public class MapTile : MonoBehaviour {
 		sprRenderer.sprite = newSprite;
 	}
 
+	//this is just here to test the room building code
 	private void OnMouseEnter () {
 		GameController gameController = GameObject.FindWithTag ("GameController").GetComponent<GameController> ();
 		ManageBuilding buildingManagement = gameController.getBuildingManagement ();

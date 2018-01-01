@@ -47,10 +47,7 @@ public class ManageYears  {
 
 	public void progressThroughCurrentYear (GameController gameController) {
 		Year currentYear = calendar [yearIndex];
-
-		//Labour - get resources
-		ManageLabour labourManagement = gameController.getLabourManagement ();
-		yearReport = labourManagement.collectAllResources ();
+		yearReport = "";
 
 		//Builders - build
 		ManageBuilding buildingManagement = gameController.getBuildingManagement();
@@ -63,7 +60,11 @@ public class ManageYears  {
 			BuildingMenu.selectedTiles.Clear ();
 		}
 
-		//need to subtract money (etc?) for worker/builder costs (etc?)
+		//Advisors
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement();
+		foreach (Advisor advisor in advisorManagement.getAdvisors()) {
+			gameController.setMoney (gameController.getMoney () - advisor.getPayment ());
+		}
 
 		//run special events, move on once they're all done
 		//shift to "turn" scene, give script all the info it needs

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Collider2D))]
 public class SpriteMouseOver : MonoBehaviour {
@@ -20,6 +21,9 @@ public class SpriteMouseOver : MonoBehaviour {
 	}
 
 	private void OnMouseEnter () {
+		if (EventSystem.current.IsPointerOverGameObject ()) {
+			return;
+		}
 		if (popUp == null && hasMessage()) {
 			popUp = (GameObject)Instantiate (Resources.Load ("PopUpCanvas"),
 				new Vector3 (this.transform.position.x, this.transform.position.y + 2, this.transform.position.z),

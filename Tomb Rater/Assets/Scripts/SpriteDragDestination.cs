@@ -9,7 +9,6 @@ public class SpriteDragDestination : MonoBehaviour {
 	/* SPRITE MUST HAVE A TRIGGER COLLIDER AND A RIGIDBODY
 	 * SET EVERYTHING ON THE RIGIDBODY TO 0, SO IT DOESN'T MOVE
 	 */
-	public bool site;
 
 	private SpriteSupervisor sprSupervisor;
 
@@ -32,10 +31,6 @@ public class SpriteDragDestination : MonoBehaviour {
 				GameObject dragObj = sprSupervisor.getDraggedSpr ();
 				SpriteDrag otherDrag = dragObj.GetComponent<SpriteDrag> ();
 				otherDrag.setEndPos (this.transform.position);
-				if (site) {
-					this.GetComponent<Site> ().handleDrop (other.gameObject);
-					Destroy (other.gameObject);
-				}
 			}
 		}
 	}
@@ -44,7 +39,4 @@ public class SpriteDragDestination : MonoBehaviour {
 		sprRenderer.color = actualColor;
 	}
 
-	public void setSite (bool b) {
-		site = b;
-	}
 }

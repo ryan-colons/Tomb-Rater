@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* This script is too hefty. It would be nice to break it up a bit. */
+
 public class BuildingMenu : MonoBehaviour {
 
 	private GameController gameController;
@@ -17,6 +19,9 @@ public class BuildingMenu : MonoBehaviour {
 	public static TombRoom currentlyBuilding = null;
 	public static List<MapTile> selectedTiles = new List<MapTile> ();
 	public static BuildMaterial materialToUse = null;
+
+	private int workerPaymentThisYear = 0;
+	private int totalBuildCostThisYear = 0;
 
 	public GameObject tilePrefab;
 	public Sprite wallSpr0, wallSpr1, wallSpr2, wallSpr3;
@@ -80,6 +85,11 @@ public class BuildingMenu : MonoBehaviour {
 		gameController.setBuildTutorialNeeded (false);
 	}
 
+	public Text moneyText;
+	private void Update () {
+		moneyText.text = gameController.getMoney ().ToString ();
+	}
+
 	public void setTileAdjacencies () {
 		// SET TILE ADJACENCIES FOR MANUALLY PLACED TILES
 		for (int i = 0; i < MAP_SIZE; i++) {
@@ -116,9 +126,12 @@ public class BuildingMenu : MonoBehaviour {
 		Text nameText = roomPanel.transform.Find ("Name Text").GetComponent<Text>();
 		Text descText = roomPanel.transform.Find ("Description Text").GetComponent<Text> ();
 		Dropdown materialDropdown = roomPanel.transform.Find ("Material Dropdown").GetComponent<Dropdown> ();
+		Slider workerPaymentSlider = roomPanel.transform.Find ("Builder Payment Slider").GetComponent<Slider> ();
 
+		//name and description
 		nameText.text = room.getName ();
 		descText.text = room.getDescription ();
+		//dropdown menu
 		materialDropdown.ClearOptions ();
 		List<string> matNames = new List<string> ();
 		foreach (BuildMaterial mat in buildingManagement.getAvailableMaterials()) {
@@ -128,8 +141,18 @@ public class BuildingMenu : MonoBehaviour {
 			matNames.Add ("No available building materials!");
 		}
 		materialDropdown.AddOptions (matNames);
+		//payment slider
+		workerPaymentSlider.minValue = 0;
+		workerPaymentSlider.maxValue = gameController.getMoney ();
+		if (buildingManagement.getWorkerExpectation () <= gameController.getMoney ()) {
+			workerPaymentSlider.value = buildingManagement.getWorkerExpectation ();
+		} else {
+			workerPaymentSlider.value = gameController.getMoney ();
+		}
+		//text for worker payment and overall cost
+		setWorkerPaymentText ();
 		setCostText ();
-
+		//confirm button
 		Button buildButton = roomPanel.transform.Find ("Build Button").GetComponent<Button> ();
 		buildButton.onClick.AddListener (delegate {
 			BuildMaterial mat = getSelectedMaterialFromDropdown ();
@@ -141,6 +164,15 @@ public class BuildingMenu : MonoBehaviour {
 	}
 	public void closeRoomPanel () {
 		roomPanel.SetActive (false);
+	}
+
+	public void setWorkerPayment () {
+		Slider workerPaymentSlider = roomPanel.transform.Find ("Builder Payment Slider").GetComponent<Slider> ();
+		workerPaymentThisYear = (int)workerPaymentSlider.value;
+		setWorkerPaymentText ();
+	}
+	public int getWorkerPayment () {
+		return workerPaymentThisYear;
 	}
 
 	public BuildMaterial getSelectedMaterialFromDropdown () {
@@ -155,6 +187,13 @@ public class BuildingMenu : MonoBehaviour {
 		return mat;
 	}
 
+	public void setWorkerPaymentText () {
+		Text paymentText = roomPanel.transform.Find ("Builder Payment Text").GetComponent<Text> ();
+		paymentText.text = "How much shall we pay your workers? They expect " + buildingManagement.getWorkerExpectation () +
+		" per tile this year.\n Payment: " + workerPaymentThisYear + "g";
+		setCostText ();
+	}
+
 	public void setCostText () {
 		//set cost text based on currently selected material in dropdown
 		Text costText = roomPanel.transform.Find ("Cost Text").GetComponent<Text> ();
@@ -163,13 +202,17 @@ public class BuildingMenu : MonoBehaviour {
 		if (mat == null) {
 			costText.text = "";
 		} else {
-			costText.text = "Using " + mat.getName () + ", this construction will cost " + mat.getCostPerTile () + "g per tile.";
+			int matCost = mat.getCostPerTile ();
+			costText.text = "Using " + mat.getName() + " (" + matCost + "g per tile), this construction will cost " + (matCost + workerPaymentThisYear) + "g per tile.";
+				
 		}
 	}
 
 	public void openBuildingMenu (TombRoom room, BuildMaterial mat) {
 		setHighlightForSelectedTiles (false);
 		selectedTiles.Clear();
+		gameController.setMoney (gameController.getMoney () + totalBuildCostThisYear);
+		totalBuildCostThisYear = 0;
 		currentlyBuilding = room;
 		materialToUse = mat;
 		confirmBuildButton.SetActive (true);
@@ -198,6 +241,8 @@ public class BuildingMenu : MonoBehaviour {
 			closeBuildingMenu ();
 		} else {
 			Debug.Log (currentlyBuilding + ": " + selectedTiles.Count);
+			totalBuildCostThisYear = getWorkerPayment() + materialToUse.getCostPerTile() * selectedTiles.Count;
+			gameController.setMoney (gameController.getMoney () - totalBuildCostThisYear);
 			confirmBuildButton.SetActive (false);
 		}
 	}
@@ -210,6 +255,12 @@ public class BuildingMenu : MonoBehaviour {
 		//check if enough tiles have been selected
 		if (selectedTiles.Count < currentlyBuilding.getMinSize ()) {
 			reportBuildError ("You haven't selected enough tiles (" + selectedTiles.Count + "/" + currentlyBuilding.getMinSize() + ").");
+			return false;
+		}
+		//check if you have enough money
+		int cost = (getWorkerPayment() + materialToUse.getCostPerTile()) * selectedTiles.Count;
+		if (cost > gameController.getMoney ()) {
+			reportBuildError ("You don't have enough money for that project. (Total cost: " + cost + ")");
 			return false;
 		}
 		//check for external contiguity (i.e. attached to all other rooms)

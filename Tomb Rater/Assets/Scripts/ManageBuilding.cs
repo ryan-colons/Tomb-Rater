@@ -23,6 +23,7 @@ public class ManageBuilding {
 	private int sizeX = MapTile.gridSize + 1, sizeY = MapTile.gridSize + 1;
 	private List<TombRoom> roomsToBuild;
 	private List<BuildMaterial> availableMaterials;
+	private int workerExpectationThisYear = 2;
 
 	public ManageBuilding () {
 		map = new BuildTile[sizeX, sizeY];
@@ -87,6 +88,13 @@ public class ManageBuilding {
 			}
 		}
 		return false;
+	}
+
+	public int getWorkerExpectation () {
+		return workerExpectationThisYear;
+	}
+	public void setWorkerExpectation (int n) {
+		workerExpectationThisYear = n;
 	}
 
 	public BuildTile getTileAtCoord (int x, int y) {

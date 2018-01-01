@@ -51,30 +51,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Advisor.cs" />
      <Compile Include="Assets\Scripts\AdvisorButton.cs" />
+     <Compile Include="Assets\Scripts\AdvisorMenu.cs" />
      <Compile Include="Assets\Scripts\BuildingMenu.cs" />
      <Compile Include="Assets\Scripts\BuildMaterial.cs" />
      <Compile Include="Assets\Scripts\ConstructionPanel.cs" />
-     <Compile Include="Assets\Scripts\Disused\ManageLabour.cs" />
-     <Compile Include="Assets\Scripts\Disused\ManageResources.cs" />
-     <Compile Include="Assets\Scripts\Disused\Resource.cs" />
-     <Compile Include="Assets\Scripts\Disused\ResourcePanel.cs" />
-     <Compile Include="Assets\Scripts\Disused\ResourceSite.cs" />
-     <Compile Include="Assets\Scripts\Disused\ResourceSites\Site_Farm.cs" />
-     <Compile Include="Assets\Scripts\Disused\ResourceSites\Site_Mine.cs" />
-     <Compile Include="Assets\Scripts\Disused\ResourceSites\Site_Quarry.cs" />
-     <Compile Include="Assets\Scripts\Disused\ResourceSites\Site_Woods.cs" />
-     <Compile Include="Assets\Scripts\Disused\Site.cs" />
-     <Compile Include="Assets\Scripts\Disused\WorkMenu.cs" />
      <Compile Include="Assets\Scripts\EventPanel.cs" />
+     <Compile Include="Assets\Scripts\FinishYearButton.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GameLoader.cs" />
+     <Compile Include="Assets\Scripts\ManageAdvisors.cs" />
      <Compile Include="Assets\Scripts\ManageBuilding.cs" />
      <Compile Include="Assets\Scripts\ManageSpecialEvents.cs" />
      <Compile Include="Assets\Scripts\ManageYears.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
      <Compile Include="Assets\Scripts\MapTile.cs" />
-     <Compile Include="Assets\Scripts\Overmenu.cs" />
+     <Compile Include="Assets\Scripts\SceneChangeButton.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\SpecialEventUI.cs" />
      <Compile Include="Assets\Scripts\SpriteDrag.cs" />
