@@ -16,6 +16,7 @@ public class BuildingMenu : MonoBehaviour {
 	public GameObject confirmBuildButton;
 	public Text errorMessageText;
 
+	public static Treasure currentlyPlacing = null;
 	public static TombRoom currentlyBuilding = null;
 	public static List<MapTile> selectedTiles = new List<MapTile> ();
 	public static BuildMaterial materialToUse = null;
@@ -48,6 +49,20 @@ public class BuildingMenu : MonoBehaviour {
 		this.buildingManagement = gameController.getBuildingManagement ();
 
 		setTileAdjacencies ();
+		placeTiles ();
+
+		/* THERE NEEDS TO BE SOME TUTORIAL EVENTUALLY!
+		if (gameController.buildTutorialNeeded ()) {
+			tutPanel.SetActive(true);
+			gameController.setBuildTutorialNeeded (false);
+		}
+		*/
+		gameController.setBuildTutorialNeeded (false);
+	}
+
+	private void placeTiles () {
+		this.gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		this.buildingManagement = gameController.getBuildingManagement ();
 
 		//need to set sprites (etc?) for tiles based on info from buildingManagement.map
 		for (int x = 0; x < MAP_SIZE; x++) {
@@ -66,6 +81,10 @@ public class BuildingMenu : MonoBehaviour {
 					else if (tileWalls == WallsToShow.BOTH)
 						spriteToUse = wallSpr3;
 					mapTile.setSprite (spriteToUse);
+					if (buildTile.getSection ().getDecorationSprite () != null) {
+						mapTile.setActualColor (Color.magenta);
+						mapTile.setHighlight (false);
+					}
 				}
 			}
 		}
@@ -75,14 +94,6 @@ public class BuildingMenu : MonoBehaviour {
 			int y = mapTile.getY ();
 			getMapTileAtCoord (x, y).setHighlight (true);
 		}
-
-		/* THERE NEEDS TO BE SOME TUTORIAL EVENTUALLY!
-		if (gameController.buildTutorialNeeded ()) {
-			tutPanel.SetActive(true);
-			gameController.setBuildTutorialNeeded (false);
-		}
-		*/
-		gameController.setBuildTutorialNeeded (false);
 	}
 
 	public Text moneyText;
@@ -121,6 +132,7 @@ public class BuildingMenu : MonoBehaviour {
 	}
 
 	public void openRoomPanel (TombRoom room) {
+		closeDecorationMenu ();
 		closeBuildingMenu ();
 		roomPanel.SetActive (true);
 		Text nameText = roomPanel.transform.Find ("Name Text").GetComponent<Text>();
@@ -209,6 +221,7 @@ public class BuildingMenu : MonoBehaviour {
 	}
 
 	public void openBuildingMenu (TombRoom room, BuildMaterial mat) {
+		closeDecorationMenu ();
 		setHighlightForSelectedTiles (false);
 		selectedTiles.Clear();
 		gameController.setMoney (gameController.getMoney () + totalBuildCostThisYear);
@@ -302,6 +315,47 @@ public class BuildingMenu : MonoBehaviour {
 	public void reportBuildError (string errorMessage) {
 		StopCoroutine ("displayErrorMessage");
 		StartCoroutine ("displayErrorMessage", errorMessage);
+	}
+
+	public void openDecorationMenu (Treasure treasure) {
+		//close all other menus, except the Treasure Panel
+		closeDecorationMenu();
+		closeBuildingMenu ();
+		closeRoomPanel ();
+		//set Treasure field
+		currentlyPlacing = treasure;
+		//make sprite that follows the mouse
+		Instantiate (Resources.Load ("FollowSprite"), 
+			new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f), Quaternion.identity);
+	}
+	public void closeDecorationMenu () {
+		currentlyPlacing = null;
+		GameObject followingSpr = GameObject.FindWithTag ("Follow Sprite");
+		if (followingSpr != null) {
+			Destroy (followingSpr);
+		}
+	}
+	public void placeDecoration (MapTile mapTile) {
+		BuildTile buildTile = buildingManagement.getTileAtCoord (mapTile.getX (), mapTile.getY ());
+		TombRoom room = buildTile.getRoom ();
+		RoomSection section = buildTile.getSection ();
+
+		//validate here
+		if (room == null || section == null) {
+			reportBuildError ("That needs to placed in an existing room.");
+			return;
+		}
+		if (section.getDecorationSprite () != null) {
+			reportBuildError ("There is already something on that tile.");
+			return;
+		}
+				
+		section.setDecorationSprite (currentlyPlacing.getSprite ());
+		room.getTreasureList ().Add (currentlyPlacing);
+		ManageTreasure treasureManagement = gameController.getTreasureManagement ();
+		treasureManagement.getTreasureList ().Remove (currentlyPlacing);
+		closeDecorationMenu ();
+		placeTiles ();
 	}
 
 	public IEnumerator displayErrorMessage (string errorMessage) {

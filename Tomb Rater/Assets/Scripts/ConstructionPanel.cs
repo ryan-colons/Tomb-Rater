@@ -26,6 +26,7 @@ public class ConstructionPanel : MonoBehaviour {
 		if (isHidden) {
 			rect.anchoredPosition = new Vector2 (displayX, y);
 			isHidden = false;
+			buildingMenu.closeDecorationMenu ();
 			addButtons ();
 		} else {
 			rect.anchoredPosition = new Vector2 (hiddenX, y);

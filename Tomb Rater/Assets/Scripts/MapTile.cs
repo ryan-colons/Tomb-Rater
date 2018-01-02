@@ -121,6 +121,8 @@ public class MapTile : MonoBehaviour {
 				setHighlight (false);
 				BuildingMenu.selectedTiles.Remove (this);
 			}
+		} else if (BuildingMenu.currentlyPlacing != null) {
+			canvas.GetComponent<BuildingMenu> ().placeDecoration (this);
 		}
 	}
 
@@ -131,4 +133,7 @@ public class MapTile : MonoBehaviour {
 		return yCoord;
 	}
 
+	public void setActualColor (Color c) {
+		this.actualColor = c;
+	}
 }

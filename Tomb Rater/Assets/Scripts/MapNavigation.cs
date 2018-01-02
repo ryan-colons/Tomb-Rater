@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Camera))]
 public class MapNavigation : MonoBehaviour {
@@ -28,6 +30,20 @@ public class MapNavigation : MonoBehaviour {
 			vert = 0f;
 		Vector3 move = new Vector3 (horiz, vert, 0f);
 		this.transform.Translate (move);
+
+		//the problem we want to avoid is scrolling on UI menus and camera simultaneously, when you only want one
+		//it is a bit silly maybe ; a similar thing is done for MapTiles
+		GameObject canvas = GameObject.Find ("Canvas");
+		GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster> ();
+		PointerEventData pointer = new PointerEventData (EventSystem.current);
+		pointer.position = Input.mousePosition;
+		List<RaycastResult> resultsList = new List<RaycastResult> ();
+		raycaster.Raycast (pointer, resultsList);
+		foreach (RaycastResult result in resultsList) {
+			if (result.gameObject.tag.Equals ("Block Camera Scroll")) {
+				return;
+			}
+		}
 
 		float scroll = Input.GetAxis ("Mouse ScrollWheel") * -1 * zoomSpeed;
 		if (cam.orthographicSize + scroll > zoomMaxBound || cam.orthographicSize + scroll < zoomMinBound) {

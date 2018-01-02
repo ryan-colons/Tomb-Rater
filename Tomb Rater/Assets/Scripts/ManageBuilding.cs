@@ -228,12 +228,20 @@ public enum WallsToShow {
 
 public class RoomSection {
 	private WallsToShow walls;
+	private Sprite decorationSprite = null;
 
 	public WallsToShow getWalls () {
 		return walls;
 	}
 	public void setWalls (WallsToShow w) {
 		this.walls = w;
+	}
+
+	public Sprite getDecorationSprite () {
+		return decorationSprite;
+	}
+	public void setDecorationSprite (Sprite spr) {
+		this.decorationSprite = spr;
 	}
 }
 

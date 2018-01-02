@@ -63,8 +63,22 @@ public class ManageYears  {
 		//Advisors
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement();
 		foreach (Advisor advisor in advisorManagement.getAdvisors()) {
+			/*
+			 * PUT THIS BACK IN ONCE SOME MILESTONES ACTUALLY EXIST!
+			 * JUST GETTING NULL REF EXCEPTIONS OTHERWISE LOL
+			AdvisorMilestone milestone = advisor.getMilestone ();
+			int overflow = milestone.pay (advisor.getPayment ());
 			gameController.setMoney (gameController.getMoney () - advisor.getPayment ());
-		}
+			if (milestone.getPayment () >= milestone.getThreshold ()) {
+				//maybe reward() should return a string that adds to the year report??
+				milestone.reward ();
+				advisor.proceedToNextMilestone ();
+				if (overflow > 0) {
+					advisor.getMilestone ().pay (overflow);
+				}
+			}
+			*/
+		} 
 
 		//run special events, move on once they're all done
 		//shift to "turn" scene, give script all the info it needs

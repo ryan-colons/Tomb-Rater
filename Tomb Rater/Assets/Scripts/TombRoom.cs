@@ -8,6 +8,7 @@ public class TombRoom {
 	private string description;
 	private int minSize = 1;
 	private BuildMaterial material;
+	private List<Treasure> treasures = new List<Treasure> ();
 
 	//return an error message if the requirements are not met
 	//return "" otherwise
@@ -46,6 +47,11 @@ public class TombRoom {
 	public void setMaterial (BuildMaterial mat) {
 		this.material = mat;
 	}
+
+	public List<Treasure> getTreasureList () {
+		return treasures;
+	}
+
 
 }
 

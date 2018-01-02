@@ -5,6 +5,7 @@ using UnityEngine;
 public class Advisor {
 
 	private int payment;
+	private AdvisorMilestone milestone;
 
 	public string getSpeech () {
 		return "Hi, please buy stuff!";
@@ -17,4 +18,10 @@ public class Advisor {
 		this.payment = n;
 	}
 
+	public AdvisorMilestone getMilestone () {
+		return milestone;
+	}
+	public void proceedToNextMilestone () {
+		milestone = milestone.getNextMilestone ();
+	}
 }

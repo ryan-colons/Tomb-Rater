@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Error Message
   - Advisor
+  - Block Camera Scroll
+  - Follow Sprite
   layers:
   - Default
   - TransparentFX

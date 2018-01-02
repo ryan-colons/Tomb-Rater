@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
 
 	private ManageAdvisors advisorManagement;
 	private ManageBuilding buildingManagement;
+	private ManageTreasure treasureManagement;
 	private ManageYears yearManagement;
 	private ManageSpecialEvents specialEventManagement;
 
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour {
 
 		advisorManagement = new ManageAdvisors();
 		buildingManagement = new ManageBuilding ();
+		treasureManagement = new ManageTreasure ();
 		yearManagement = new ManageYears (50);
 		specialEventManagement = new ManageSpecialEvents ();
 
@@ -78,6 +80,9 @@ public class GameController : MonoBehaviour {
 	}
 	public ManageBuilding getBuildingManagement () {
 		return buildingManagement;
+	}
+	public ManageTreasure getTreasureManagement () {
+		return treasureManagement;
 	}
 	public ManageYears getYearManagement () {
 		return yearManagement;
