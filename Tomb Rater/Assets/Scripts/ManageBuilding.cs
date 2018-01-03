@@ -41,7 +41,7 @@ public class ManageBuilding {
 
 		availableMaterials = new List<BuildMaterial> ();
 		addAvailableMaterial (new Mat_Clay ());
-		addAvailableMaterial (new Mat_Marble ());
+		addAvailableMaterial (new Mat_Wood ());
 	}
 
 	public void makeRoomAvailableToBuild (TombRoom room) {

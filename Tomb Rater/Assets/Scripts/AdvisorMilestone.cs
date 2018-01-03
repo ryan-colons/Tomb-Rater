@@ -73,11 +73,26 @@ public class AdvisorMilestone {
  * 300g - add murals to all your hallways (existing and future)
  */
 
+public class GM_UnlockMarble : AdvisorMilestone {
+	public GM_UnlockMarble () {
+		setThreshold (50);
+		setDescription ("Happy Birthday, Your Grace! I have been in talks with the Guilds of the Kingdom, to investigate " +
+		"the ways in which they can contribute to the construction of your Tomb. The Masonry Guild will construct and work " +
+		"a new quarry to provide access to marble brick. They just need some funding.");
+	}
+	public override string reward () {
+		ManageBuilding buildingManagement = gameController.getBuildingManagement ();
+		buildingManagement.addAvailableMaterial (new Mat_Marble ());
+		return "The Masonry Guild has opened a new marble quarry. We can now use marble brick in the construction of the Tomb.";
+	}
+}
+
 public class EM_BuildBoats : AdvisorMilestone {
 	public EM_BuildBoats () {
 		setThreshold (50);
 		setDescription ("Your Highness, the nearby lakes hold untapped economic potential! We should invest in a fleet " +
 		"of fishing boats. This would bring in a little extra money every year. It's well worth it in the long run!");
+		setNextMilestone (new EM_ImproveMines ());
 	}
 	public override string reward () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -86,12 +101,14 @@ public class EM_BuildBoats : AdvisorMilestone {
 		"an extra 10g per year.";
 	}
 }
+
 public class EM_ImproveMines : AdvisorMilestone {
 	public EM_ImproveMines () {
 		setThreshold (50);
 		setDescription ("Happy Birthday, Your Highness. The workers from our silver mines have been complaining in recent years. " +
 			"The roads around the mines and poorly maintained, and their tools are broken and outdated. If you wish to invest some " +
 			"money, we can get the mines running properly again, bringing in more money for the Kingdom each year.");
+		setNextMilestone (new EM_OpenTradeRoute ());
 	}
 	public override string reward () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -99,11 +116,21 @@ public class EM_ImproveMines : AdvisorMilestone {
 		return "Significant improvements have been made to our mining operations. This will bring in an extra 10g per year.";
 	}
 }
-// NOT FINISHED, OBVIOUSLY
+
 public class EM_OpenTradeRoute : AdvisorMilestone {
 	public EM_OpenTradeRoute () {
 		setThreshold (50);
-		setDescription ("Happy Birthday, Your Highness! ");
+		setDescription ("Happy Birthday, Your Highness! I have been in contact with a group of travelling traders, from " +
+		gameController.getTradeCivName () + ". For a small fee, they will include our Kingdom in their trading route, which " +
+		"makes its rounds every three years. " + gameController.getTradeCivName () + " is known for its many fine treasures!");
+	}
+	public override string reward () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_TradeOpportunity (), 3);
+		yearManagement.addSpecialEventInXYears (new Event_TradeOpportunity (), 6);
+		yearManagement.addSpecialEventInXYears (new Event_TradeOpportunity (), 9);
+		yearManagement.addSpecialEventInXYears (new Event_TradeOpportunity (), 12);
+		return "Traders from " + gameController.getTradeCivName () + " will now stop by every 3 years, for the next 12 years.";
 	}
 }
 
@@ -125,7 +152,7 @@ public class MM_FortifyWalls : AdvisorMilestone {
 public class MM_RaidRival : AdvisorMilestone {
 	public MM_RaidRival () {
 		setThreshold (50);
-		setDescription ("Happy Birthday, Your Majesty. Our rivals have an encampment not far from here - " +
+		setDescription ("Happy Birthday, Your Majesty. Our rivals, from " + gameController.getRivalCivName() + " have an encampment not far from here - " +
 			"it is full of resources, but poorly defended. We should mount up an expedition to take what we can! " +
 			"It would be nice of us to teach them the importance of a strong defence.");
 	}

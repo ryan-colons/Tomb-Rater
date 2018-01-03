@@ -42,4 +42,13 @@ public class SpecialEventUI : MonoBehaviour {
 		return buttonObjects;
 	}
 
+	public GameObject setFeedbackDisplay (string feedback) {
+		GameObject[] existingPanels = GameObject.FindGameObjectsWithTag ("Event UI");
+		foreach (GameObject obj in existingPanels) {
+			Destroy (obj);
+		}
+		GameObject feedbackPanel = setEventPanel (feedback);
+		return feedbackPanel;
+	}
+
 }

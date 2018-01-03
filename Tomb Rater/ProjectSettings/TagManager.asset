@@ -8,6 +8,7 @@ TagManager:
   - Advisor
   - Block Camera Scroll
   - Follow Sprite
+  - Event UI
   layers:
   - Default
   - TransparentFX

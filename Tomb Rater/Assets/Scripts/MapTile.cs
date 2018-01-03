@@ -94,6 +94,9 @@ public class MapTile : MonoBehaviour {
 		TombRoom room = buildTile.getRoom ();
 		if (room != null) {
 			Debug.Log (room.getName () + ": " + room.getMaterial ().getName ());
+			foreach (Treasure treasure in room.getTreasureList()) {
+				Debug.Log (room.getName() + ": " + treasure.getName ());
+			}
 		}
 		*/
 		if (getRoom () == null) {

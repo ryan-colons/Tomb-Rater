@@ -18,8 +18,10 @@ public class GameController : MonoBehaviour {
 
 	private int money = 100;
 
+	private string tradeCivName;
+	private string rivalCivName;
+
 	private void Start () {
-		Debug.Log ("HIII");
 		SpecialEvent.gameController = this;
 		SpecialEventUI.gameController = this;
 		Treasure.gameController = this;
@@ -29,13 +31,22 @@ public class GameController : MonoBehaviour {
 		workTutorial = true;
 		buildTutorial = true;
 
-		advisorManagement = new ManageAdvisors();
+		advisorManagement = new ManageAdvisors ();
 		buildingManagement = new ManageBuilding ();
 		treasureManagement = new ManageTreasure ();
 		yearManagement = new ManageYears (50);
 		specialEventManagement = new ManageSpecialEvents ();
 
 		yearManagement.getYear (0).addSpecialEvent (new Event_SpecialEventTest ());
+
+		string[] cityName1 = new string[] {"Ben", "Brath", "Cyn", "Clint", "Dae-", "Duum", "Eriph", "Font",
+			"Gab", "Glin", "Hag", "Halm", "Indor"
+		};
+		string[] cityName2 = new string[] {"", "arm", "amp", "ebo", "i", "o", "olm", "uris"};
+		tradeCivName = cityName1 [Random.Range (0, cityName1.Length)] + cityName2 [Random.Range (0, cityName2.Length)];
+		rivalCivName = cityName1 [Random.Range (0, cityName1.Length)] + cityName2 [Random.Range (0, cityName2.Length)];
+		Debug.Log (tradeCivName);
+		Debug.Log (rivalCivName);
 	}
 
 	private void Awake () {
@@ -100,6 +111,13 @@ public class GameController : MonoBehaviour {
 	public void setMoney (int n) {
 		this.money = n;
 		Debug.Log ("Money: " + n);
+	}
+
+	public string getTradeCivName () {
+		return tradeCivName;
+	}
+	public string getRivalCivName () {
+		return rivalCivName;
 	}
 
 	//this method returns your score

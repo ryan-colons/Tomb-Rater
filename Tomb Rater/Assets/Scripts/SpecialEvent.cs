@@ -81,6 +81,12 @@ public class SpecialEvent {
 		gameController.loadScene ("turn");
 	}
 
+	public void displayFeedback (string feedback) {
+		GameObject panel = eventUI.setFeedbackDisplay (feedback);
+		Button button = panel.GetComponent<Button> ();
+		button.onClick.AddListener (exit);
+	}
+
 	public void addButtons(GameObject panel) {
 		Button button = panel.GetComponent<Button> ();
 		if (messageIndex < extraMessages.Length) {
@@ -246,6 +252,23 @@ public class Event_Death : SpecialEvent {
 	}
 	public override void option1 () {
 		//go to final scene, where you see your legacy etc
+	}
+}
+
+public class Event_TradeOpportunity : SpecialEvent {
+	public Event_TradeOpportunity () {
+		this.setMessage ("A band of traders from " + gameController.getTradeCivName () + " has come. " +
+		"They offer you an array of treasures.");
+		initialiseExtraMessageArray (0);
+		initialiseButtonTexts (5);
+		this.setButtonText ("unimplemented", 0);
+		this.setButtonText ("unimplemented", 1);
+		this.setButtonText ("unimplemented", 2);
+		this.setButtonText ("Seize all the goods by force (unimplemented)", 3);
+		this.setButtonText ("Buy nothing", 4);
+	}
+	public override void option5 () {
+		displayFeedback ("Visibly disappointed, the traders pick up their things and leave.");
 	}
 }
 

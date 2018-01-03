@@ -42,3 +42,10 @@ public class Mat_Clay : BuildMaterial {
 		setCostPerTile (5);
 	}
 }
+
+public class Mat_Wood : BuildMaterial {
+	public Mat_Wood () {
+		setName ("Oak");
+		setCostPerTile (3);
+	}
+}
