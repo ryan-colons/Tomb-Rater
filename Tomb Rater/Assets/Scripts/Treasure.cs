@@ -10,6 +10,8 @@ public class Treasure {
 	private int baseValue;
 	private List<TreasureType> typeList;
 
+	public static GameController gameController;
+
 	public void setName (string newName) {
 		name = newName;
 	}
@@ -58,15 +60,18 @@ public class Treasure {
 
 public enum TreasureType {
 	RICHES,
+	BURIAL,
 	MECHANICAL,
 	HISTORICAL,
 	RELIGIOUS,
 	MAGICAL
 }
 
+/* This was just made for testing, not really good enough for the actual game. */
 public class Tre_Pawn : Treasure {
 	public Tre_Pawn () {
 		setName ("Pawn");
 		setSprite ("worker_token");
 	}
 }
+

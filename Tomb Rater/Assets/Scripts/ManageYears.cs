@@ -55,6 +55,8 @@ public class ManageYears  {
 			bool success = buildingManagement.addRoom (BuildingMenu.currentlyBuilding, BuildingMenu.selectedTiles.ToArray (), BuildingMenu.materialToUse);
 			if (!success) {
 				Debug.Log ("Something went wrong in the building process! Error!");
+			} else {
+				yearReport += BuildingMenu.currentlyBuilding.getName () + " was built!\n";
 			}
 			BuildingMenu.currentlyBuilding = null;
 			BuildingMenu.selectedTiles.Clear ();
@@ -78,7 +80,10 @@ public class ManageYears  {
 				}
 			}
 			*/
-		} 
+		}
+		// yearly boons
+		gameController.setMoney(gameController.getMoney() + advisorManagement.getGPT());
+		yearReport += "The Kingdom brought in " + advisorManagement.getGPT () + "g this year.";
 
 		//run special events, move on once they're all done
 		//shift to "turn" scene, give script all the info it needs

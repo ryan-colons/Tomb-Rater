@@ -19,8 +19,11 @@ public class GameController : MonoBehaviour {
 	private int money = 100;
 
 	private void Start () {
+		Debug.Log ("HIII");
 		SpecialEvent.gameController = this;
 		SpecialEventUI.gameController = this;
+		Treasure.gameController = this;
+		AdvisorMilestone.gameController = this;
 
 		overmenuTutorial = true;
 		workTutorial = true;

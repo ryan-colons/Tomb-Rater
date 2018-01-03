@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4272412420853040}
   - component: {fileID: 212627397041493128}
-  - component: {fileID: 60582819459683762}
   - component: {fileID: 114256829695560740}
+  - component: {fileID: 60029427995576466}
   m_Layer: 0
   m_Name: 0 0
   m_TagString: Untagged
@@ -42,7 +42,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &60582819459683762
+--- !u!60 &60029427995576466
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

@@ -45,8 +45,6 @@ public class TurnoverScene : MonoBehaviour {
 		report += yearlyReport;
 		reportText.text = report;
 
-
-
 		yearManagement.progressToNextYear ();
 	}
 

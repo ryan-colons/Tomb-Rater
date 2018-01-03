@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* This script is too hefty. It would be nice to break it up a bit. */
-
 public class BuildingMenu : MonoBehaviour {
 
 	private GameController gameController;
@@ -49,7 +47,7 @@ public class BuildingMenu : MonoBehaviour {
 		this.buildingManagement = gameController.getBuildingManagement ();
 
 		setTileAdjacencies ();
-		placeTiles ();
+		placeAllTiles ();
 
 		/* THERE NEEDS TO BE SOME TUTORIAL EVENTUALLY!
 		if (gameController.buildTutorialNeeded ()) {
@@ -60,39 +58,40 @@ public class BuildingMenu : MonoBehaviour {
 		gameController.setBuildTutorialNeeded (false);
 	}
 
-	private void placeTiles () {
+	private void placeAllTiles () {
 		this.gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		this.buildingManagement = gameController.getBuildingManagement ();
 
 		//need to set sprites (etc?) for tiles based on info from buildingManagement.map
 		for (int x = 0; x < MAP_SIZE; x++) {
 			for (int y = 0; y < MAP_SIZE; y++) {
-				BuildTile buildTile = buildingManagement.getTileAtCoord (x, y);
-				MapTile mapTile = getMapTileAtCoord (x, y);
-				// buildTile and mapTile should correspond
-				// buildTile has game info, mapTile handles the graphical representation (basically)
-				if (buildTile.getRoom () != null) {
-					WallsToShow tileWalls = buildTile.getSection ().getWalls ();
-					Sprite spriteToUse = wallSpr0;
-					if (tileWalls == WallsToShow.LEFT)
-						spriteToUse = wallSpr1;
-					else if (tileWalls == WallsToShow.RIGHT)
-						spriteToUse = wallSpr2;
-					else if (tileWalls == WallsToShow.BOTH)
-						spriteToUse = wallSpr3;
-					mapTile.setSprite (spriteToUse);
-					if (buildTile.getSection ().getDecorationSprite () != null) {
-						mapTile.setActualColor (Color.magenta);
-						mapTile.setHighlight (false);
-					}
-				}
+				placeTile (x, y);
 			}
 		}
+	}
+
+	public void placeTile (int x, int y) {
+		BuildTile buildTile = buildingManagement.getTileAtCoord (x, y);
+		MapTile mapTile = getMapTileAtCoord (x, y);
+		if (buildTile.getRoom () != null) {
+			WallsToShow tileWalls = buildTile.getSection ().getWalls ();
+			Sprite spriteToUse = wallSpr0;
+			if (tileWalls == WallsToShow.LEFT)
+				spriteToUse = wallSpr1;
+			else if (tileWalls == WallsToShow.RIGHT)
+				spriteToUse = wallSpr2;
+			else if (tileWalls == WallsToShow.BOTH)
+				spriteToUse = wallSpr3;
+			mapTile.setSprite (spriteToUse);
+			if (buildTile.getSection ().getDecorationSprite () != null) {
+				mapTile.setActualColor (Color.magenta);
+				mapTile.setHighlight (false);
+			}
+		}
+		//mapTile.gameObject.AddComponent<PolygonCollider2D> ();
 		//set highlights according to what has been selected
-		foreach (MapTile mapTile in selectedTiles) {
-			int x = mapTile.getX ();
-			int y = mapTile.getY ();
-			getMapTileAtCoord (x, y).setHighlight (true);
+		if (selectedTiles.Contains (mapTile)) {
+			mapTile.setHighlight (true);
 		}
 	}
 
@@ -355,7 +354,7 @@ public class BuildingMenu : MonoBehaviour {
 		ManageTreasure treasureManagement = gameController.getTreasureManagement ();
 		treasureManagement.getTreasureList ().Remove (currentlyPlacing);
 		closeDecorationMenu ();
-		placeTiles ();
+		placeTile (mapTile.getX (), mapTile.getY ());
 	}
 
 	public IEnumerator displayErrorMessage (string errorMessage) {

@@ -16,7 +16,7 @@ public class MapTile : MonoBehaviour {
 	private GameObject north, east, west, south;
 	private SpriteRenderer sprRenderer;
 	private Color actualColor;
-	private TombRoom room;
+	private TombRoom room = null;
 	public int xCoord, yCoord;
 	public static float xSize = 4, ySize = 2;
 	public static int gridSize = 9; //subtract 1 from actual grid size
@@ -84,9 +84,10 @@ public class MapTile : MonoBehaviour {
 	public void setSprite (Sprite newSprite) {
 		sprRenderer.sprite = newSprite;
 	}
-
-	//this is just here to test the room building code
+		
 	private void OnMouseEnter () {
+		/*
+		//this is just here to test the room building code
 		GameController gameController = GameObject.FindWithTag ("GameController").GetComponent<GameController> ();
 		ManageBuilding buildingManagement = gameController.getBuildingManagement ();
 		BuildTile buildTile = buildingManagement.getTileAtCoord (this.getX (), this.getY ());
@@ -94,6 +95,16 @@ public class MapTile : MonoBehaviour {
 		if (room != null) {
 			Debug.Log (room.getName () + ": " + room.getMaterial ().getName ());
 		}
+		*/
+		if (getRoom () == null) {
+			Color current = sprRenderer.color;
+			sprRenderer.color = new Color (current.r, current.g, current.b, 0.25f);
+		}
+	}
+
+	private void OnMouseExit () {
+		Color current = sprRenderer.color;
+		sprRenderer.color = new Color (current.r, current.g, current.b, 1f);
 	}
 
 	private void OnMouseDown () {

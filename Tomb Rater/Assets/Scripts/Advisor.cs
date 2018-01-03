@@ -8,7 +8,7 @@ public class Advisor {
 	private AdvisorMilestone milestone;
 
 	public string getSpeech () {
-		return "Hi, please buy stuff!";
+		return milestone.getDescription ();
 	}
 
 	public int getPayment () {
