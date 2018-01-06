@@ -22,14 +22,12 @@ public class GameLoader : MonoBehaviour {
 	}
 
 	public void startNewGame () {
-		gameController.loadEvent(new Event_Introduction());
+		gameController.loadScene ("char_creation");
 	}
 
 	public void continueGame () {
 		Debug.Log ("Continuing a previous game!");
 		gameController.setBuildTutorialNeeded (false);
-		gameController.setOvermenuTutorialNeeded (false);
-		gameController.setWorkTutorialNeeded (false);
 		gameController.loadScene ("menu");
 	}
 

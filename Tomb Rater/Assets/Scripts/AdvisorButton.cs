@@ -22,6 +22,10 @@ public class AdvisorButton : MonoBehaviour {
 		if (EventSystem.current.IsPointerOverGameObject ()) {
 			return;
 		}
+		if (advisor.getTutorial () != null) {
+			gameController.loadEvent (advisor.getTutorial ());
+			return;
+		}
 		//toggle canvas
 		if (canvas.activeSelf) {
 			closeCanvas ();

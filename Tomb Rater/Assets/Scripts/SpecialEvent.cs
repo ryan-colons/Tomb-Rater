@@ -133,43 +133,26 @@ public class SpecialEvent {
 
 
 public class Event_Introduction : SpecialEvent {
-	
 	public Event_Introduction () {
-		this.setMessage ("Waking on your birthday, you think for the first time about " +
-		"your own mortality. How will your people remember you when you are gone?\n\n...");
+		CharacterData info = gameController.getCharData ();
+		this.setMessage ("You wake up in a cold sweat, haunted by nightmares. For the first time, " +
+		"on your " + info.getAgeOrdinal () + " birthday, your thoughts have turned to your own mortality.\n\n...");
 		
-		initialiseExtraMessageArray(2);
-		this.setExtraMessage ("You decide immediately that you will build a magnficient tomb, " +
-		"to carry your legacy through the ages.\n\n...", 0);
-		this.setExtraMessage ("And then a third, final panel with a question...", 1);
+		initialiseExtraMessageArray(3);
+		this.setExtraMessage ("You're going to be gone forever! Your accomplishments are impermanent, " +
+			"meaningless in the face of eternity! You'll be dumped into earth, doomed to decay while the " +
+			"people above forget your name, a nameless pile of dust in an uncaring universe...\n\n...", 0);
+		this.setExtraMessage ("No! You refuse to be forgotten!\n\nA tomb will be built! A glorious tomb, to " +
+			"carry your legacy through the ages!", 1);
+		this.setExtraMessage ("You assemble a team of your wisest Advisors, to bring your visions into reality. " +
+			"", 2);
 
-		/* The extra messages here should explain the next menu, ideally.
-		 * i.e. make it clear that your talking to advisors about plans.
-		 * but also the next screen should have some tutorial panels
-		 */
-
-		initialiseButtonTexts (5);
-		this.setButtonText ("Go to main scene", 0);
-		this.setButtonText ("Two", 1);
-		this.setButtonText ("A third option with lots of words", 2);
-		this.setButtonText ("A fourth option with even more text on it, to test the limits", 3);
-		this.setButtonText ("Webster's dictionary defines fifth options as the longest of the long. Check out all this text. Does it even fit??", 4);
+		initialiseButtonTexts (1);
+		this.setButtonText ("Continue", 0);
 	}
 
 	public override void option1 () {
 		gameController.loadScene ("menu");
-	}
-	public override void option2 () {
-		Debug.Log ("2");
-	}
-	public override void option3 () {
-		Debug.Log ("3");
-	}
-	public override void option4 () {
-		Debug.Log ("4");
-	}
-	public override void option5 () {
-		Debug.Log ("5");
 	}
 }
 
@@ -187,26 +170,7 @@ public class Event_SpecialEventTest : SpecialEvent {
 	}
 }
 
-public class Event_LabourAllocationTutorial : SpecialEvent {
-
-	public Event_LabourAllocationTutorial () {
-		this.setMessage ("Well met, Your Majesty! I am here to discuss your plans for " +
-		"managing our resources this year.");
-
-		initialiseExtraMessageArray (1);
-		this.setExtraMessage ("Okay, well hopefully that explains everything.", 0);
-
-		initialiseButtonTexts (1);
-		this.setButtonText ("Let's begin.", 0);
-	}
-
-	public override void option1 () {
-		gameController.loadScene ("work_map");
-	}
-}
-
 public class Event_TombBuildingTutorial : SpecialEvent {
-
 	public Event_TombBuildingTutorial () {
 		this.setMessage ("Well met, Your Highness! I am here to discuss your plans for " +
 		"the construction of your tomb.");
@@ -217,9 +181,50 @@ public class Event_TombBuildingTutorial : SpecialEvent {
 		initialiseButtonTexts (1);
 		this.setButtonText ("Yes, let's go.", 0);
 	}
-
 	public override void option1 () {
 		gameController.loadScene ("building_map");
+	}
+}
+
+public class Event_MilitaryAdvisorTutorial : SpecialEvent {
+	public Event_MilitaryAdvisorTutorial () {
+		this.setMessage ("");
+		initialiseButtonTexts (1);
+		this.setButtonText ("Continue", 0);
+	}
+	public override void option1 () {
+		gameController.loadScene ("menu");
+		ManageAdvisors manageAdvisors = gameController.getAdvisorManagement ();
+		Advisor militaryAdvisor = manageAdvisors.getAdvisors () [ManageAdvisors.MILITARY];
+		militaryAdvisor.setTutorial (null);
+	}
+}
+
+public class Event_EconomicAdvisorTutorial : SpecialEvent {
+	public Event_EconomicAdvisorTutorial () {
+		this.setMessage ("");
+		initialiseButtonTexts (1);
+		this.setButtonText ("Continue", 0);
+	}
+	public override void option1 () {
+		gameController.loadScene ("menu");
+		ManageAdvisors manageAdvisors = gameController.getAdvisorManagement ();
+		Advisor economicAdvisor = manageAdvisors.getAdvisors () [ManageAdvisors.ECONOMY];
+		economicAdvisor.setTutorial (null);
+	}
+}
+
+public class Event_GuildAdvisorTutorial : SpecialEvent {
+	public Event_GuildAdvisorTutorial () {
+		this.setMessage ("");
+		initialiseButtonTexts (1);
+		this.setButtonText ("Continue", 0);
+	}
+	public override void option1 () {
+		gameController.loadScene ("menu");
+		ManageAdvisors manageAdvisors = gameController.getAdvisorManagement ();
+		Advisor guildAdvisor = manageAdvisors.getAdvisors () [ManageAdvisors.GUILDS];
+		guildAdvisor.setTutorial (null);
 	}
 }
 
@@ -253,6 +258,10 @@ public class Event_Death : SpecialEvent {
 	public override void option1 () {
 		//go to final scene, where you see your legacy etc
 	}
+}
+
+public class Event_GettingRaided : SpecialEvent {
+	
 }
 
 public class Event_TradeOpportunity : SpecialEvent {

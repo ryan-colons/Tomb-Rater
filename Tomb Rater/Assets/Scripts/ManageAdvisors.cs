@@ -21,6 +21,14 @@ public class ManageAdvisors {
 		advisors [MILITARY] = new Advisor ();
 		advisors [GUILDS] = new Advisor ();
 
+		advisors [ECONOMY].setMilestone (new EM_BuildBoats ());
+		advisors [MILITARY].setMilestone (new MM_FortifyWalls ());
+		advisors [GUILDS].setMilestone (new GM_UnlockMarble ());
+
+		advisors [ECONOMY].setTutorial (new Event_EconomicAdvisorTutorial ());
+		advisors [MILITARY].setTutorial (new Event_MilitaryAdvisorTutorial ());
+		advisors [GUILDS].setTutorial (new Event_GuildAdvisorTutorial ());
+
 		goldPerTurn = 20;
 	}
 

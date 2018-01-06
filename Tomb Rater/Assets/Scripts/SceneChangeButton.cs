@@ -13,13 +13,6 @@ public class SceneChangeButton : MonoBehaviour {
 
 	private void OnMouseDown () {
 		switch (this.sceneToLoad) {
-		case "work_map":
-			if (!gameController.workTutorialNeeded ()) {
-				gameController.loadScene (sceneToLoad);
-			} else {
-				gameController.loadEvent (new Event_LabourAllocationTutorial ());
-			}
-			break;
 		case "building_map":
 			if (!gameController.buildTutorialNeeded ()) {
 				gameController.loadScene (sceneToLoad);

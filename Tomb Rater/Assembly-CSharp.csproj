@@ -57,6 +57,8 @@
      <Compile Include="Assets\Scripts\AdvisorMilestone.cs" />
      <Compile Include="Assets\Scripts\BuildingMenu.cs" />
      <Compile Include="Assets\Scripts\BuildMaterial.cs" />
+     <Compile Include="Assets\Scripts\CharacterCreation.cs" />
+     <Compile Include="Assets\Scripts\CharacterData.cs" />
      <Compile Include="Assets\Scripts\ConstructionPanel.cs" />
      <Compile Include="Assets\Scripts\EventPanel.cs" />
      <Compile Include="Assets\Scripts\FinishYearButton.cs" />
@@ -80,6 +82,7 @@
      <Compile Include="Assets\Scripts\TestRunner.cs" />
      <Compile Include="Assets\Scripts\TombRoom.cs" />
      <Compile Include="Assets\Scripts\Treasure.cs" />
+     <Compile Include="Assets\Scripts\TreasureButtonPopup.cs" />
      <Compile Include="Assets\Scripts\TreasurePanel.cs" />
      <Compile Include="Assets\Scripts\TurnoverScene.cs" />
      <Compile Include="Assets\Scripts\Year.cs" />

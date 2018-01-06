@@ -73,6 +73,8 @@ public class AdvisorMilestone {
  * 300g - add murals to all your hallways (existing and future)
  */
 
+
+
 public class GM_UnlockMarble : AdvisorMilestone {
 	public GM_UnlockMarble () {
 		setThreshold (50);
@@ -84,6 +86,15 @@ public class GM_UnlockMarble : AdvisorMilestone {
 		ManageBuilding buildingManagement = gameController.getBuildingManagement ();
 		buildingManagement.addAvailableMaterial (new Mat_Marble ());
 		return "The Masonry Guild has opened a new marble quarry. We can now use marble brick in the construction of the Tomb.";
+	}
+}
+
+public class GM_GuildTreasure : AdvisorMilestone {
+	public GM_GuildTreasure () {
+
+	}
+	public override string reward () {
+		return "";
 	}
 }
 
@@ -134,6 +145,37 @@ public class EM_OpenTradeRoute : AdvisorMilestone {
 	}
 }
 
+public class EM_GeneratedMilestone : AdvisorMilestone {
+	private string[] investments = new string[] {
+		"eagle feather pillows",
+		"double-ended pickaxes",
+		"cloud juicing",
+		"video games (whatever that is)", 
+		"all-you-can-eat restaurants",
+		"*actual* pyramid schemes",
+		"funny t-shirts",
+		"ostrich farming",
+		"carp racing",
+		"puppet shows"
+	};
+	private string scheme;
+	public EM_GeneratedMilestone () {
+		CharacterData info = gameController.getCharData ();
+		scheme = investments [Random.Range (0, investments.Length)];
+		setThreshold (75);
+		setDescription ("Happy Birthday, " + info.getPlayerTitle () + " " + info.getPlayerName () + ". We have an excellent opportunity " +
+		"to invest in " + this.scheme + ". If you put aside a little money now, we can bring in " +
+		"extra funds for tomb building every year going forward.");
+	}
+	public override string reward () {
+		this.setNextMilestone (new EM_GeneratedMilestone ());
+		int boon = Random.Range (10, 15);
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.setGPT (advisorManagement.getGPT () + boon);
+		return "We made some shrewd investments in " + this.scheme + ". This will bring in an extra " + boon + " gold per year.";
+	}
+}
+
 public class MM_FortifyWalls : AdvisorMilestone {
 	public MM_FortifyWalls () {
 		setThreshold (50);
@@ -168,7 +210,7 @@ public class MM_RaidRival : AdvisorMilestone {
 		}
 	}
 }
-
+	
 public class MM_CaptureMine : AdvisorMilestone {
 	public MM_CaptureMine () {
 		setThreshold (100);
@@ -185,6 +227,36 @@ public class MM_CaptureMine : AdvisorMilestone {
 		} else {
 			//failure
 			return "Our mission to capture the enemy mine failed.";
+		}
+	}
+}
+
+public class MM_GeneratedMilestone : AdvisorMilestone {
+	private string[] raidLocations = new string[]{
+		"a rival encampment"
+	};
+	private string[] raidGoods = new string[]{
+		"fine cheeses", "valuable silks", "gems", "gold", "silver", "baboon-fur coats"
+	};
+	private string mission;
+	public MM_GeneratedMilestone () {
+		setThreshold (75);
+		mission = raidLocations[Random.Range(0, raidLocations.Length)];
+		CharacterData info = gameController.getCharData ();
+		setDescription (info.getPlayerTitle () + " " + info.getPlayerName () + ", we have an opportunity at hand. " +
+		"There is a stockpile of " + raidGoods [Random.Range (0, raidGoods.Length)] + " at " + mission + ". " +
+		"The mission is somewhat risky, but if we can put together a well-equipped raid team, we can take it.");
+	}
+	public override string reward () {
+		setNextMilestone (new MM_GeneratedMilestone ());
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		if (Random.Range (0, 100) <= advisorManagement.getOffensiveMight ()) {
+			//success!
+			gameController.setMoney(gameController.getMoney() + 200);
+			return "We raided " + mission + " and successfully plundered 200g!";
+		} else {
+			//failure
+			return "Our raid at " + mission + " was a failure.";
 		}
 	}
 }

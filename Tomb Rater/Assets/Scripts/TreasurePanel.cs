@@ -62,6 +62,8 @@ public class TreasurePanel : MonoBehaviour {
 				rect.anchoredPosition = new Vector2 (rect.anchoredPosition.x, hiddenY);
 				isHidden = true;
 			});
+			TreasureButtonPopup popupScript = buttonObj.GetComponent<TreasureButtonPopup> ();
+			popupScript.setTreasure (treasure);
 		}
 	}
 

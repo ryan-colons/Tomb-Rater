@@ -13,10 +13,6 @@ public class AdvisorMenu : MonoBehaviour {
 	private void Start () {
 		this.gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		placeAdvisors ();
-
-		if (gameController.overmenuTutorialNeeded ()) {
-			tutPanel.SetActive(true);
-		}
 	}
 
 	public bool validateMoneyAllocation () {
@@ -39,7 +35,6 @@ public class AdvisorMenu : MonoBehaviour {
 
 	public void removeTutPanel () {
 		tutPanel.SetActive (false);
-		gameController.setOvermenuTutorialNeeded (false);
 	}
 
 	public void toggleHelpPanel () {
