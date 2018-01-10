@@ -55,6 +55,14 @@ public class TombRoom {
 	public List<TreasureType> getTreasureBonuses () {
 		return treasureBonuses;
 	}
+	public bool containsTreasure (Treasure t) {
+		foreach (Treasure treasure in treasures) {
+			if (treasure.getName ().Equals (t.getName ())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
 
@@ -64,6 +72,17 @@ public class Room_Hallway : TombRoom {
 		setName ("Hallway");
 		setDescription ("A hallway, for connecting rooms.");
 		setMinSize (1);
+	}
+}
+
+public class Room_MuralHallway : TombRoom {
+	public Room_MuralHallway () {
+		setName ("Hallway");
+		setDescription ("A hallway, for connecting rooms. The Masonry Guild will add murals to this.");
+		setMinSize (1);
+	}
+	public override void onBuild () {
+		getTreasureList ().Add (new Tre_Mural ());
 	}
 }
 

@@ -6,17 +6,21 @@ public class ManageAdvisors {
 	public const int ECONOMY = 0;
 	public const int MILITARY = 1;
 	public const int GUILDS = 2;
+	public const int NECRO = 3;
+	public const int PARTY = 4;
+	public const int TEMPLE = 5;
 
 	private int goldPerTurn = 0;
 	//percent chance of succeeding in a (normal) military event
 	private int offensiveMight = 40;
 	//percent chance of defending against invasion etc
 	private int defensiveMight = 10;
+	//guild advisor should give a +chance to get treasure special events
 
 	private Advisor[] advisors;
 
 	public ManageAdvisors () {
-		advisors = new Advisor[3];
+		advisors = new Advisor[6];
 		advisors [ECONOMY] = new Advisor ();
 		advisors [MILITARY] = new Advisor ();
 		advisors [GUILDS] = new Advisor ();

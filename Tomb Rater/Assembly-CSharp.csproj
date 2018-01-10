@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\GameLoader.cs" />
      <Compile Include="Assets\Scripts\ManageAdvisors.cs" />
      <Compile Include="Assets\Scripts\ManageBuilding.cs" />
+     <Compile Include="Assets\Scripts\ManageOpinion.cs" />
      <Compile Include="Assets\Scripts\ManageSpecialEvents.cs" />
      <Compile Include="Assets\Scripts\ManageTreasure.cs" />
      <Compile Include="Assets\Scripts\ManageYears.cs" />

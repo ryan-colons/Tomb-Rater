@@ -14,9 +14,10 @@ public class GameController : MonoBehaviour {
 	private ManageBuilding buildingManagement;
 	private ManageTreasure treasureManagement;
 	private ManageYears yearManagement;
+	private ManageOpinion opinionManagement;
 	private ManageSpecialEvents specialEventManagement;
 
-	private int money = 100;
+	private int money = 5000;
 
 	private CharacterData charData;
 
@@ -36,8 +37,6 @@ public class GameController : MonoBehaviour {
 		treasureManagement = new ManageTreasure ();
 		yearManagement = new ManageYears (50);
 		specialEventManagement = new ManageSpecialEvents ();
-
-		yearManagement.getYear (0).addSpecialEvent (new Event_SpecialEventTest ());
 	}
 
 	private void Awake () {
@@ -80,6 +79,9 @@ public class GameController : MonoBehaviour {
 	public ManageYears getYearManagement () {
 		return yearManagement;
 	}
+	public ManageOpinion getOpinionManagement () {
+		return opinionManagement;
+	}
 	public ManageSpecialEvents getSpecialEventManagement () {
 		return specialEventManagement;
 	}
@@ -120,4 +122,23 @@ public class GameController : MonoBehaviour {
 
 		return score;
 	}
+
+	/* THINGS TO SAVE
+	 * GameController
+	 *   -money
+	 * CharData
+	 *   -names
+	 * AdvisorManagement
+	 *   -advisors (and related milestones)
+	 *   -GPT, military might
+	 * BuildingManagement
+	 *   -map (2d buildtile array)
+	 *   -available rooms, available materials
+	 * TreasureManagement
+	 *   -treasure list
+	 * SpecialEventManagement
+	 *   -possible event list
+	 * YearManagement
+	 *   -calendar, index (buffer calendar)
+	 */
 }

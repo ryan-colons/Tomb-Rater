@@ -17,7 +17,6 @@ public class ManageSpecialEvents {
 
 	public ManageSpecialEvents () {
 		possibleEvents = new List<SpecialEvent> ();
-		addPossibleEvent (new Event_IncurableTerminalIllness ());
 	}
 
 	public SpecialEvent chooseSpecialEventRandomly () {

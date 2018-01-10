@@ -53,8 +53,13 @@ public class AdvisorMenu : MonoBehaviour {
 			Application.Quit ();
 		}
 		for (int i = 0; i < advisors.Length; i++) {
-			advisorObjs [i].gameObject.SetActive (true);
-			advisorObjs [i].setAdvisor (advisors [i]);
+			if (advisors [i] != null) {
+				advisorObjs [i].gameObject.SetActive (true);
+				advisorObjs [i].setAdvisor (advisors [i]);
+				advisorObjs [i].nameTag.text = advisors [i].getName ();
+			} else {
+				advisorObjs [i].gameObject.SetActive (false);
+			}
 		}
 	}
 

@@ -76,6 +76,13 @@ public class Tre_Pawn : Treasure {
 	}
 }
 
+public class Tre_Mural : Treasure {
+	public Tre_Mural () {
+		setName ("Mural");
+		setDesc ("A carved mural of your many deeds and accomplishments.");
+	}
+}
+
 public class Tre_Candelabra : Treasure {
 	public Tre_Candelabra () {
 		setName ("Candelabra");
@@ -126,5 +133,32 @@ public class Tre_CurseSapling : Treasure {
 		setDesc ("The sapling of a curse tree. Its magic will punish intruders.");
 		addType (TreasureType.MAGICAL);
 		addType (TreasureType.TRAP);
+	}
+}
+
+public class Tre_RubySarcophagus : Treasure {
+	public Tre_RubySarcophagus () {
+		setName ("Ruby Sarcophagus");
+		setDesc ("An ornate sarcophagus, somehow crafted entirely from rubies. Even the hinges appear to be carefully cut gems.");
+		addType (TreasureType.BURIAL);
+		addType (TreasureType.RICHES);
+	}
+}
+
+public class Tre_ChestOfGreed : Treasure {
+	public Tre_ChestOfGreed () {
+		setName ("Chest of Greed");
+		setDesc ("An cursed oaken chest. Designed to punish greedy tomb robbers, it will devour anyone who tried to open it.");
+		addType (TreasureType.MAGICAL);
+		addType (TreasureType.TRAP);
+	}
+}
+
+public class Tre_FountainOfSilver : Treasure {
+	public Tre_FountainOfSilver () {
+		setName ("Fountain of Silver");
+		setName ("Liquid silver flows continuously up and down this amazing contraption. Magic is surely involved.");
+		addType (TreasureType.MAGICAL);
+		addType (TreasureType.RICHES);
 	}
 }

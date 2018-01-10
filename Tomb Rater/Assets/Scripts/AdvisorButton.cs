@@ -8,6 +8,7 @@ public class AdvisorButton : MonoBehaviour {
 
 	private Advisor advisor;
 	public GameObject canvas;
+	public Text nameTag;
 	private GameController gameController;
 
 	private void Start () {
@@ -43,7 +44,8 @@ public class AdvisorButton : MonoBehaviour {
 		Text speechText = canvas.transform.Find("Panel/Speech Text").GetComponent<Text>();
 		Text paymentText = canvas.transform.Find("Panel/Payment Text").GetComponent<Text>();
 		speechText.text = advisor.getSpeech ();
-		paymentText.text = "Giving " + advisor.getPayment().ToString() + "g";
+		paymentText.text = "Giving " + advisor.getPayment ().ToString () + "g" +
+		"\nRequired " + (advisor.getMilestone ().getThreshold () - advisor.getMilestone ().getPayment ()) + "g";
 		//set slider
 		Slider paymentSlider = canvas.transform.Find("Panel/Payment Slider").GetComponent<Slider>();
 		paymentSlider.minValue = 0;
@@ -59,9 +61,13 @@ public class AdvisorButton : MonoBehaviour {
 		Slider paymentSlider = canvas.transform.Find("Panel/Payment Slider").GetComponent<Slider>();
 		Text paymentText = canvas.transform.Find("Panel/Payment Text").GetComponent<Text>();
 		advisor.setPayment ((int)paymentSlider.value);
-		paymentText.text = "Giving " + advisor.getPayment().ToString() + "g";
+		paymentText.text = "Giving " + advisor.getPayment ().ToString () + "g" +
+		"\nRequired " + (advisor.getMilestone ().getThreshold () - advisor.getMilestone ().getPayment ()) + "g";
 	}
 	public int getPayment () {
-		return advisor.getPayment();
+		if (advisor != null) { 
+			return advisor.getPayment ();
+		} else
+			return 0;
 	}
 }

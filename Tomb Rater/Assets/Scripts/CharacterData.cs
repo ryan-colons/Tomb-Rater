@@ -68,7 +68,7 @@ public class CharacterData {
 		return kingdomName;
 	}
 	public void setKingdomName (string str) {
-		playerName = str;
+		kingdomName = str;
 	}
 	public string getTradeCivName () {
 		return tradeCivName;

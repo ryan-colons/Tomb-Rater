@@ -43,7 +43,7 @@ public class AdvisorMilestone {
 	//returns the overflow (money spent beyond the threshold
 	public int pay (int newPayment) {
 		int overflow = (payment + newPayment) - threshold;
-		payment = newPayment;
+		payment += newPayment;
 		return overflow;
 	}
 	public int getPayment () {
@@ -81,6 +81,7 @@ public class GM_UnlockMarble : AdvisorMilestone {
 		setDescription ("Happy Birthday, Your Grace! I have been in talks with the Guilds of the Kingdom, to investigate " +
 		"the ways in which they can contribute to the construction of your Tomb. The Masonry Guild will construct and work " +
 		"a new quarry to provide access to marble brick. They just need some funding.");
+		setNextMilestone (new GM_GuildTreasure ());
 	}
 	public override string reward () {
 		ManageBuilding buildingManagement = gameController.getBuildingManagement ();
@@ -91,9 +92,119 @@ public class GM_UnlockMarble : AdvisorMilestone {
 
 public class GM_GuildTreasure : AdvisorMilestone {
 	public GM_GuildTreasure () {
-
+		CharacterData info = gameController.getCharData ();
+		setThreshold (50);
+		setDescription ("Your Grace, the Guilds of " + info.getKingdomName () + " have much to offer. For a small price, we " +
+		"can commission a work of art for your Tomb.");
+		setNextMilestone (new GM_AnotherGuildTreasure ());
 	}
 	public override string reward () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_GuildTreasure (), 0);
+		return "";
+	}
+}
+
+public class GM_AnotherGuildTreasure : AdvisorMilestone {
+	public GM_AnotherGuildTreasure () {
+		CharacterData info = gameController.getCharData ();
+		setThreshold (50);
+		setDescription ("Happy Birthday, " + info.getPlayerName () + "! There are a lot of excited artisans waiting to contribute to " +
+		"your Tomb! Let's commission another fine piece of art, shall we?");
+		setNextMilestone (new GM_AddMurals ());
+	}
+	public override string reward () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_GuildTreasure (), 0);
+		return "";
+	}
+}
+
+public class GM_AddMurals : AdvisorMilestone {
+	public GM_AddMurals () {
+		setThreshold (150);
+		setDescription ("I have been in contact with the Masonry Guild. In exchange for some funding, " +
+			"they will carve murals into all of the Hallways in your tomb. That includes Hallways built " +
+			"between now and your death! I suggest we take them up on their offer.");
+		setNextMilestone (new GM_ForeignGuildTreasure ());
+	}
+	public override string reward () {
+		ManageBuilding buildingManagement = gameController.getBuildingManagement ();
+		for (int x = 0; x < buildingManagement.getSizes () [0]; x++) {
+			for (int y = 0; y < buildingManagement.getSizes () [1]; y++) {
+				BuildTile buildTile = buildingManagement.getTileAtCoord (x, y);
+				TombRoom existingRoom = buildTile.getRoom ();
+				if (existingRoom != null && existingRoom.getName ().Equals ("Hallway")) {
+					if (!existingRoom.containsTreasure (new Tre_Mural ())) {
+						existingRoom.getTreasureList ().Add (new Tre_Mural ());
+					}
+				}
+			}
+		}
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_ImmigratingArtists (), 0);
+		return "All the hallways of your Tomb will now be covered in carved murals.";
+	}
+}
+
+public class GM_ForeignGuildTreasure : AdvisorMilestone {
+	public GM_ForeignGuildTreasure () {
+		CharacterData info = gameController.getCharData ();
+		setThreshold (50);
+		setDescription ("Your Grace, " + info.getKingdomName() + " is crawling with creative artisans from across the world! " +
+			"Now would be an excellent time to commission a work of art for your tomb. Lots of exciting new art forms have made " +
+			"their way here...");
+		setNextMilestone (new GM_FundNewGuild ());
+	}
+	public override string reward () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_ForeignGuildTreasure (), 0);
+		return "";
+	}
+}
+
+public class GM_FundNewGuild : AdvisorMilestone {
+	public GM_FundNewGuild () {
+		CharacterData info = gameController.getCharData ();
+		setThreshold (150);
+		setDescription ("Your Grace, we must make the most of the new talents that have arrived in " + info.getKingdomName () + ". " +
+		"I think it is time for a new guild to be founded. With enough funding, we can ensure that these exciting new crafts " +
+		"thrive here. That could only be a good thing.");
+		setNextMilestone (new GM_FundAnotherNewGuild ());
+	}
+	public override string reward () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_FoundNewGuild (), 0);
+		return "";
+	}
+}
+
+public class GM_FundAnotherNewGuild : AdvisorMilestone {
+	public GM_FundAnotherNewGuild () {
+		CharacterData info = gameController.getCharData ();
+		setThreshold (500);
+		setDescription ("Happy Birthday, " + info.getPlayerTitle () + " " + info.getPlayerName () + "! " + info.getKingdomName () + " " +
+			"is fast becoming the world capital for culture, art, and innovation! It may be expensive, but I think we should have another " +
+			"new guild founded.");
+	}
+	public override string reward () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_FoundNewGuild (), 0);
+		return "";
+	}
+}
+
+public class GM_GeneratedMilestone : AdvisorMilestone {
+	public GM_GeneratedMilestone () {
+		CharacterData info = gameController.getCharData ();
+		setThreshold (50);
+		setDescription ("Your Grace, the Guilds of " + info.getKingdomName () + " have much to offer. For a small price, we " +
+			"can commission a work of art for your Tomb.");
+		setNextMilestone (new GM_GeneratedMilestone ());
+	}
+	public override string reward () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_GuildTreasure (), 0);
 		return "";
 	}
 }
@@ -258,5 +369,42 @@ public class MM_GeneratedMilestone : AdvisorMilestone {
 			//failure
 			return "Our raid at " + mission + " was a failure.";
 		}
+	}
+}
+	
+public class NM_ZombieWorkers : AdvisorMilestone {
+	public NM_ZombieWorkers () {
+		setThreshold (75);
+		setDescription ("Happy Birthday, Your Excellence...\nMy colleagues and I wish to extend an offer. If you provide us " +
+			"funding for our studies... we can help you. Your perished citizens are just laying in graveyards - they should be " +
+			"working for you! We will remind them of their responsibilities.");
+		setNextMilestone (new NM_BecomeLich ());
+	}
+	public override string reward () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.setGPT (advisorManagement.getGPT () + 20);
+		string econAdvisor = "Your economic advisors ";
+		if (advisorManagement.getAdvisors () [ManageAdvisors.ECONOMY] != null) {
+			econAdvisor = advisorManagement.getAdvisors () [ManageAdvisors.ECONOMY].getName ();
+		}
+		// reputation suffers
+		return "Recently dead citizens have risen from the grave to till your fields. " + econAdvisor +
+		" predicts an increase of 20 gold per year, from the extra productivity.";
+	}
+}
+
+public class NM_BecomeLich : AdvisorMilestone {
+	public NM_BecomeLich () {
+		setThreshold (100);
+		setDescription ("You have been good to us, Your Excellence. You wish to thank you... " +
+		"We have plans for a ritual that can hide a person from death... If you can simply provide us " +
+		"with some materials, we will try - I mean, perform - the ritual on you.");
+	}
+	public override string reward () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string necroName = advisorManagement.getAdvisors () [ManageAdvisors.NECRO].getName ();
+		advisorManagement.getAdvisors () [ManageAdvisors.NECRO] = null;
+		//remove death events, somehow?
+		return necroName + " has left, presumably in pursuit of otherwordly knowledge.";
 	}
 }
