@@ -50,8 +50,10 @@ public class ManageBuilding {
 		}
 	}
 	public void makeRoomUnavailableToBuild (TombRoom room) {
-		if (roomsToBuild.Contains (room)) {
-			roomsToBuild.Remove (room);
+		foreach (TombRoom availableRoom in roomsToBuild) {
+			if (availableRoom.getName ().Equals (room.getName ())) {
+				roomsToBuild.Remove (availableRoom);
+			}
 		}
 	}
 	public TombRoom[] getAvailableRooms () {

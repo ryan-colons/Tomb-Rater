@@ -14,6 +14,7 @@ using UnityEngine;
 public class ManageSpecialEvents {
 
 	private List<SpecialEvent> possibleEvents;
+	private int complaintsHeard = 0;
 
 	public ManageSpecialEvents () {
 		possibleEvents = new List<SpecialEvent> ();
@@ -85,4 +86,13 @@ public class ManageSpecialEvents {
 		}
 	}
 
+	public void incrementComplaintsHeard () {
+		if (complaintsHeard >= 0) {
+			complaintsHeard++;
+		}
+		if (complaintsHeard > 5) {
+			complaintsHeard = -1;
+			addPossibleEvent (new Event_YetAnotherComplaint ());
+		}
+	}
 }

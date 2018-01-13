@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\ManageYears.cs" />
      <Compile Include="Assets\Scripts\MapNavigation.cs" />
      <Compile Include="Assets\Scripts\MapTile.cs" />
+     <Compile Include="Assets\Scripts\PosthumousEvents.cs" />
      <Compile Include="Assets\Scripts\SceneChangeButton.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\SpecialEventUI.cs" />
@@ -81,6 +82,7 @@
      <Compile Include="Assets\Scripts\SpriteMouseOver.cs" />
      <Compile Include="Assets\Scripts\SpriteSupervisor.cs" />
      <Compile Include="Assets\Scripts\TestRunner.cs" />
+     <Compile Include="Assets\Scripts\TombRater.cs" />
      <Compile Include="Assets\Scripts\TombRoom.cs" />
      <Compile Include="Assets\Scripts\Treasure.cs" />
      <Compile Include="Assets\Scripts\TreasureButtonPopup.cs" />

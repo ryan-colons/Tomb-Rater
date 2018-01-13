@@ -31,10 +31,18 @@ public class GameController : MonoBehaviour {
 
 		charData = new CharacterData ();
 		charData.generateCivNames ();
+		charData.generateComplainer ();
+
+		for (int i = 0; i < 10; i++) {
+			charData.generateCivNames ();
+			charData.generateComplainer ();
+			Debug.Log (charData.getComplainName() + " :" + charData.getComplainPronouns()[0]);
+		}
 
 		advisorManagement = new ManageAdvisors ();
 		buildingManagement = new ManageBuilding ();
 		treasureManagement = new ManageTreasure ();
+		opinionManagement = new ManageOpinion ();
 		yearManagement = new ManageYears (50);
 		specialEventManagement = new ManageSpecialEvents ();
 	}
@@ -103,24 +111,6 @@ public class GameController : MonoBehaviour {
 	}
 	public string getRivalCivName () {
 		return charData.getRivalCivName();
-	}
-
-	//this method returns your score
-	public int rateTomb () {
-		int score = 0;
-
-		int sizeX = buildingManagement.getSizes() [0];
-		int sizeY = buildingManagement.getSizes() [1];
-		for (int x = 0; x < sizeX; x++) {
-			for (int y = 0; y < sizeY; y++) {
-				BuildTile tile = buildingManagement.getTileAtCoord (x, y);
-				if (tile.getRoom () != null) {
-					score += 1;
-				}
-			}
-		}
-
-		return score;
 	}
 
 	/* THINGS TO SAVE

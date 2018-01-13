@@ -68,6 +68,7 @@ public class SpecialEvent {
 		//do everything
 		GameObject panel = eventUI.setEventPanel(this.message);
 		addButtons (panel);
+		onTrigger ();
 	}
 
 	public void next() {
@@ -85,6 +86,12 @@ public class SpecialEvent {
 		GameObject panel = eventUI.setFeedbackDisplay (feedback);
 		Button button = panel.GetComponent<Button> ();
 		button.onClick.AddListener (exit);
+	}
+
+	public void displayFeedbackButReturnToMenu (string feedback) {
+		GameObject panel = eventUI.setFeedbackDisplay (feedback);
+		Button button = panel.GetComponent<Button> ();
+		button.onClick.AddListener (delegate {gameController.loadScene("menu");});
 	}
 
 	public void addButtons(GameObject panel) {
@@ -123,6 +130,8 @@ public class SpecialEvent {
 		}
 
 	}
+
+	public virtual void onTrigger () {}
 
 	public virtual void option1 () {}
 	public virtual void option2 () {}
@@ -227,7 +236,7 @@ public class Event_GuildAdvisorTutorial : SpecialEvent {
 		guildAdvisor.setTutorial (null);
 	}
 }
-
+	
 public class Event_GuildTreasure : SpecialEvent {
 	public Event_GuildTreasure () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -332,11 +341,101 @@ public class Event_FoundNewGuild : SpecialEvent {
 	public override void option3 () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
 		advisorManagement.getAdvisors () [ManageAdvisors.NECRO] = new Advisor ();
-		//set first milestone for necro advisor
-		//set tutorial for advisor also
+		advisorManagement.getAdvisors () [ManageAdvisors.NECRO].setMilestone (new NM_DabbleNecromancy ());
+		advisorManagement.getAdvisors () [ManageAdvisors.NECRO].setTutorial (new Event_NecromancyAdvisorTutorial ());
 		ManageYears yearManagement = gameController.getYearManagement();
 		yearManagement.addSpecialEventInXYears (new Event_PeopleFearNecromancy (), 1);
 		exit();
+	}
+}
+
+public class Event_TempleAdvisorTutorial : SpecialEvent {
+	public Event_TempleAdvisorTutorial () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string temple = advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE].getName();
+		string title = gameController.getCharData ().getPlayerTitle ();
+		this.setMessage ("\"Well met, " + title + ". I am " + temple + ", Front Paw of the Temple " +
+			"of the Badger Prince. I thank you for funding our humble church. We know you are in the " +
+			"process of digging a Grave Burrow beneath the mountains. The Badger Prince can guide " +
+			"you there, as he is an expert in sheltering underground.");
+		initialiseExtraMessageArray (0);
+		initialiseButtonTexts (1);
+		setButtonText ("Okay.", 0);
+	}
+	public override void option1 () {
+		gameController.loadScene ("menu");
+	}
+}
+
+public class Event_TempleConflict : SpecialEvent {
+	public Event_TempleConflict () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string temple = advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE].getName();
+		CharacterData info = gameController.getCharData ();
+		this.setMessage (info.getComplainName () + ", a prominent citizen of " + info.getKingdomName () +
+		", has come to lodge a complaint about the new temple in town.");
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage (info.getComplainName () + " claims that Badger worship amounts to heresy," +
+		"and should not be encouraged. " + info.getUpperComplainPronouns () [0] + " suggests that " +
+		"Badgerian symbols, such as black-and-white stripes, should not be allowed in public spaces.", 0);
+		this.setExtraMessage (temple + ", Adherent of the Badger Prince, angrily disagrees, and says " +
+		"that if Badgerian symbols are disallowed in public, then symbols of the Sun Lord should be too.", 1);
+		initialiseButtonTexts (3);
+		this.setButtonText ("Dismiss " + info.getComplainName () + "'s complaints", 0);
+		this.setButtonText ("Criminalise public display of Badgerian symbols", 1);
+		this.setButtonText ("Criminalise public display of all religious symbols", 2);
+	}
+	public override void onTrigger () {
+		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement ();
+		specialEventManagement.incrementComplaintsHeard ();
+	}
+	public override void option1 () {
+		CharacterData info = gameController.getCharData ();
+		displayFeedback (info.getComplainName () + " leaves in a huff.");
+	}
+	public override void option2 () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string temple = advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE].getName();
+		displayFeedback (temple + " appears upset, but agrees to keep the Badger worship underground.");
+	}
+	public override void option3 () {
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (-1);
+		displayFeedback ("Within a week, all religious symbols are removed from public view. " +
+			"There are a lot of complaints from the various clergy, but all comply.");
+	}
+}
+	
+public class Event_PartyAdvisorTutorial : SpecialEvent {
+	public Event_PartyAdvisorTutorial () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string party = advisorManagement.getAdvisors () [ManageAdvisors.PARTY].getName();
+		this.setMessage ("\"Hey dude, I'm " + party + ", from the Rave Society or whatever. " +
+			"So tight of you to hook us up my dude, we're gonna turn it up around here! " +
+			"And like, I know you've got this whole tomb thing going, so hit me up and we can " +
+			"suss you some dope shit for it!\"");
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage (party + " extends a clenched hand towards you.", 0);
+		initialiseButtonTexts (3);
+		this.setButtonText ("Accept the fist bump", 0);
+		this.setButtonText ("Ignore the fist, but nod", 1);
+		this.setButtonText ("Order " + party + " to leave", 2);
+	}
+	public override void option1 () {
+		ManageAdvisors manageAdvisors = gameController.getAdvisorManagement ();
+		Advisor partyAdvisor = manageAdvisors.getAdvisors () [ManageAdvisors.PARTY];
+		partyAdvisor.setTutorial (null);
+		displayFeedbackButReturnToMenu ("As you leave, some of your other advisors hurry to " +
+			"give " + partyAdvisor.getName() + " instructions on how to properly address you.");
+	}
+	public override void option2 () {
+		this.option1 ();
+	}
+	public override void option3 () {
+		ManageAdvisors manageAdvisors = gameController.getAdvisorManagement ();
+		string partyName = manageAdvisors.getAdvisors () [ManageAdvisors.PARTY].getName ();
+		manageAdvisors.getAdvisors () [ManageAdvisors.PARTY] = null;
+		displayFeedbackButReturnToMenu (partyName + " complains, but leaves.");
 	}
 }
 
@@ -353,11 +452,66 @@ public class Event_PeopleLoveParties : SpecialEvent {
 	}
 	public override void option1 () {
 		ManageOpinion opinionManagement = gameController.getOpinionManagement ();
-		opinionManagement.incrementFavour (2);
+		opinionManagement.incrementFavour (1);
 		exit ();
 	}
 }
 
+public class Event_NecromancyAdvisorTutorial : SpecialEvent {
+	public Event_NecromancyAdvisorTutorial () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string necro = advisorManagement.getAdvisors () [ManageAdvisors.NECRO].getName();
+		this.setMessage ("\"Good day, Your Excellence. I am " + necro + ", a representative " +
+			"from the Society of Morticians. I believe we can help each other. We would like " +
+			"to contribute to your project.");
+		initialiseExtraMessageArray (0);
+		initialiseButtonTexts (2);
+		setButtonText ("Continue", 0);
+		setButtonText ("Order " + necro + " to leave", 1);
+	}
+	public override void option1 () {
+		gameController.loadScene ("menu");
+		ManageAdvisors manageAdvisors = gameController.getAdvisorManagement ();
+		Advisor necroAdvisor = manageAdvisors.getAdvisors () [ManageAdvisors.NECRO];
+		necroAdvisor.setTutorial (null);
+	}
+	public override void option2 () {
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (1);
+		ManageAdvisors manageAdvisors = gameController.getAdvisorManagement ();
+		string necroName = manageAdvisors.getAdvisors () [ManageAdvisors.NECRO].getName ();
+		manageAdvisors.getAdvisors () [ManageAdvisors.NECRO] = null;
+		displayFeedbackButReturnToMenu (necroName + " leaves, clearly disappointed. Some of " +
+			"your other advisors look relieved.");
+	}
+}
+
+public class Event_NecromancerDabblingGifts : SpecialEvent {
+	public Event_NecromancerDabblingGifts () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string necroName = advisorManagement.getAdvisors () [ManageAdvisors.NECRO].getName();
+		this.setMessage (necroName + " comes to you with gifts for your tomb.");
+		initialiseExtraMessageArray (2);
+		this.setExtraMessage (necroName + " presents a set of bells, strangely blackened somehow.\n " +
+			"\"These bells will ring out when intruders enter your tomb, and your corpse will rise to fight them!", 0);
+		this.setExtraMessage ("A woman hands you a large jar, made of black glass.\nPut your blood in this jar when " +
+			"you are dead. People will notice your spirit.", 1);
+		initialiseButtonTexts (2);
+		setButtonText ("Accept the weird gifts", 0);
+		setButtonText ("Decline the weird gifts", 1);
+
+	}
+	public override void option1 () {
+		ManageTreasure treasureManagement = gameController.getTreasureManagement ();
+		treasureManagement.getTreasureList ().Add (new Tre_BlackenedAlarmBells ());
+		treasureManagement.getTreasureList ().Add (new Tre_BloodJar ());
+		exit ();
+	}
+	public override void option2 () {
+		displayFeedback ("They nod and leave the room in silence.");
+	}
+}
+	
 public class Event_PeopleFearNecromancy : SpecialEvent {
 	public Event_PeopleFearNecromancy () {
 		this.setMessage ("Controversy has arisen around the recently founded Society of Morticians. " +
@@ -375,6 +529,45 @@ public class Event_PeopleFearNecromancy : SpecialEvent {
 		opinionManagement.setPublicFear (opinionManagement.getPublicFear () + 1);
 		opinionManagement.setPublicAwe (opinionManagement.getPublicAwe () + 1);
 		exit ();
+	}
+}
+
+public class Event_NecromancerRitualsAreWeird : SpecialEvent {
+	public Event_NecromancerRitualsAreWeird () {
+		this.setReuse (false);
+		this.setProbability (3);
+		CharacterData info = gameController.getCharData ();
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		Advisor necro = advisorManagement.getAdvisors () [ManageAdvisors.NECRO];
+		this.setMessage ("A prominent member of the community, " + info.getComplainName() + " has " +
+		"come to lodge a complaint.");
+		initialiseExtraMessageArray (2);
+		setExtraMessage ("\"People in black robes have been hiding painted bones in trees and flowers. " +
+			"The plants are dying! It's weird! Do something about this, " + info.getPlayerTitle() +"!\"", 0);
+		setExtraMessage ("It seems " + necro.getName () + " and colleagues are causing a disturbance.", 1);
+		initialiseButtonTexts (3);
+		setButtonText ("Dismiss the complaints", 0);
+		setButtonText ("Order " + necro.getName () + " to stop", 1);
+		setButtonText ("Plant more trees and flowers", 2);
+	}
+	public override void onTrigger () {
+		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement ();
+		specialEventManagement.incrementComplaintsHeard ();
+	}
+	public override void option1 () {
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (-1);
+		CharacterData info = gameController.getCharData ();
+		displayFeedback (info.getComplainName() + " left in a huff.");
+	}
+	public override void option2 () {
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (1);
+		displayFeedback ("The Morticians quietly agreed to stop, to the relief of many citizens.");
+	}
+	public override void option3 () {
+		gameController.setMoney (gameController.getMoney () - 5);
+		displayFeedback ("The dying plants were quickly replaced, at your cost.");
 	}
 }
 
@@ -498,6 +691,94 @@ public class Event_TradeOpportunity : SpecialEvent {
 	}
 	public override void option5 () {
 		displayFeedback ("Visibly disappointed, the traders pick up their things and leave.");
+	}
+}
+
+public class Event_ComplaintAboutTaxes : SpecialEvent {
+	public Event_ComplaintAboutTaxes () {
+		setProbability (5);
+		setReuse (true);
+
+		CharacterData info = gameController.getCharData ();
+		string name = info.getComplainName ();
+		this.setMessage (name + ", a prominent member of the community, has " +
+		"come to lodge a complaint. \"Taxes are too high!\", " + info.getComplainPronouns () [0] +
+		" he says. \"Either lower taxes, so we can live more comfortably, or " +
+		"put more money into improving the quality of life for the average citizen!\"");
+		initialiseExtraMessageArray (0);
+		initialiseButtonTexts (3);
+		this.setButtonText ("Lower taxes", 0);
+		this.setButtonText ("Increase public spending", 1);
+		this.setButtonText ("Dismiss the complaint", 2);
+	}
+	public override void onTrigger () {
+		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement ();
+		specialEventManagement.incrementComplaintsHeard ();
+	}
+	public override void option1 () {
+		gameController.getOpinionManagement ().incrementFavour (1);
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.setGPT (advisorManagement.getGPT () - 5);
+		exit ();
+	}
+	public override void option2 () {
+		option1 ();
+	}
+	public override void option3 () {
+		exit ();
+	}
+}
+
+public class Event_YetAnotherComplaint : SpecialEvent {
+	public Event_YetAnotherComplaint () {
+		setProbability (2);
+		setReuse (false);
+		CharacterData info = gameController.getCharData ();
+		string name = info.getComplainName ();
+		this.setMessage (name + ", a prominent member of the community, has " +
+		"come to lodge a complaint. \"It's too rainy these days!\", " + info.getComplainPronouns () [0] +
+		" he says. \"You need to put more money into awnings, public umbrellas and " +
+		"raincoats. What else do we pay taxes for?\"");
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage ("\"What do you think?\"", 0);
+		initialiseButtonTexts (4);
+		this.setButtonText ("Arrest " + name + " for wasting your time", 0);
+		this.setButtonText ("Execute " + name + " for being annoying", 1);
+		this.setButtonText ("Calmly dismiss the complaint", 2);
+		this.setButtonText ("Set up an anti-rain committee", 3);
+	}
+	public override void option1 () {
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.setPublicFear (opinion.getPublicFear () + 1);
+		CharacterData info = gameController.getCharData ();
+		string name = info.getComplainName ();
+		info.generateComplainer ();
+		displayFeedback (name + " is thrown in the dungeon. You savour the silence in your court.");
+	}
+	public override void option2 () {
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.setPublicFear (opinion.getPublicFear () + 2);
+		CharacterData info = gameController.getCharData ();
+		string name = info.getComplainName ();
+		info.generateComplainer ();
+		displayFeedback (name + " is killed on the spot, as a message to all who would disrupt " +
+			"your peace with frivilous complaints.");
+	}
+	public override void option3 () {
+		CharacterData info = gameController.getCharData ();
+		string name = info.getComplainName ();
+		info.generateComplainer ();
+		displayFeedback (name + " grumbles and leaves.");
+	}
+	public override void option4 () {
+		CharacterData info = gameController.getCharData ();
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.setGPT (advisorManagement.getGPT () - 5);
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (2);
+		displayFeedback ("You fund an new anti-rain committee, and begin supplying " +
+		info.getKingdomName () + " with supplies for dealing with the mild annoyances of rain. " +
+		"Truely, you are a " + info.getPlayerTitle () + " of the people!");
 	}
 }
 

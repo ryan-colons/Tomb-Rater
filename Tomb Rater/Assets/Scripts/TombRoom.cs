@@ -145,3 +145,22 @@ public class Room_DungeonOfMockery : TombRoom {
 		getTreasureBonuses ().Add (TreasureType.HISTORICAL);
 	}
 }
+
+public class Room_Tavern : TombRoom {
+	public Room_Tavern () {
+		setName ("Tavern");
+		setDescription ("Visitors to your tomb can hang out here. There's a stocked bar, and a stage for gigs!");
+		setMinSize (2);
+		getTreasureBonuses ().Add (TreasureType.MUSICAL);
+	}
+	// method called during tomb evaluation
+}
+
+public class Room_SpeakeasyEntrance : TombRoom {
+	public Room_SpeakeasyEntrance () {
+		setName ("Speakeasy Entrance");
+		setDescription ("A secret tunnel leads to this entrance, so that cool people can get in and hang in your tomb.");
+		setMinSize (1);
+	}
+	// method called during tomb evaluation
+}

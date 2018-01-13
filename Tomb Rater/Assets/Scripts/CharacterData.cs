@@ -16,6 +16,8 @@ public class CharacterData {
 	private string kingdomName;
 	private string tradeCivName;
 	private string rivalCivName;
+	private string complainCitizen;
+	private string[] complainPronouns;
 
 	public string getPlayerName () {
 		return playerName;
@@ -82,6 +84,20 @@ public class CharacterData {
 	public void setRivalCivName (string str) {
 		rivalCivName = str;
 	}
+	public string getComplainName () {
+		return complainCitizen;
+	}
+	public string[] getComplainPronouns () {
+		return complainPronouns;
+	}
+	public string[] getUpperComplainPronouns () {
+		return new string[] {
+			complainPronouns[0][0].ToString().ToUpper() + complainPronouns[0].Substring(1),
+			complainPronouns[1][0].ToString().ToUpper() + complainPronouns[1].Substring(1),
+			complainPronouns[2][0].ToString().ToUpper() + complainPronouns[2].Substring(1),
+		};
+	}
+
 
 	public void generateCivNames () {
 		string[] cityName1 = new string[] {"Ben", "Brath", "Cyn", "Clint", "Dae D", "Duum", "Eriph", "Font Fon",
@@ -92,6 +108,29 @@ public class CharacterData {
 		rivalCivName = cityName1 [Random.Range (0, cityName1.Length)] + cityName2 [Random.Range (0, cityName2.Length)];
 		while (tradeCivName.Equals (rivalCivName)) {
 			tradeCivName = cityName1 [Random.Range (0, cityName1.Length)] + cityName2 [Random.Range (0, cityName2.Length)];
+		}
+	}
+
+	public void generateComplainer () {
+		string[] name0 = new string[]{ "Old", "Councillor", "Mad", "Crazy-Eyes", "Wide-Eyes"};
+		string[] name1 = new string[]{ "Br", "D", "F", "R", "Wr", "M"};
+		string[] name2 = new string[]{ "ent", "ont", "onson", "obson", "esley", "ixon"};
+		string[] name3 = new string[]{ "the Wise", "Sweemy", "Dandleton", "Dugnutt", "the Bold", "the Feeble"};
+
+		string name = "";
+		if (Random.Range (1, 5) == 1) {
+			name += name0 [Random.Range (0, name0.Length)] + " ";
+		}
+		name += name1 [Random.Range (0, name1.Length)] + name2 [Random.Range (0, name2.Length)];
+		if (Random.Range (1, 5) == 1) {
+			name += " " + name3 [Random.Range (0, name3.Length)];
+		}
+
+		complainCitizen = name;
+		if (Random.Range (0, 2) == 0) {
+			complainPronouns = new string[]{ "he", "him", "his" };
+		} else {
+			complainPronouns = new string[]{ "she", "her", "her" };
 		}
 	}
 

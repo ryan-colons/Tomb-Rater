@@ -64,6 +64,7 @@ public enum TreasureType {
 	TRAP,
 	HISTORICAL,
 	RELIGIOUS,
+	MUSICAL,
 	MAGICAL
 }
 
@@ -157,8 +158,54 @@ public class Tre_ChestOfGreed : Treasure {
 public class Tre_FountainOfSilver : Treasure {
 	public Tre_FountainOfSilver () {
 		setName ("Fountain of Silver");
-		setName ("Liquid silver flows continuously up and down this amazing contraption. Magic is surely involved.");
+		setDesc ("Liquid silver flows continuously up and down this amazing contraption. Magic is surely involved.");
 		addType (TreasureType.MAGICAL);
 		addType (TreasureType.RICHES);
 	}
+}
+	
+public class Tre_ClockworkDrums : Treasure {
+	public Tre_ClockworkDrums () {
+		setName ("Clockwork Drums");
+		setDesc ("Self-playing drums, to fill your tomb with beats.");
+		addType (TreasureType.MUSICAL);
+	}
+}
+
+public class Tre_BlackLightCandle : Treasure {
+	public Tre_BlackLightCandle () {
+		setName ("Candle of Black Light");
+		setDesc ("Encased in an orb of violet glass, the light from this candle highlights fluorescent objects.");
+	}
+}
+
+public class Tre_CryptHorn : Treasure {
+	public Tre_CryptHorn () {
+		setName ("Crypt Horn");
+		setDesc ("A traditional fixture for noble tombs. It converts wind from outside into mournful droning inside.");
+		addType (TreasureType.MUSICAL);
+	}
+}
+
+// jacuzzi
+
+public class Tre_BlackenedAlarmBells : Treasure {
+	public Tre_BlackenedAlarmBells () {
+		setName ("Blackened Alarm Bells");
+		setDesc ("These bells will ring if intruders enter your tomb, and your corpse will rise to fight them!");
+		addType (TreasureType.TRAP);
+		addType (TreasureType.MAGICAL);
+		addType (TreasureType.MUSICAL);
+	}
+	// do stuff after dead
+}
+
+public class Tre_BloodJar : Treasure {
+	public Tre_BloodJar () {
+		setName ("Blood Jar");
+		setDesc ("When you die, put all your blood in this. Then, you can haunt the living!");
+		addType (TreasureType.BURIAL);
+		addType (TreasureType.MAGICAL);
+	}
+	// method after death
 }

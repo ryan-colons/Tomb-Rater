@@ -141,6 +141,8 @@ public class GM_AddMurals : AdvisorMilestone {
 				}
 			}
 		}
+		buildingManagement.makeRoomUnavailableToBuild (new Room_Hallway ());
+		buildingManagement.makeRoomAvailableToBuild (new Room_MuralHallway ());
 		ManageYears yearManagement = gameController.getYearManagement ();
 		yearManagement.addSpecialEventInXYears (new Event_ImmigratingArtists (), 0);
 		return "All the hallways of your Tomb will now be covered in carved murals.";
@@ -372,6 +374,23 @@ public class MM_GeneratedMilestone : AdvisorMilestone {
 	}
 }
 	
+public class NM_DabbleNecromancy : AdvisorMilestone {
+	public NM_DabbleNecromancy () {
+		setThreshold (75);
+		setDescription ("Good day, Your Excellence. My colleagues wish to perform some... research. We require " +
+			"certain tools that are expensive to acquire. If you were to provide us with some additional funding, " +
+			"we could happily return a favour. We can acquire things for your Tomb in which you will be quite interested.");
+		setNextMilestone (new NM_ZombieWorkers ());
+	}
+	public override string reward () {
+		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement ();
+		specialEventManagement.addPossibleEvent (new Event_NecromancerRitualsAreWeird ());
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_NecromancerDabblingGifts (), 0);
+		return "";
+	}
+}
+
 public class NM_ZombieWorkers : AdvisorMilestone {
 	public NM_ZombieWorkers () {
 		setThreshold (75);
@@ -381,15 +400,18 @@ public class NM_ZombieWorkers : AdvisorMilestone {
 		setNextMilestone (new NM_BecomeLich ());
 	}
 	public override string reward () {
+		// add possible event about zombies running around
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
 		advisorManagement.setGPT (advisorManagement.getGPT () + 20);
 		string econAdvisor = "Your economic advisors ";
 		if (advisorManagement.getAdvisors () [ManageAdvisors.ECONOMY] != null) {
 			econAdvisor = advisorManagement.getAdvisors () [ManageAdvisors.ECONOMY].getName ();
 		}
-		// reputation suffers
+		ManageOpinion opinionManagement = gameController.getOpinionManagement ();
+		opinionManagement.incrementFavour (-1);
 		return "Recently dead citizens have risen from the grave to till your fields. " + econAdvisor +
-		" predicts an increase of 20 gold per year, from the extra productivity.";
+		" predicts an increase of 20 gold per year, from the extra productivity. The other farmers " +
+		"seemed to disapprove a little.";
 	}
 }
 
@@ -401,6 +423,7 @@ public class NM_BecomeLich : AdvisorMilestone {
 		"with some materials, we will try - I mean, perform - the ritual on you.");
 	}
 	public override string reward () {
+		// add possible event where you are denounced by someone
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
 		string necroName = advisorManagement.getAdvisors () [ManageAdvisors.NECRO].getName ();
 		advisorManagement.getAdvisors () [ManageAdvisors.NECRO] = null;
@@ -408,3 +431,61 @@ public class NM_BecomeLich : AdvisorMilestone {
 		return necroName + " has left, presumably in pursuit of otherwordly knowledge.";
 	}
 }
+	
+public class PM_ThrowParty : AdvisorMilestone {
+	public PM_ThrowParty () {
+		setThreshold (50);
+		setDescription ("Oh hey, Your... uh, Graciousness. Listen, me and the others were thinking " +
+			"about throwing a big party in the town hall. Invite the whole city, y'know? We kinda need " +
+			"some cash though, for like drinks and stuff... What do you say?");
+		setNextMilestone (new PM_TombTavern ());
+	}
+	public override string reward () {
+		ManageOpinion opinionManagement = gameController.getOpinionManagement ();
+		opinionManagement.incrementFavour (1);
+		return "Citizens are raving about an amazing party that was thrown in your name this year.";
+	}
+}
+
+public class PM_TombTavern : AdvisorMilestone {
+	public PM_TombTavern () {
+		CharacterData info = gameController.getCharData ();
+		setThreshold (50);
+		setDescription ("Hey, it's the " + info.getPlayerTitle() + "! Happy Birthday! Hey, I was thinking " +
+			"the other day about your whole tomb thing, and I was like, man it'd be sick to hang out there. " +
+			"Pretty sweet venue for gigs and stuff, y'know? Hit me up if you're interested, we could hook you " +
+			"up with some designs and stuff. Something to think about!");
+		setNextMilestone (new PM_BecomeALegend ());
+	}
+	public override string reward () {
+		//add new tomb rooms (and treasures maybe?)
+		ManageBuilding buildingManagement = gameController.getBuildingManagement();
+		buildingManagement.makeRoomAvailableToBuild (new Room_Tavern ());
+		buildingManagement.makeRoomAvailableToBuild (new Room_SpeakeasyEntrance ());
+		ManageTreasure treasureManagement = gameController.getTreasureManagement ();
+		treasureManagement.getTreasureList ().Add (new Tre_BlackLightCandle ());
+		treasureManagement.getTreasureList ().Add (new Tre_BlackLightCandle ());
+		treasureManagement.getTreasureList ().Add (new Tre_ClockworkDrums ());
+		treasureManagement.getTreasureList ().Add (new Tre_ClockworkDrums ());
+		return "Your building team has been in talks with the Rave Society.";
+	}
+}
+
+public class PM_BecomeALegend : AdvisorMilestone {
+	public PM_BecomeALegend () {
+		setThreshold (50);
+		setDescription ("Hey, what's up Your Honour? So, me and the squad were talking about " +
+			"how chill you've been, and we know you really wanna leave a big legacy behind and " +
+			"all that good stuff, and word of mouth is real helpful, y'know? Basically, we want to do " +
+			"a big world tour, throwing parties and telling everyone how tight your reign is. Sounds good right??");	
+	}
+	public override string reward () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		string partyName = advisorManagement.getAdvisors () [ManageAdvisors.PARTY].getName ();
+		advisorManagement.getAdvisors () [ManageAdvisors.PARTY] = null;
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (3);
+		return partyName + " is now on a world tour, spreading favourable stories about you.";
+	}
+}
+
