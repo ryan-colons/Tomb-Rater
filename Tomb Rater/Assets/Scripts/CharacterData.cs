@@ -112,7 +112,7 @@ public class CharacterData {
 	}
 
 	public void generateComplainer () {
-		string[] name0 = new string[]{ "Old", "Councillor", "Mad", "Crazy-Eyes", "Wide-Eyes"};
+		string[] name0 = new string[]{ "Old", "Councillor"};
 		string[] name1 = new string[]{ "Br", "D", "F", "R", "Wr", "M"};
 		string[] name2 = new string[]{ "ent", "ont", "onson", "obson", "esley", "ixon"};
 		string[] name3 = new string[]{ "the Wise", "Sweemy", "Dandleton", "Dugnutt", "the Bold", "the Feeble"};

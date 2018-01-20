@@ -73,8 +73,6 @@ public class AdvisorMilestone {
  * 300g - add murals to all your hallways (existing and future)
  */
 
-
-
 public class GM_UnlockMarble : AdvisorMilestone {
 	public GM_UnlockMarble () {
 		setThreshold (50);
