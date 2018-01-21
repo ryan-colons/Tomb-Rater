@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour {
 	private int money = 5000;
 
 	private CharacterData charData;
+	private PathToDeath healthPathToDeath;
+	private PathToDeath revolutionPathToDeath;
 
 	private void Start () {
 		SpecialEvent.gameController = this;
@@ -32,6 +34,15 @@ public class GameController : MonoBehaviour {
 		charData = new CharacterData ();
 		charData.generateCivNames ();
 		charData.generateComplainer ();
+		SpecialEvent[] healthEvents = new SpecialEvent[] {
+			new Event_EatingLotsOfCheese(),
+			new Event_CheeseSickness(),
+			new Event_OveractiveParasites(),
+			new Event_TerminalIllness()
+		};
+		healthPathToDeath = new PathToDeath (healthEvents);
+		SpecialEvent[] revolutionEvents = new SpecialEvent[1];
+		revolutionPathToDeath = new PathToDeath (revolutionEvents);
 
 		for (int i = 0; i < 10; i++) {
 			charData.generateCivNames ();
@@ -104,6 +115,12 @@ public class GameController : MonoBehaviour {
 
 	public CharacterData getCharData () {
 		return charData;
+	}
+	public PathToDeath getHealth () {
+		return healthPathToDeath;
+	}
+	public PathToDeath getRevolution () {
+		return revolutionPathToDeath;
 	}
 
 	public string getTradeCivName () {

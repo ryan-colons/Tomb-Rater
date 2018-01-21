@@ -49,6 +49,29 @@ public class ManageYears  {
 		Year currentYear = calendar [yearIndex];
 		yearReport = "";
 
+		//Health - get a little closer to death
+		PathToDeath health = gameController.getHealth();
+		health.decrement ();
+		if (health.checkThreshold ()) {
+			SpecialEvent nextHealthEvent = health.triggerNextSpecialEvent ();
+			if (nextHealthEvent != null) {
+				addSpecialEventInXYears (nextHealthEvent, 0);
+			}
+		}
+
+		//Revolution - decrement counter according to public disfavour
+		PathToDeath revolution = gameController.getRevolution();
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		if (opinion.getNetFavour () < 0) {
+			revolution.increment (opinion.getNetFavour () * 2);
+			if (revolution.checkThreshold ()) {
+				SpecialEvent nextRevolutionEvent = revolution.triggerNextSpecialEvent ();
+				if (nextRevolutionEvent != null) {
+					addSpecialEventInXYears (nextRevolutionEvent, 0);
+				}
+			}
+		}
+
 		//Builders - build
 		ManageBuilding buildingManagement = gameController.getBuildingManagement();
 		if (BuildingMenu.currentlyBuilding != null) {

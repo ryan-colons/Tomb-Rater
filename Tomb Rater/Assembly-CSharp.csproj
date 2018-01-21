@@ -55,7 +55,6 @@
      <Compile Include="Assets\Scripts\AdvisorMilestone.cs" />
      <Compile Include="Assets\Scripts\BuildMaterial.cs" />
      <Compile Include="Assets\Scripts\CharacterData.cs" />
-     <Compile Include="Assets\Scripts\Health.cs" />
      <Compile Include="Assets\Scripts\Managers\GameController.cs" />
      <Compile Include="Assets\Scripts\Managers\ManageAdvisors.cs" />
      <Compile Include="Assets\Scripts\Managers\ManageBuilding.cs" />
@@ -68,6 +67,7 @@
      <Compile Include="Assets\Scripts\Menus\CharacterCreation.cs" />
      <Compile Include="Assets\Scripts\Menus\GameLoader.cs" />
      <Compile Include="Assets\Scripts\Menus\TurnoverScene.cs" />
+     <Compile Include="Assets\Scripts\PathToDeath.cs" />
      <Compile Include="Assets\Scripts\PosthumousEvent.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\TestRunner.cs" />

@@ -571,6 +571,92 @@ public class Event_NecromancerRitualsAreWeird : SpecialEvent {
 	}
 }
 
+public class Event_BecomeLich : SpecialEvent {
+	public Event_BecomeLich () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		Advisor necro = advisorManagement.getAdvisors () [ManageAdvisors.NECRO];
+		setMessage ("As promised, " + necro.getName () + " has prepared an experimental " +
+		"ritual to 'hide you from death'. One night, the Society of Morticians " +
+		"come to your quarters...");
+		initialiseExtraMessageArray (1);
+		setExtraMessage ("You wake the next morning with no memory of the night before, " +
+		"covered in bruises and colourful paints. You feel... very relaxed...", 0);
+		initialiseButtonTexts (1);
+		setButtonText ("Continue", 0);
+	}
+	public override void option1 () {
+		ManageSpecialEvents spManagement = gameController.getSpecialEventManagement ();
+		spManagement.addPossibleEvent (new Event_LichDeath ());
+		spManagement.addPossibleEvent (new Event_LichFlavour ());
+		PathToDeath health = gameController.getHealth ();
+		health.setLossPerYear (0);
+		exit ();
+	}
+}
+
+public class Event_LichFlavour : SpecialEvent {
+	private string[] flavours = new string[] {
+		"Today you drank several glasses of a delicious beverage " +
+		"that turned out to be Throne Cleaner. You feel fine though!",
+		"Today you accidentally cut yourself badly with a cheese knife, " +
+		"and smoke came out instead of blood. You feel fine though!",
+		"Today you took a bath, and the water immediately turned black " +
+		"and started to boil. When you got out, you were bone dry."
+	};
+	public Event_LichFlavour () {
+		setReuse (true);
+		setProbability (6);
+		setMessage (flavours[Random.Range(0, flavours.Length)]);
+		initialiseExtraMessageArray (0);
+		initialiseButtonTexts (1);
+		setButtonText ("Hmmm", 0);
+	}
+	public override void option1 () {
+		exit ();
+	}
+}
+
+public class Event_LichDeath : SpecialEvent {
+	public Event_LichDeath () {
+		setReuse (true);
+		setProbability (1);
+		setMessage ("A warrior in gleaming armor tumbles through the window of " +
+		"your throne room! Brandishing a spiked mace, she yells something about " +
+		"the Society of Morticians and crimes against nature, and dashes towards you!");
+		initialiseExtraMessageArray (3);
+		setButtonText ("Call for the guards", 0);
+		setButtonText ("Reach for your sceptre", 1);
+		setButtonText ("Try to run away", 2);
+	}
+	public override void option1 () {
+		int guards = gameController.getAdvisorManagement ().getDefensiveMight ();
+		if (guards >= Random.Range (1, 50)) {
+			displayFeedback ("Your guards manage to subdue the assassain in time.");
+		} else {
+			Event_Death deathEvent = new Event_Death ("You were murdered for your " +
+			                         "participation in dark rituals.");
+			gameController.loadEvent (deathEvent);
+		}
+	}
+	public override void option2 () {
+		if (Random.Range (0, 2) == 0) {
+			ManageOpinion opinion = gameController.getOpinionManagement ();
+			opinion.setPublicAwe (opinion.getPublicAwe () + 1);
+			displayFeedback ("Wielding your sceptre as a mace, you hold back the assassain " +
+			"until your guards arrive. The guards are impressed with your fighting skills!");
+		} else {
+			Event_Death deathEvent = new Event_Death ("You were murdered for your " +
+				"participation in dark rituals.");
+			gameController.loadEvent (deathEvent);
+		}
+	}
+	public override void option3 () {
+		Event_Death deathEvent = new Event_Death ("You were murdered for your " +
+			"participation in dark rituals.");
+		gameController.loadEvent (deathEvent);
+	}
+}
+
 public class Event_FoundAnotherNewGuild : SpecialEvent {
 	public Event_FoundAnotherNewGuild () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -781,6 +867,129 @@ public class Event_YetAnotherComplaint : SpecialEvent {
 		"Truely, you are a " + info.getPlayerTitle () + " of the people!");
 	}
 }
+	
+// HEALTH EVENTS
+
+public class Event_EatingLotsOfCheese : SpecialEvent {
+	public Event_EatingLotsOfCheese () {
+		CharacterData info = gameController.getCharData ();
+		setMessage ("A new type of cheese has been forged in " + info.getKingdomName() + "! " +
+			"It is made from goats milk, and infused with honey, salt, sugar, egg yolks, and butter-essence. " +
+			"By all accounts, this is the most superior cheese in the world.");
+		initialiseExtraMessageArray (1);
+		setExtraMessage ("Cheese is known to be the most royal of foods, and all successful rulers are expected " +
+			"to partake generously at every meal. Your advisors ensure that your kitchens are well stocked.", 0);
+		initialiseButtonTexts (3);
+		setButtonText ("Excellent", 0);
+		setButtonText ("Very good", 1);
+		setButtonText ("Mmm, cheeeese!", 2);
+	}
+	public override void option1 () {exit ();}
+	public override void option2 () {exit ();}
+	public override void option3 () {exit ();}
+}
+
+public class Event_CheeseSickness : SpecialEvent {
+	public Event_CheeseSickness () {
+		setMessage ("At breakfast one morning, while reaching for a second bowl of " +
+			"melted goat cheese, you suddenly experience strong discomfort in your stomach. " +
+			"As soon as you have finished eating, you pay a visit to the Royal Physician.");
+		initialiseExtraMessageArray (4);
+		setExtraMessage ("After finding flakes of cheese in your blood, the Royal Physician " +
+			"suggests that your diet may have caused you some health issues. Fortunately, " +
+			"she has a solution at hand.", 0);
+		setExtraMessage ("She produces a tank of murky water, with thousands of tiny specks. " +
+			"She explains that these specks are microscopic creatures. If you drink from this water every day, " +
+			"these creatures can live inside your body and eat away any excess cheese!", 1);
+		setExtraMessage ("Pleased to have the world's finest medical team at your side, you move the tank " +
+			"into your quarters, so that you can drink from it regularly.", 2);
+		setExtraMessage ("One of your chefs also suggests switching to a diet of smake cheese. This would be more" +
+			"expensive to import, but is said to be much healthier than our goat cheese.", 3);
+		initialiseButtonTexts (2);
+		setButtonText ("Stick with the goat cheese diet", 0);
+		setButtonText ("Switch to a healthier cheese diet", 1);
+	}
+	public override void option1 () {
+		exit ();	
+	}
+	public override void option2 () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.setGPT (advisorManagement.getGPT () - 2);
+		PathToDeath health = gameController.getHealth ();
+		health.increment (5);
+		exit ();
+	}
+}
+
+public class Event_OveractiveParasites : SpecialEvent {
+	public Event_OveractiveParasites () {
+		setMessage ("You have been feeling nauseous and tired lately. " +
+			"Today, you make a visit to the Royal Physician, who quickly " +
+			"identifies the problem.");
+		initialiseExtraMessageArray (3);
+		setExtraMessage ("It appears that the cheese eating parasites in your " +
+			"blood stream have grown, and are now eating your internal organs. They " +
+			"will need to be removed.", 0);
+		setExtraMessage ("Your Royal Physician has a solution. Every fortnight, " +
+			"your blood should be passed through a special medical sieve, " +
+			"to filter out the parasites. Then, it can be put back into your body.", 1);
+		setExtraMessage ("This process may be tough for your body to handle. Some of your " +
+			"Advisors recommend mandatory blood donations from your citizens, to help " +
+			"you through the process. Others fear this might not be popular decision.", 2);
+		initialiseButtonTexts (2);
+		setButtonText ("Undergo the process alone", 0);
+		setButtonText ("Make citizens donate blood", 1);
+	}
+	public override void option1 () {
+		exit ();
+	}
+	public override void option2 () {
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (-1);
+		PathToDeath health = gameController.getHealth ();
+		health.increment (5);
+		exit ();
+	}
+}
+
+public class Event_TerminalIllness : SpecialEvent {
+	public Event_TerminalIllness () {
+		setMessage ("Lately you have noticed that the veins in your " +
+			"arms are very black. Appreciating that good health is important, " +
+			"you schedule a visit with the Royal Physician.");
+		initialiseExtraMessageArray (2);
+		setExtraMessage ("The Royal Physician runs several diagnostic tests, " +
+			"looking more and more distressed as she goes. Finally, she says " +
+			"that you have somehow contracted Chronic Blood Sickness, " +
+			"a rare terminal disease.", 0);
+		setExtraMessage ("There is no real cure for Chronic Blood Sickness. " +
+			"The Royal Physician gives you 3 years to live. However, she advises " +
+			"that snorting crushed emeralds could fortify your heart, perhaps " +
+			"giving you an extra few years of life.", 1);
+		initialiseButtonTexts (2);
+		setButtonText ("Accept your fate with grace", 0);
+		setButtonText ("Snort as many emeralds as possible (100g)", 1);
+	}
+	public override void option1 () {
+		ManageYears yearManagement = gameController.getYearManagement ();
+		Event_Death deathEvent = new Event_Death ("You succumbed to the deadly effects " +
+			"of Chronic Blood Sickness.");
+		yearManagement.addSpecialEventInXYears (deathEvent, 3);
+		exit ();
+	}
+	public override void option2 () {
+		gameController.setMoney (gameController.getMoney () - 100);
+		ManageYears yearManagement = gameController.getYearManagement ();
+		Event_Death deathEvent = new Event_Death ("You succumbed to the deadly effects " +
+			"of Chronic Blood Sickness.");
+		yearManagement.addSpecialEventInXYears (deathEvent, 5);
+		displayFeedback ("Inhaling all that emerald dust actually made you feel a bit better!");
+	}
+}
+
+// REVOLUTION EVENTS
+
+
 
 /* Checklist for writing a SpecialEvent
  * Constructor:

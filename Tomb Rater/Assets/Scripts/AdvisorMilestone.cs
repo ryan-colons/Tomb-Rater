@@ -421,11 +421,11 @@ public class NM_BecomeLich : AdvisorMilestone {
 		"with some materials, we will try - I mean, perform - the ritual on you.");
 	}
 	public override string reward () {
-		// add possible event where you are denounced by someone
+		ManageYears yearManagement = gameController.getYearManagement ();
+		yearManagement.addSpecialEventInXYears (new Event_BecomeLich (), 0);
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
 		string necroName = advisorManagement.getAdvisors () [ManageAdvisors.NECRO].getName ();
 		advisorManagement.getAdvisors () [ManageAdvisors.NECRO] = null;
-		//remove death events, somehow?
 		return necroName + " has left, presumably in pursuit of otherwordly knowledge.";
 	}
 }
