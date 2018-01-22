@@ -989,8 +989,100 @@ public class Event_TerminalIllness : SpecialEvent {
 
 // REVOLUTION EVENTS
 
+public class Event_Unpopular : SpecialEvent {
+	public Event_Unpopular () {
+		CharacterData info = gameController.getCharData ();
+		setMessage ("One of your Advisors comes to show you some anti-" + info.getPlayerName() +
+		" propaganda posters that have been showing up in some corners of the city. Apparently, " +
+		"some of your recent decisions have not been popular with the people.");
+		initialiseExtraMessageArray (0);
+		initialiseButtonTexts (2);
+		setButtonText ("Endeavour to do better for your people", 0);
+		setButtonText ("Shrug", 1);
+	}
+	public override void option1 () { exit ();}
+	public override void option2 () { exit ();}
+}
 
+public class Event_Protests : SpecialEvent {
+	public Event_Protests () {
+		CharacterData info = gameController.getCharData ();
+		setMessage ("There have been reports of violent protests breaking out in " + info.getKingdomName() + 
+		". It seems the people are upset about some of your recent decisions. Your Advisors are concerned, " +
+		"and offer some possible responses.");
+		initialiseExtraMessageArray (1);
 
+		initialiseButtonTexts (2);
+		setButtonText ("Ignore the protesters", 0);
+		setButtonText ("Arrest the protesters", 1);
+		setButtonText ("Send a cake to every citizen (50g)", 2);
+	}
+	public override void option1 () { exit ();}
+	public override void option2 () {
+		gameController.getOpinionManagement ().incrementFavour (-1);
+		PathToDeath revolution = gameController.getRevolution ();
+		revolution.increment (10);
+		displayFeedback ("You sent your guards to arrest the protesters. The citizens seemed " +
+		"angry about this, but the protests quickly stopped.");
+	}
+	public override void option3 () {
+		gameController.setMoney (gameController.getMoney () - 50);
+		gameController.getOpinionManagement ().incrementFavour (1);
+		exit ();
+	}
+}
+
+public class Event_AssassinationPrevented : SpecialEvent{
+	public Event_AssassinationPrevented () {
+		setMessage ("One day, your guards find a group of strangers lurking " +
+		"around the palace kitchen. After arresting and questioning them, the guards " +
+		"determine that they were trying to poison your food!");
+		initialiseExtraMessageArray (1);
+		setExtraMessage ("Apparently, your citizens are disgruntled enough to try to kill you! " +
+		"Your Advisors come up with some plans to help prevent future assassination attempts.", 0);
+		initialiseButtonTexts (3);
+		setButtonText ("Criminalise assassination", 0);
+		setButtonText ("Put more money into helping your citizens", 1);
+		setButtonText ("Publicly execute the assassins who tried to poison you", 2);
+	}
+	public override void option1 () {
+		displayFeedback ("You make sure everyone knows that it's a crime to murder you. That should do it.");
+	}
+	public override void option2 () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.setGPT (advisorManagement.getGPT () - 5);
+		gameController.getOpinionManagement ().incrementFavour (1);
+		PathToDeath revolution = gameController.getRevolution ();
+		revolution.increment (5);
+		displayFeedback ("You set up several expensive ongoing programs for raising the quality of life " +
+		"for your citizens.");
+	}
+	public override void option3 () {
+		gameController.getOpinionManagement ().incrementFavour (-1);
+		PathToDeath revolution = gameController.getRevolution ();
+		revolution.increment (5);
+		displayFeedback ("The mood at the public execution was... tense. It didn't seem to go over well, " +
+		"but at least everyone knows not to mess with you.");
+	}
+}
+
+public class Event_AssassinationSuccessful : SpecialEvent {
+	public Event_AssassinationSuccessful () {
+		setMessage ("Walking back to your throne from the kitchen after a delicious " +
+		"meal, you suddenly notice that none of your guards are around. It's quiet...");
+		initialiseExtraMessageArray (1);
+		setExtraMessage ("Several citizens step out of the shadows, brandishing knives! " +
+		"They quickly surround you, yelling about your crimes against them, and carve " +
+		"you up like an ice sculpture.", 0);
+		initialiseButtonTexts (1);
+		setButtonText ("Ouch", 0);
+	}
+	public override void option1 () {
+		Event_Death deathEvent = new Event_Death ("You were assassinated by disgruntled citizens.");
+		gameController.loadEvent (deathEvent);
+	}
+}
+	
 /* Checklist for writing a SpecialEvent
  * Constructor:
  *      -set probability and reusability
