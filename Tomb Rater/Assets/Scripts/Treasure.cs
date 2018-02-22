@@ -96,6 +96,7 @@ public class Tre_Sarcophagus : Treasure {
 	public Tre_Sarcophagus () {
 		setName ("Sarcophagus");
 		setSprite ("coffin");
+		setDesc ("A beautiful, hand-carved sarcophagus. Put your corpse in it!");
 		addType (TreasureType.BURIAL);
 	}
 }

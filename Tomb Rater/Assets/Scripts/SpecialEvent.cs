@@ -330,18 +330,16 @@ public class Event_FoundNewGuild : SpecialEvent {
 			"form a guild. They specialise in the study and manipulation of the forces of life and death. It's... interesting.", 2);
 		this.setExtraMessage ("Which of these groups would you most like to support?", 3);
 		initialiseButtonTexts (3);
-		this.setButtonText ("Found the Temple of the Badger Prince (jk, hasn't been implemented sorry)", 0);
+		this.setButtonText ("Found the Temple of the Badger Prince (warning: not fully implemented)", 0);
 		this.setButtonText ("Found the Rave Syndicate", 1);
 		this.setButtonText ("Found the Society of Morticians", 2);
 	}
 	public override void option1 () {
-		/*
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
 		advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE] = new Advisor ();
 		advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE].setTutorial (new Event_TempleAdvisorTutorial ());
 		//set first milestone for badger advisor
 		exit();
-		*/
 	}
 	public override void option2 () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -773,29 +771,97 @@ public class Event_Death : SpecialEvent {
 		gameController.loadScene("legacy");
 	}
 }
-
-public class Event_GettingRaided : SpecialEvent {
 	
-}
-
 public class Event_TradeOpportunity : SpecialEvent {
 	public Event_TradeOpportunity () {
 		this.setMessage ("A band of traders from " + gameController.getTradeCivName () + " has come. " +
-		"They offer you an array of treasures.");
+			"They offer you an array of treasures. You have " + gameController.getMoney() + " to spend.");
 		initialiseExtraMessageArray (0);
-		initialiseButtonTexts (5);
-		this.setButtonText ("unimplemented", 0);
-		this.setButtonText ("unimplemented", 1);
-		this.setButtonText ("unimplemented", 2);
-		this.setButtonText ("Seize all the goods by force (unimplemented)", 3);
-		this.setButtonText ("Buy nothing", 4);
+		initialiseButtonTexts (3);
+		this.setButtonText ("Sarcophagus (50g)", 0);
+		this.setButtonText ("Crypt Horn (40g)", 1);
+		this.setButtonText ("Buy nothing", 2);
 	}
-	public override void option5 () {
+	public override void option1 () {
+		if (gameController.getMoney () >= 50) {
+			gameController.setMoney (gameController.getMoney () - 50);
+			gameController.getTreasureManagement ().getTreasureList ().Add (new Tre_Sarcophagus ());
+			exit ();
+		} else {
+			displayFeedback ("Unfortunately, you don't have enough money. The traders shake their heads and leave.");
+		}
+	}
+	public override void option2 () {
+		if (gameController.getMoney () >= 40) {
+			gameController.setMoney (gameController.getMoney () - 40);
+			gameController.getTreasureManagement ().getTreasureList ().Add (new Tre_CryptHorn ());
+			exit ();
+		} else {
+			displayFeedback ("Unfortunately, you don't have enough money. The traders shake their heads and leave.");
+		}
+	}
+	public override void option3 () {
 		displayFeedback ("Visibly disappointed, the traders pick up their things and leave.");
 	}
 }
 
 // RANDOM EVENTS
+
+public class Event_GettingRaided : SpecialEvent {
+	public Event_GettingRaided () {
+		setProbability (3);
+		setReuse (true);
+
+		CharacterData info = gameController.getCharData ();
+		string rival = info.getRivalCivName ();
+		this.setMessage ("A raiding party from " + rival + " has come to plunder our many assets! " +
+		"You watch from a tower high above, as your soldiers move in to meet them.");
+		initialiseExtraMessageArray (1);
+		setExtraMessage ("The enemy moves quickly! No doubt, they intend to steal from your workshops " +
+		"before scurrying home to " + rival + ". As you watch, they take cover in the orchards of " + info.getKingdomName () +
+		", using fruit trees as cover from your archers.", 0);
+		initialiseButtonTexts (3);
+		setButtonText ("Send soldiers into the orchards to fight.", 0);
+		setButtonText ("Burn the orchard to flush out the enemy", 1);
+		setButtonText ("Have soldiers wait in the workshops for an ambush", 2);
+	}
+	public override void option1 () {
+		CharacterData info = gameController.getCharData ();
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		int enemyWin = Random.Range (0, 100) - advisorManagement.getMight();
+		if (enemyWin > 0) {
+			// enemy wins
+			advisorManagement.setDefensiveMight(advisorManagement.getDefensiveMight() - 2);
+			gameController.setMoney (gameController.getMoney () - 20);
+			displayFeedback ("Unprepared for the orchard skirmish, your soldiers fail to stop the raiders " +
+			"from looting the workshops. " + info.getRivalCivName () + " has bested you today.");
+		} else if (enemyWin > -10) {
+			// enemy just loses
+			gameController.setMoney (gameController.getMoney () - 5);
+			displayFeedback ("Your soldiers sneak through the trees and fight back most of the raiders. " +
+			"A few still manage to reach your workshops and pilfer some goods.");
+		} else {
+			// enemy decisively loses
+			gameController.setMoney (gameController.getMoney () + 3);
+			displayFeedback ("Your soldiers meet the enemies head on, and fight them back. The blood and bones " +
+			"help the trees grow, and you manage to turn a small profit as a result!");
+		}	
+	}
+	public override void option2 () {
+		ManageOpinion opinionManagement = gameController.getOpinionManagement ();
+		opinionManagement.setPublicFear (opinionManagement.getPublicFear () + 1);
+		opinionManagement.incrementFavour (-1);
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.setGPT (advisorManagement.getGPT () - 2);
+		displayFeedback ("Your soldiers fire burning arrows into the trees, creating a wall of fire. The enemies " +
+		"are forced back, but annual Fig Eating Contest will never be quite the same.");
+	}
+	public override void option3 () {
+		gameController.setMoney (gameController.getMoney () - 3);
+		displayFeedback ("You trap the raiders inside a workshop, and pick them off carefully. Your wares are safe," +
+		"as are your soldiers. The only victim was all the fruit they ate on their way through the orchards.");
+	}
+}
 
 public class Event_ComplaintAboutTaxes : SpecialEvent {
 	public Event_ComplaintAboutTaxes () {

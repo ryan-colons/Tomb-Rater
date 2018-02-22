@@ -12,7 +12,7 @@ public class PosthumousEvent {
 	public void setProbability (int n) {
 		probability = n;
 	}
-	public int getProbability () {
+	public virtual int getProbability (TombRater rater) {
 		return probability;
 	}
 	public void setReuse (bool b) {
@@ -31,7 +31,7 @@ public class Post_Entropy : PosthumousEvent {
 		setReuse (true);
 	}
 	public override string trigger (TombRater rater) {
-		rater.incrementScore (-1);
+		rater.incrementScore (-2);
 		return "Time passes. Dust gathers on the history books containing your name.";
 	}
 }
@@ -91,13 +91,17 @@ public class Post_ExcitingNewReign : PosthumousEvent {
 
 public class Post_Vandalism : PosthumousEvent {
 	public Post_Vandalism () {
-		setProbability (6);
 		setReuse (true);
 	}
 	public override string trigger (TombRater rater) {
 		rater.incrementScore (-2);
 		return "A group of haters vandalises the outside of your " +
 			"tomb with dirt, paint, and chisels.";
+	}
+	public override int getProbability (TombRater rater) {
+		ManageOpinion opinionManagement = rater.getOpinionManagement ();
+		int opinion = opinionManagement.getNetFavour ();
+		return 5 - opinion;
 	}
 }
 
@@ -111,6 +115,11 @@ public class Post_MassVisitation : PosthumousEvent {
 		CharacterData info = rater.getCharData ();
 		return "On Throne Day, a parade of people come to visit the resting " +
 		"place of their favourite " + info.getPlayerTitle () + "... which is you!";
+	}
+	public override int getProbability (TombRater rater) {
+		ManageOpinion opinionManagement = rater.getOpinionManagement ();
+		int opinion = opinionManagement.getNetFavour ();
+		return 3 + opinion;
 	}
 }
 
@@ -150,5 +159,39 @@ public class Post_BloodJarHaunting : PosthumousEvent {
 
 // LATE
 
+public class Post_ArrivalOfElves : PosthumousEvent {
+	public Post_ArrivalOfElves () {
+		setProbability (10000);
+		setReuse (false);
+	}
+	public override string trigger (TombRater rater) {
+		return "Elves arrive from across the sea, and quickly take control " +
+		"of most of the continent.";
+	}
+}
 
 // REALLY LATE
+
+public class Post_Apocalypse : PosthumousEvent {
+	public Post_Apocalypse () {
+		setProbability (10000);
+		setReuse (false);
+	}
+	public override string trigger (TombRater rater) {
+		rater.clearAllLists ();
+		rater.addReallyLateEvent (new Post_Entropy());
+		return "A great fire washes over the land, destroying nearly all life. " +
+		"Only the beetles remain.";
+	}
+}
+
+public class Post_BeetlesRemember : PosthumousEvent {
+	public Post_BeetlesRemember () {
+		setProbability (1);
+		setReuse (true);
+	}
+	public override string trigger (TombRater rater) {
+		rater.incrementScore (1);
+		return "The beetles talk to the rocks about your deeds.";
+	}
+}

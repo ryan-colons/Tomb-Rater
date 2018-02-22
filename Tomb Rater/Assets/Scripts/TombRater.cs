@@ -148,12 +148,12 @@ public class TombRater {
 
 		int sum = 0;
 		foreach (PosthumousEvent postEvent in list) {
-			sum += postEvent.getProbability ();
+			sum += postEvent.getProbability (this);
 		}
 		int randNum = Random.Range (0, sum);
 		sum = 0;
 		foreach (PosthumousEvent postEvent in list) {
-			sum += postEvent.getProbability ();
+			sum += postEvent.getProbability (this);
 			if (randNum < sum) {
 				if (!postEvent.getReuse ()) {
 					// will this work??
@@ -197,6 +197,13 @@ public class TombRater {
 	}
 	public void addReallyLateEvent (PosthumousEvent newEvent) {
 		reallyLateEvents.Add (newEvent);
+	}
+
+	public void clearAllLists () {
+		earlyEvents = new List<PosthumousEvent> ();
+		midEvents = new List<PosthumousEvent> ();
+		lateEvents = new List<PosthumousEvent> ();
+		reallyLateEvents = new List<PosthumousEvent> ();
 	}
 
 	public CharacterData getCharData () {

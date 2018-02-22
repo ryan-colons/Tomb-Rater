@@ -45,7 +45,7 @@ public class ManageAdvisors {
 	public void setGPT (int gpt) {
 		this.goldPerTurn = gpt;
 	}
-
+		
 	public void setOffensiveMight (int n) {
 		offensiveMight = n;
 	}
@@ -58,4 +58,8 @@ public class ManageAdvisors {
 	public int getDefensiveMight () {
 		return defensiveMight;
 	}
+
+	public int getMight () {
+		return offensiveMight + defensiveMight;
+	}	
 }

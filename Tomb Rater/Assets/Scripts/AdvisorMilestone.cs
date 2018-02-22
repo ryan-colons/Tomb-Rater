@@ -190,7 +190,7 @@ public class GM_FundAnotherNewGuild : AdvisorMilestone {
 	}
 	public override string reward () {
 		ManageYears yearManagement = gameController.getYearManagement ();
-		yearManagement.addSpecialEventInXYears (new Event_FoundNewGuild (), 0);
+		yearManagement.addSpecialEventInXYears (new Event_FoundAnotherNewGuild (), 0);
 		return "";
 	}
 }
