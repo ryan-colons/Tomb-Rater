@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TombRater {
 
-	private string finalReport = "";
+	private List<string> finalReport = new List<string>();
 	private int score = 0;
 
 	private int tombSecurity = 0;
@@ -16,10 +16,10 @@ public class TombRater {
 	private ManageOpinion opinionManagement;
 	private ManageSpecialEvents specialEventManagement;
 
-	private List<PosthumousEvent> earlyEvents;
-	private List<PosthumousEvent> midEvents;
-	private List<PosthumousEvent> lateEvents;
-	private List<PosthumousEvent> reallyLateEvents;
+	private List<PosthumousEvent> earlyEvents = new List<PosthumousEvent>();
+	private List<PosthumousEvent> midEvents = new List<PosthumousEvent>();
+	private List<PosthumousEvent> lateEvents = new List<PosthumousEvent>();
+	private List<PosthumousEvent> reallyLateEvents = new List<PosthumousEvent>();
 
 	public TombRater (CharacterData info, ManageAdvisors advisor, ManageBuilding building,
 		ManageYears years, ManageOpinion opinion, ManageSpecialEvents spEvent) {
@@ -29,12 +29,22 @@ public class TombRater {
 		this.yearManagement = years;
 		this.opinionManagement = opinion;
 		this.specialEventManagement = spEvent;
+
+		addEventAnytime (new Post_Entropy ());
+		addEventAnytime (new Post_AmateurTombRobbers ());
+		addEventAnytime (new Post_ExpertTombRobbers ());
+
+		addEarlyEvent (new Post_ExcitingNewReign());
+		addEarlyEvent (new Post_MassVisitation());
+		addEarlyEvent (new Post_Vandalism());
+
+		addMidEvent (new Post_NewTomb());
 	}
 
 	//this method returns your score
-	public void rateTomb () {
+	public int rateTomb () {
 		score = 0;
-		finalReport = "";
+		finalReport = new List<string>();
 		string kingdomName = charData.getKingdomName ();
 
 		// check reputation
@@ -104,13 +114,18 @@ public class TombRater {
 				}
 			}
 		}
+		return yearsRemembered;
 	}
 
 	public void addToReport (string str) {
-		finalReport += str + "\n";
+		finalReport.Add(str);
 	}
 	public void incrementScore (int n) {
 		score += n;
+	}
+
+	public List<string> getReport() {
+		return this.finalReport;
 	}
 
 	public void incrementTombSecurity (int n) {
@@ -165,6 +180,25 @@ public class TombRater {
 		}
 	}
 		
+	public void addEventAnytime (PosthumousEvent newEvent) {
+		addEarlyEvent (newEvent);
+		addMidEvent (newEvent);
+		addLateEvent (newEvent);
+		addReallyLateEvent (newEvent);
+	}
+	public void addEarlyEvent (PosthumousEvent newEvent) {
+		earlyEvents.Add (newEvent);
+	}
+	public void addMidEvent (PosthumousEvent newEvent) {
+		midEvents.Add (newEvent);
+	}
+	public void addLateEvent (PosthumousEvent newEvent) {
+		lateEvents.Add (newEvent);
+	}
+	public void addReallyLateEvent (PosthumousEvent newEvent) {
+		reallyLateEvents.Add (newEvent);
+	}
+
 	public CharacterData getCharData () {
 		return charData;
 	}

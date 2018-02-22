@@ -53,6 +53,8 @@ public class ManageBuilding {
 		foreach (TombRoom availableRoom in roomsToBuild) {
 			if (availableRoom.getName ().Equals (room.getName ())) {
 				roomsToBuild.Remove (availableRoom);
+				makeRoomUnavailableToBuild (room);
+				return;
 			}
 		}
 	}

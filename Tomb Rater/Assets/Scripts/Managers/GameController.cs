@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour {
 	private PathToDeath healthPathToDeath;
 	private PathToDeath revolutionPathToDeath;
 
+	private TombRater tombRater;
+
 	private void Start () {
 		SpecialEvent.gameController = this;
 		SpecialEventUI.gameController = this;
@@ -32,6 +34,20 @@ public class GameController : MonoBehaviour {
 		buildTutorial = true;
 
 		charData = new CharacterData ();
+
+	}
+
+	// this is called from the introductory event
+	public void createManagers () {
+		advisorManagement = new ManageAdvisors ();
+		buildingManagement = new ManageBuilding ();
+		treasureManagement = new ManageTreasure ();
+		opinionManagement = new ManageOpinion ();
+		yearManagement = new ManageYears (50);
+		specialEventManagement = new ManageSpecialEvents ();
+
+		tombRater = new TombRater (charData, advisorManagement, buildingManagement, yearManagement, opinionManagement, specialEventManagement);
+
 		charData.generateCivNames ();
 		charData.generateComplainer ();
 		SpecialEvent[] healthEvents = new SpecialEvent[] {
@@ -41,21 +57,13 @@ public class GameController : MonoBehaviour {
 			new Event_TerminalIllness()
 		};
 		healthPathToDeath = new PathToDeath (healthEvents);
-		SpecialEvent[] revolutionEvents = new SpecialEvent[1];
+		SpecialEvent[] revolutionEvents = new SpecialEvent[] {
+			new Event_Unpopular(),
+			new Event_Protests(),
+			new Event_AssassinationPrevented(),
+			new Event_AssassinationSuccessful()
+		};	
 		revolutionPathToDeath = new PathToDeath (revolutionEvents);
-
-		for (int i = 0; i < 10; i++) {
-			charData.generateCivNames ();
-			charData.generateComplainer ();
-			Debug.Log (charData.getComplainName() + " :" + charData.getComplainPronouns()[0]);
-		}
-
-		advisorManagement = new ManageAdvisors ();
-		buildingManagement = new ManageBuilding ();
-		treasureManagement = new ManageTreasure ();
-		opinionManagement = new ManageOpinion ();
-		yearManagement = new ManageYears (50);
-		specialEventManagement = new ManageSpecialEvents ();
 	}
 
 	private void Awake () {
@@ -105,12 +113,15 @@ public class GameController : MonoBehaviour {
 		return specialEventManagement;
 	}
 
+	public TombRater getTombRater () {
+		return tombRater;
+	}
+
 	public int getMoney () {
 		return this.money;
 	}
 	public void setMoney (int n) {
 		this.money = n;
-		Debug.Log ("Money: " + n);
 	}
 
 	public CharacterData getCharData () {
@@ -133,6 +144,9 @@ public class GameController : MonoBehaviour {
 	/* THINGS TO SAVE
 	 * GameController
 	 *   -money
+	 *   -paths to death
+	 *     -event array, index
+	 *     -counter, threshold, loss
 	 * CharData
 	 *   -names
 	 * AdvisorManagement

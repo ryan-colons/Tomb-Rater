@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\Menus\BuildingMenu.cs" />
      <Compile Include="Assets\Scripts\Menus\CharacterCreation.cs" />
      <Compile Include="Assets\Scripts\Menus\GameLoader.cs" />
+     <Compile Include="Assets\Scripts\Menus\LegacyMenu.cs" />
      <Compile Include="Assets\Scripts\Menus\TurnoverScene.cs" />
      <Compile Include="Assets\Scripts\PathToDeath.cs" />
      <Compile Include="Assets\Scripts\PosthumousEvent.cs" />

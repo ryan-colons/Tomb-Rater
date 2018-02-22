@@ -17,6 +17,7 @@ public class ManageOpinion {
 	public ManageOpinion () {
 		publicFavour = 0;
 		publicDisfavour = 0;
+		publicAwe = 0;
 		publicFear = 0;
 	}
 

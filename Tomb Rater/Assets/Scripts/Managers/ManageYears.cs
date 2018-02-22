@@ -88,14 +88,14 @@ public class ManageYears  {
 		//Advisors
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement();
 		foreach (Advisor advisor in advisorManagement.getAdvisors()) {
-			if (advisor != null) {
+			if (advisor != null && advisor.getMilestone() != null) {
 				AdvisorMilestone milestone = advisor.getMilestone ();
 				int overflow = milestone.pay (advisor.getPayment ());
 				gameController.setMoney (gameController.getMoney () - advisor.getPayment ());
 				if (milestone.getPayment () >= milestone.getThreshold ()) {
 					yearReport += milestone.reward () + "\n";
 					advisor.proceedToNextMilestone ();
-					if (overflow > 0) {
+					if (overflow > 0 && advisor.getMilestone() != null) {
 						advisor.getMilestone ().pay (overflow);
 					}
 				}

@@ -186,6 +186,7 @@ public class GM_FundAnotherNewGuild : AdvisorMilestone {
 		setDescription ("Happy Birthday, " + info.getPlayerTitle () + " " + info.getPlayerName () + "! " + info.getKingdomName () + " " +
 			"is fast becoming the world capital for culture, art, and innovation! It may be expensive, but I think we should have another " +
 			"new guild founded.");
+		setNextMilestone (new GM_GeneratedMilestone ());
 	}
 	public override string reward () {
 		ManageYears yearManagement = gameController.getYearManagement ();
@@ -200,9 +201,10 @@ public class GM_GeneratedMilestone : AdvisorMilestone {
 		setThreshold (50);
 		setDescription ("Your Grace, the Guilds of " + info.getKingdomName () + " have much to offer. For a small price, we " +
 			"can commission a work of art for your Tomb.");
-		setNextMilestone (new GM_GeneratedMilestone ());
+		
 	}
 	public override string reward () {
+		this.setNextMilestone (new GM_GeneratedMilestone ());
 		ManageYears yearManagement = gameController.getYearManagement ();
 		yearManagement.addSpecialEventInXYears (new Event_GuildTreasure (), 0);
 		return "";
@@ -245,6 +247,7 @@ public class EM_OpenTradeRoute : AdvisorMilestone {
 		setDescription ("Happy Birthday, Your Highness! I have been in contact with a group of travelling traders, from " +
 		gameController.getTradeCivName () + ". For a small fee, they will include our Kingdom in their trading route, which " +
 		"makes its rounds every three years. " + gameController.getTradeCivName () + " is known for its many fine treasures!");
+		setNextMilestone (new EM_GeneratedMilestone ());
 	}
 	public override string reward () {
 		ManageYears yearManagement = gameController.getYearManagement ();
@@ -293,6 +296,7 @@ public class MM_FortifyWalls : AdvisorMilestone {
 		setDescription ("Your Majesty, our enemies are always conspiring against us. They want to steal your glory! " +
 			"Your soldiers stand ready to fight them, but the city walls are falling into disrepair... for a small price," +
 			"we can fortify the walls and station ballistae on our fearsome guard towers!");
+		setNextMilestone (new MM_RaidRival ());
 		
 	}
 	public override string reward () {
@@ -308,6 +312,7 @@ public class MM_RaidRival : AdvisorMilestone {
 		setDescription ("Happy Birthday, Your Majesty. Our rivals, from " + gameController.getRivalCivName() + " have an encampment not far from here - " +
 			"it is full of resources, but poorly defended. We should mount up an expedition to take what we can! " +
 			"It would be nice of us to teach them the importance of a strong defence.");
+		setNextMilestone (new MM_CaptureMine ());
 	}
 	public override string reward () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -328,6 +333,7 @@ public class MM_CaptureMine : AdvisorMilestone {
 		setDescription ("Our enemies have set up a mining camp, far beyond the walls of their city. It would be much " +
 			"easier for us to maintain and defend it. We should send a squadron of soldiers to capture it. The mine " +
 			"contains many valuable minerals, and would bring in extra money for the Kingdom each year.");
+		setNextMilestone (new MM_GeneratedMilestone ());
 	}
 	public override string reward () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();

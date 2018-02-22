@@ -42,7 +42,6 @@ public class Post_AmateurTombRobbers : PosthumousEvent {
 		setReuse (true);
 	}
 	public override string trigger (TombRater rater) {
-		string returnString = "";
 		if (Random.Range (0, 5) < rater.getTombSecurity ()) {
 			//robbers fail
 			rater.incrementScore(3);
@@ -63,7 +62,6 @@ public class Post_ExpertTombRobbers : PosthumousEvent {
 		setReuse (false);
 	}
 	public override string trigger (TombRater rater) {
-		string returnString = "";
 		if (Random.Range (0, 20) < rater.getTombSecurity ()) {
 			//robbers fail
 			rater.incrementScore(8);
@@ -138,6 +136,7 @@ public class Post_NewTomb : PosthumousEvent {
 }
 
 public class Post_BloodJarHaunting : PosthumousEvent {
+	// only if you have the blood jar treasure installed in your tomb
 	public Post_BloodJarHaunting () {
 		setProbability (8);
 		setReuse (false);
@@ -149,4 +148,7 @@ public class Post_BloodJarHaunting : PosthumousEvent {
 	}
 }
 
+// LATE
 
+
+// REALLY LATE

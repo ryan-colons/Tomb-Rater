@@ -29,10 +29,9 @@ public class ManageAdvisors {
 		advisors [MILITARY].setMilestone (new MM_FortifyWalls ());
 		advisors [GUILDS].setMilestone (new GM_UnlockMarble ());
 
-		advisors [ECONOMY].setTutorial (new Event_EconomicAdvisorTutorial ());
-		advisors [MILITARY].setTutorial (new Event_MilitaryAdvisorTutorial ());
-		advisors [GUILDS].setTutorial (new Event_GuildAdvisorTutorial ());
-
+		advisors [ECONOMY].setTutorial (new Event_EconomicAdvisorTutorial (advisors[ECONOMY]));
+		advisors [MILITARY].setTutorial (new Event_MilitaryAdvisorTutorial (advisors[MILITARY]));
+		advisors [GUILDS].setTutorial (new Event_GuildAdvisorTutorial (advisors[GUILDS]));
 		goldPerTurn = 20;
 	}
 

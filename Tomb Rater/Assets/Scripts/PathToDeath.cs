@@ -12,7 +12,7 @@ public class PathToDeath {
 
 	public PathToDeath (SpecialEvent[] events) {
 		counter = 100;
-		lossPerYear = 3;
+		lossPerYear = 2;
 		nextThreshold = 75;
 		eventPathToDeath = events;
 	}

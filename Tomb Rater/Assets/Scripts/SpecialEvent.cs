@@ -140,13 +140,14 @@ public class SpecialEvent {
 	public virtual void option5 () {}
 }
 
+// COMPLETELY FIXED EVENTS
 
 public class Event_Introduction : SpecialEvent {
 	public Event_Introduction () {
 		CharacterData info = gameController.getCharData ();
 		this.setMessage ("You wake up in a cold sweat, haunted by nightmares. For the first time, " +
-		"on your " + info.getAgeOrdinal () + " birthday, your thoughts have turned to your own mortality.\n\n...");
-		
+			"on your " + info.getAgeOrdinal () + " birthday, your thoughts have turned to your own mortality.\n\n...");
+
 		initialiseExtraMessageArray(3);
 		this.setExtraMessage ("You're going to be gone forever! Your accomplishments are impermanent, " +
 			"meaningless in the face of eternity! You'll be dumped into earth, doomed to decay while the " +
@@ -161,28 +162,15 @@ public class Event_Introduction : SpecialEvent {
 	}
 
 	public override void option1 () {
+		gameController.createManagers ();
 		gameController.loadScene ("menu");
-	}
-}
-
-public class Event_SpecialEventTest : SpecialEvent {
-	public Event_SpecialEventTest () {
-		this.setMessage ("This is just a test, to make sure the Special Event " +
-		"system is working!");
-		initialiseExtraMessageArray (1);
-		this.setExtraMessage ("Looks like everything is in order... Carry on!", 0);
-		initialiseButtonTexts (1);
-		this.setButtonText ("Okey dokey", 0);
-	}
-	public override void option1 () {
-		exit ();
 	}
 }
 
 public class Event_TombBuildingTutorial : SpecialEvent {
 	public Event_TombBuildingTutorial () {
 		this.setMessage ("Well met, Your Highness! I am here to discuss your plans for " +
-		"the construction of your tomb.");
+			"the construction of your tomb.");
 
 		initialiseExtraMessageArray (1);
 		this.setExtraMessage ("", 0);
@@ -196,7 +184,7 @@ public class Event_TombBuildingTutorial : SpecialEvent {
 }
 
 public class Event_MilitaryAdvisorTutorial : SpecialEvent {
-	public Event_MilitaryAdvisorTutorial () {
+	public Event_MilitaryAdvisorTutorial (Advisor militaryAdvisor) {
 		this.setMessage ("");
 		initialiseButtonTexts (1);
 		this.setButtonText ("Continue", 0);
@@ -210,7 +198,7 @@ public class Event_MilitaryAdvisorTutorial : SpecialEvent {
 }
 
 public class Event_EconomicAdvisorTutorial : SpecialEvent {
-	public Event_EconomicAdvisorTutorial () {
+	public Event_EconomicAdvisorTutorial (Advisor economicAdvisor) {
 		this.setMessage ("");
 		initialiseButtonTexts (1);
 		this.setButtonText ("Continue", 0);
@@ -224,8 +212,16 @@ public class Event_EconomicAdvisorTutorial : SpecialEvent {
 }
 
 public class Event_GuildAdvisorTutorial : SpecialEvent {
-	public Event_GuildAdvisorTutorial () {
-		this.setMessage ("");
+	public Event_GuildAdvisorTutorial (Advisor guildAdvisor) {
+		CharacterData info = gameController.getCharData ();
+		string guildName = guildAdvisor.getName();
+		this.setMessage ("Good day, Your Grace! I am " + guildName + ", and " +
+			"I am here as a representative of the guilds of " + info.getKingdomName () + ".");
+		initialiseExtraMessageArray (2);
+		setExtraMessage ("The guilds are full of talented artisans, performers, and thinkers. They " +
+			"can help make your Tomb into a masterpiece, to be admired for centuries!", 0);
+		setExtraMessage ("Talk to me if you would like to invest some money into the guilds. " +
+			"In return, they can offer exciting treasures and more!", 1);
 		initialiseButtonTexts (1);
 		this.setButtonText ("Continue", 0);
 	}
@@ -236,6 +232,22 @@ public class Event_GuildAdvisorTutorial : SpecialEvent {
 		guildAdvisor.setTutorial (null);
 	}
 }
+
+public class Event_SpecialEventTest : SpecialEvent {
+	public Event_SpecialEventTest () {
+		this.setMessage ("This is just a test, to make sure the Special Event " +
+			"system is working!");
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage ("Looks like everything is in order... Carry on!", 0);
+		initialiseButtonTexts (1);
+		this.setButtonText ("Okey dokey", 0);
+	}
+	public override void option1 () {
+		exit ();
+	}
+}
+
+// SEMI FIXED EVENTS
 	
 public class Event_GuildTreasure : SpecialEvent {
 	public Event_GuildTreasure () {
@@ -318,22 +330,24 @@ public class Event_FoundNewGuild : SpecialEvent {
 			"form a guild. They specialise in the study and manipulation of the forces of life and death. It's... interesting.", 2);
 		this.setExtraMessage ("Which of these groups would you most like to support?", 3);
 		initialiseButtonTexts (3);
-		this.setButtonText ("Found the Temple of the Badger Prince", 0);
+		this.setButtonText ("Found the Temple of the Badger Prince (jk, hasn't been implemented sorry)", 0);
 		this.setButtonText ("Found the Rave Syndicate", 1);
 		this.setButtonText ("Found the Society of Morticians", 2);
 	}
 	public override void option1 () {
+		/*
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
 		advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE] = new Advisor ();
+		advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE].setTutorial (new Event_TempleAdvisorTutorial ());
 		//set first milestone for badger advisor
-		//set tutorial for advisor also
 		exit();
+		*/
 	}
 	public override void option2 () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
 		advisorManagement.getAdvisors () [ManageAdvisors.PARTY] = new Advisor ();
-		//set first milestone for party advisor
-		//set tutorial for advisor also
+		advisorManagement.getAdvisors () [ManageAdvisors.PARTY].setMilestone (new PM_ThrowParty ());
+		advisorManagement.getAdvisors () [ManageAdvisors.PARTY].setTutorial (new Event_PartyAdvisorTutorial ());
 		ManageYears yearManagement = gameController.getYearManagement();
 		yearManagement.addSpecialEventInXYears (new Event_PeopleLoveParties (), 1);
 		exit();
@@ -623,7 +637,7 @@ public class Event_LichDeath : SpecialEvent {
 		setMessage ("A warrior in gleaming armor tumbles through the window of " +
 		"your throne room! Brandishing a spiked mace, she yells something about " +
 		"the Society of Morticians and crimes against nature, and dashes towards you!");
-		initialiseExtraMessageArray (3);
+		initialiseButtonTexts (3);
 		setButtonText ("Call for the guards", 0);
 		setButtonText ("Reach for your sceptre", 1);
 		setButtonText ("Try to run away", 2);
@@ -756,6 +770,7 @@ public class Event_Death : SpecialEvent {
 	}
 	public override void option1 () {
 		//go to final scene, where you see your legacy etc
+		gameController.loadScene("legacy");
 	}
 }
 
@@ -780,6 +795,8 @@ public class Event_TradeOpportunity : SpecialEvent {
 	}
 }
 
+// RANDOM EVENTS
+
 public class Event_ComplaintAboutTaxes : SpecialEvent {
 	public Event_ComplaintAboutTaxes () {
 		setProbability (5);
@@ -788,9 +805,9 @@ public class Event_ComplaintAboutTaxes : SpecialEvent {
 		CharacterData info = gameController.getCharData ();
 		string name = info.getComplainName ();
 		this.setMessage (name + ", a prominent member of the community, has " +
-		"come to lodge a complaint. \"Taxes are too high!\", " + info.getComplainPronouns () [0] +
-		" he says. \"Either lower taxes, so we can live more comfortably, or " +
-		"put more money into improving the quality of life for the average citizen!\"");
+			"come to lodge a complaint. \"Taxes are too high!\", " + info.getComplainPronouns () [0] +
+			" he says. \"Either lower taxes, so we can live more comfortably, or " +
+			"put more money into improving the quality of life for the average citizen!\"");
 		initialiseExtraMessageArray (0);
 		initialiseButtonTexts (3);
 		this.setButtonText ("Lower taxes", 0);
@@ -822,9 +839,9 @@ public class Event_YetAnotherComplaint : SpecialEvent {
 		CharacterData info = gameController.getCharData ();
 		string name = info.getComplainName ();
 		this.setMessage (name + ", a prominent member of the community, has " +
-		"come to lodge a complaint. \"It's too rainy these days!\", " + info.getComplainPronouns () [0] +
-		" he says. \"You need to put more money into awnings, public umbrellas and " +
-		"raincoats. What else do we pay taxes for?\"");
+			"come to lodge a complaint. \"It's too rainy these days!\", " + info.getComplainPronouns () [0] +
+			"says. \"You need to put more money into awnings, public umbrellas and " +
+			"raincoats. What else do we pay taxes for?\"");
 		initialiseExtraMessageArray (1);
 		this.setExtraMessage ("\"What do you think?\"", 0);
 		initialiseButtonTexts (4);
@@ -863,11 +880,12 @@ public class Event_YetAnotherComplaint : SpecialEvent {
 		ManageOpinion opinion = gameController.getOpinionManagement ();
 		opinion.incrementFavour (2);
 		displayFeedback ("You fund an new anti-rain committee, and begin supplying " +
-		info.getKingdomName () + " with supplies for dealing with the mild annoyances of rain. " +
-		"Truely, you are a " + info.getPlayerTitle () + " of the people!");
+			info.getKingdomName () + " with supplies for dealing with the mild annoyances of rain. " +
+			"Truely, you are a " + info.getPlayerTitle () + " of the people!");
 	}
 }
-	
+
+
 // HEALTH EVENTS
 
 public class Event_EatingLotsOfCheese : SpecialEvent {
@@ -903,7 +921,7 @@ public class Event_CheeseSickness : SpecialEvent {
 			"these creatures can live inside your body and eat away any excess cheese!", 1);
 		setExtraMessage ("Pleased to have the world's finest medical team at your side, you move the tank " +
 			"into your quarters, so that you can drink from it regularly.", 2);
-		setExtraMessage ("One of your chefs also suggests switching to a diet of smake cheese. This would be more" +
+		setExtraMessage ("One of your chefs also suggests switching to a diet of snake cheese. This would be more" +
 			"expensive to import, but is said to be much healthier than our goat cheese.", 3);
 		initialiseButtonTexts (2);
 		setButtonText ("Stick with the goat cheese diet", 0);
@@ -1010,9 +1028,8 @@ public class Event_Protests : SpecialEvent {
 		setMessage ("There have been reports of violent protests breaking out in " + info.getKingdomName() + 
 		". It seems the people are upset about some of your recent decisions. Your Advisors are concerned, " +
 		"and offer some possible responses.");
-		initialiseExtraMessageArray (1);
 
-		initialiseButtonTexts (2);
+		initialiseButtonTexts (3);
 		setButtonText ("Ignore the protesters", 0);
 		setButtonText ("Arrest the protesters", 1);
 		setButtonText ("Send a cake to every citizen (50g)", 2);

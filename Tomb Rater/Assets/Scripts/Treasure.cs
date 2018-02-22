@@ -52,9 +52,9 @@ public class Treasure {
 		return typeList;
 	}
 
-	public virtual void onRate () {
-		//called when the tomb is finally rated
-		//probably?
+	public virtual void onBuild () {
+		//called when you put the decoration down
+		//this kind of assumes you won't remove it???
 	}
 }
 
@@ -207,5 +207,7 @@ public class Tre_BloodJar : Treasure {
 		addType (TreasureType.BURIAL);
 		addType (TreasureType.MAGICAL);
 	}
-	// method after death
+	public override void onBuild () {
+		gameController.getTombRater ().addMidEvent (new Post_BloodJarHaunting ());
+	}
 }
