@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\Menus\TurnoverScene.cs" />
      <Compile Include="Assets\Scripts\PathToDeath.cs" />
      <Compile Include="Assets\Scripts\PosthumousEvent.cs" />
+     <Compile Include="Assets\Scripts\SaveData.cs" />
      <Compile Include="Assets\Scripts\SpecialEvent.cs" />
      <Compile Include="Assets\Scripts\TestRunner.cs" />
      <Compile Include="Assets\Scripts\TombRater.cs" />

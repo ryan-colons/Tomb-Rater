@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -133,6 +135,12 @@ public class GameController : MonoBehaviour {
 	public PathToDeath getRevolution () {
 		return revolutionPathToDeath;
 	}
+	public void setHealth (PathToDeath h) {
+		healthPathToDeath = h;
+	}
+	public void setRevolution (PathToDeath r) {
+		revolutionPathToDeath = r;
+	}
 
 	public string getTradeCivName () {
 		return charData.getTradeCivName();
@@ -141,25 +149,26 @@ public class GameController : MonoBehaviour {
 		return charData.getRivalCivName();
 	}
 
-	/* THINGS TO SAVE
-	 * GameController
-	 *   -money
-	 *   -paths to death
-	 *     -event array, index
-	 *     -counter, threshold, loss
-	 * CharData
-	 *   -names
-	 * AdvisorManagement
-	 *   -advisors (and related milestones)
-	 *   -GPT, military might
-	 * BuildingManagement
-	 *   -map (2d buildtile array)
-	 *   -available rooms, available materials
-	 * TreasureManagement
-	 *   -treasure list
-	 * SpecialEventManagement
-	 *   -possible event list
-	 * YearManagement
-	 *   -calendar, index (buffer calendar)
-	 */
+
+	public void save () {
+		BinaryFormatter bf = new BinaryFormatter ();
+		FileStream file = File.Create (Application.persistentDataPath + "/playerInfo.tr");
+		SaveData save = new SaveData (this);
+		bf.Serialize (file, save);
+		file.Close ();
+	}
+
+	public bool load () {
+		if (File.Exists (Application.persistentDataPath + "/playerInfo.tr")) {
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.tr", FileMode.Open);
+			SaveData save = (SaveData)bf.Deserialize (file);
+			file.Close ();
+			save.unload (this);
+			return true;
+		} else {
+			Debug.Log ("Couldn't find a save file!");
+			return false;
+		}
+	}
 }

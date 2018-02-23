@@ -38,6 +38,9 @@ public class ManageAdvisors {
 	public Advisor[] getAdvisors () {
 		return advisors;
 	}
+	public void setAdvisors (Advisor[] array) {
+		advisors = array;
+	}
 
 	public int getGPT () {
 		return goldPerTurn;

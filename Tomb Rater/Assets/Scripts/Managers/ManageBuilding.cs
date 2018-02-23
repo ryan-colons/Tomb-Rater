@@ -61,6 +61,9 @@ public class ManageBuilding {
 	public TombRoom[] getAvailableRooms () {
 		return roomsToBuild.ToArray ();
 	}
+	public List<TombRoom> getAvailableRoomList () {
+		return roomsToBuild;
+	}
 
 	public void addAvailableMaterial (BuildMaterial mat) {
 		if (!isMaterialAvailable (mat)) {
@@ -78,6 +81,9 @@ public class ManageBuilding {
 	}
 	public BuildMaterial[] getAvailableMaterials () {
 		return availableMaterials.ToArray ();
+	}
+	public List<BuildMaterial> getAvailableMaterialList () {
+		return availableMaterials;
 	}
 	public void changeMaterialCost (BuildMaterial mat, int newCost) {
 		foreach (BuildMaterial availableMat in availableMaterials) {
@@ -191,6 +197,19 @@ public class ManageBuilding {
 			array [3] = map [x - 1, y];
 		}
 		return array;
+	}
+
+	public BuildTile[,] getTileMap () {
+		return map;
+	}
+	public void setTileMap (BuildTile[,] array) {
+		map = array;
+	}
+	public void setRoomsToBuild (List<TombRoom> list) {
+		roomsToBuild = list;
+	}
+	public void setAvailableMaterials (List<BuildMaterial> list) {
+		availableMaterials = list;
 	}
 }
 

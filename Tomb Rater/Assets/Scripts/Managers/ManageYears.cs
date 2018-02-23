@@ -26,6 +26,9 @@ public class ManageYears  {
 	public int getYearIndex () {
 		return yearIndex;
 	}
+	public void setYearIndex (int n) {
+		yearIndex = n;
+	}
 
 	public Year getYear (int yearNum) {
 		if (yearNum < CALENDAR_SIZE) {
@@ -137,5 +140,18 @@ public class ManageYears  {
 			bufferCalendar = null;
 			yearIndex = 0;
 		}
+	}
+		
+	public Year[] getCalendar () {
+		return calendar;
+	}
+	public Year[] getBufferCalendar () {
+		return bufferCalendar;
+	}
+	public void setCalendar (Year[] c) {
+		calendar = c;
+	}
+	public void setBufferCalendar(Year[] c) {
+		bufferCalendar = c;
 	}
 }

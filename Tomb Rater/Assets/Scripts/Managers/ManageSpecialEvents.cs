@@ -95,4 +95,18 @@ public class ManageSpecialEvents {
 			addPossibleEvent (new Event_YetAnotherComplaint ());
 		}
 	}
+
+	public int getComplaintsHeard () {
+		return complaintsHeard;
+	}
+	public void setComplaintsHeard (int n) {
+		complaintsHeard = n;
+	}
+
+	public List<SpecialEvent> getPossibleEvents () {
+		return possibleEvents;
+	}
+	public void setPossibleEvents (List<SpecialEvent> list) {
+		possibleEvents = list;
+	}
 }

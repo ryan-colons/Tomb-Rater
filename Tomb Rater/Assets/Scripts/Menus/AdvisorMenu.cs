@@ -63,4 +63,9 @@ public class AdvisorMenu : MonoBehaviour {
 		}
 	}
 
+	public void saveAndQuit () {
+		gameController.save ();
+		Application.Quit ();
+	}
+
 }

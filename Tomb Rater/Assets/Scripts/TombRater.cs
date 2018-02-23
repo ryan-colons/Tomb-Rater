@@ -224,4 +224,16 @@ public class TombRater {
 	public ManageSpecialEvents getSpecialEventManagement () {
 		return specialEventManagement;
 	}
+
+	public List<PosthumousEvent>[] getLists () {
+		return new List<PosthumousEvent>[] {
+			earlyEvents, midEvents, lateEvents, reallyLateEvents
+		};
+	}
+	public void setLists (List<PosthumousEvent>[] array) {
+		earlyEvents = array [0];
+		midEvents = array [1];
+		lateEvents = array [2];
+		reallyLateEvents = array [3];
+	}
 }

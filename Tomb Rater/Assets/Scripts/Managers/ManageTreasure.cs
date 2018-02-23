@@ -17,4 +17,7 @@ public class ManageTreasure {
 		return treasureList;
 	}
 
+	public void setTreasureList (List<Treasure> list) {
+		treasureList = list;
+	}
 }

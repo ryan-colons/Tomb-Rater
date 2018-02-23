@@ -87,8 +87,14 @@ public class CharacterData {
 	public string getComplainName () {
 		return complainCitizen;
 	}
+	public void setComplainName (string str) {
+		complainCitizen = str;
+	}
 	public string[] getComplainPronouns () {
 		return complainPronouns;
+	}
+	public void setComplainPronouns (string[] array) {
+		complainPronouns = array;
 	}
 	public string[] getUpperComplainPronouns () {
 		return new string[] {
