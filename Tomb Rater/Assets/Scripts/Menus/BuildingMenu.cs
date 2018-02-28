@@ -39,6 +39,11 @@ public class BuildingMenu : MonoBehaviour {
 		return tileMap [x, y];
 	}
 	public MapTile getMapTileAtCoord (int x, int y) {
+		// THIS CAN BE NULL
+		//   oh
+		//   no
+		//
+		Debug.Log ("Getting " + tileMap [x, y]);
 		return getTileAtCoord (x, y).GetComponent<MapTile> ();
 	}
 
@@ -46,15 +51,9 @@ public class BuildingMenu : MonoBehaviour {
 		this.gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		this.buildingManagement = gameController.getBuildingManagement ();
 
-		setTileAdjacencies ();
 		placeAllTiles ();
+		setTileAdjacencies ();
 
-		/* THERE NEEDS TO BE SOME TUTORIAL EVENTUALLY!
-		if (gameController.buildTutorialNeeded ()) {
-			tutPanel.SetActive(true);
-			gameController.setBuildTutorialNeeded (false);
-		}
-		*/
 		gameController.setBuildTutorialNeeded (false);
 	}
 
@@ -117,6 +116,7 @@ public class BuildingMenu : MonoBehaviour {
 				if (j < MAP_SIZE - 1) {
 					east = tileMap [i, j + 1];
 				}
+				//Debug.Log ("TILE: " + i + ", " + j + ": " + tileMap [i, j]);
 				tileMap [i, j].GetComponent<MapTile> ().setAdjacentObjects (north, east, west, south);
 			}
 		}

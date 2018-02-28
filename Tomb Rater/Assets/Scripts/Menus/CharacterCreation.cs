@@ -7,7 +7,7 @@ public class CharacterCreation : MonoBehaviour {
 
 	private GameController gameController;
 
-	private string name;
+	private string pName;
 	private string title;
 	private string kingdomName;
 
@@ -23,11 +23,11 @@ public class CharacterCreation : MonoBehaviour {
 
 	public void updateCharacterText () {
 		string str = "I am ";
-		name = nameField.text;
+		pName = nameField.text;
 		kingdomName = kingdomField.text;
 		title = titleDropdown.options [titleDropdown.value].text;
-		if (!name.Equals ("")) {
-			str += name + ", ";
+		if (!pName.Equals ("")) {
+			str += pName + ", ";
 		}
 		str += "the " + title + " ";
 		if (!kingdomName.Equals ("")) {
@@ -37,11 +37,11 @@ public class CharacterCreation : MonoBehaviour {
 	}
 
 	public void validate () {
-		if (name == null || name.Equals ("")) {
+		if (pName == null || pName.Equals ("")) {
 			reportError ("You must enter a name.");
 			return;
 		}
-		if (kingdomName == null || name.Equals ("")) {
+		if (kingdomName == null || pName.Equals ("")) {
 			reportError ("Your Kingdom needs a name.");
 			return;
 		}
@@ -50,7 +50,7 @@ public class CharacterCreation : MonoBehaviour {
 			return;
 		}
 		CharacterData info = gameController.getCharData ();
-		info.setPlayerName (name);
+		info.setPlayerName (pName);
 		info.setPlayerTitle (title);
 		info.setKingdomName (kingdomName);
 		info.setPlayerAge (52);

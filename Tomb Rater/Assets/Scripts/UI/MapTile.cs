@@ -4,13 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-/* How to select tiles for building:
- * have a static variable in ManageBuilding (or just MapTile?) that shows when it's selecting time
- * also need to have a button up for cancelling probably?
- */
-
 [RequireComponent(typeof(SpriteRenderer))]
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class MapTile : MonoBehaviour {
 
 	private GameObject north, east, west, south;
@@ -21,13 +16,14 @@ public class MapTile : MonoBehaviour {
 	public static float xSize = 4, ySize = 2;
 	public static int gridSize = 9; //subtract 1 from actual grid size
 
-	private void Start () {
+	private void Awake () {
 		sprRenderer = this.GetComponent<SpriteRenderer> ();
 		actualColor = sprRenderer.color;
 		BuildingMenu buildingMenu = GameObject.Find ("Canvas").GetComponent<BuildingMenu> ();
 		buildingMenu.setTileAtCoord (this.gameObject, xCoord, yCoord);
 	}
 
+	/* USED IN EDITOR TO PLACE TILES MORE EASILY
 	private void OnValidate() {
 		//place tile according to xCoord and yCoord
 		if (!Application.isPlaying) {
@@ -41,7 +37,7 @@ public class MapTile : MonoBehaviour {
 			this.transform.position = new Vector3 (xPos - xOffset, yPos, zPos);
 		}
 	}
-
+	*/
 	public TombRoom getRoom () {
 		return room;
 	}
