@@ -65,6 +65,10 @@ public class GameController : MonoBehaviour {
 			new Event_AssassinationSuccessful()
 		};	
 		revolutionPathToDeath = new PathToDeath (revolutionEvents);
+
+		specialEventManagement.addPossibleEvent (new Event_GettingRaided());
+		specialEventManagement.addPossibleEvent (new Event_ComplaintAboutTaxes());
+		specialEventManagement.addPossibleEvent (new Event_VerminousVisitors());
 	}
 
 	private void Awake () {

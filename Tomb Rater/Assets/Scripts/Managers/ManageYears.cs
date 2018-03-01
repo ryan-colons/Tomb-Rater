@@ -110,10 +110,12 @@ public class ManageYears  {
 
 		//run special events, move on once they're all done
 		//shift to "turn" scene, give script all the info it needs
-		//current picking just 1 random event each year
+		//current picking just 1 random event each year (33% chance of 0 events picked)
 		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement();
 		SpecialEvent randEvent = specialEventManagement.chooseSpecialEventRandomly ();
-		if (randEvent != null) {
+		int chance = Random.Range (0, 3);
+		Debug.Log ("chance " + chance);
+		if (randEvent != null && chance > 0) {
 			currentYear.addSpecialEvent (randEvent);
 		}
 		TurnoverScene.specialEvents = currentYear.getEvents().ToArray();

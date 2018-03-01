@@ -28,7 +28,8 @@ public class ManageSpecialEvents {
 		foreach (SpecialEvent specialEvent in possibleEvents) {
 			sum += specialEvent.getProbability ();
 		}
-		int randNum = Random.Range (0, sum);
+		int randNum = Random.Range (0, sum + 1);
+		Debug.Log ("sum " + sum + ", rand " + randNum);
 		sum = 0;
 		foreach (SpecialEvent specialEvent in possibleEvents) {
 			sum += specialEvent.getProbability ();

@@ -515,3 +515,17 @@ public class PM_BecomeALegend : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
+public class MongooseMilestone : AdvisorMilestone {
+	public MongooseMilestone () {
+		setThreshold (75);
+		CharacterData info = gameController.getCharData ();
+		setDescription ("* The mongoose rolls, hisses, and squeaks. *");
+	}
+	public override string reward () {
+		setNextMilestone (new MongooseMilestone ());
+		ManageOpinion opinion = gameController.getOpinionManagement ();
+		opinion.incrementFavour (-1);
+		return "People were very annoyed when they found out how much money you gave to a mongoose.";
+	}
+}

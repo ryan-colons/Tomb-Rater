@@ -845,6 +845,118 @@ public class Event_TradeOpportunity : SpecialEvent {
 // RANDOM EVENTS
 
 [System.Serializable]
+public class Event_VerminousVisitors : SpecialEvent {
+	public Event_VerminousVisitors () {
+		setProbability (4);
+		setReuse (false);
+
+		CharacterData info = gameController.getCharData ();
+		this.setMessage ("A travelling carnival made its way from " + info.getTradeCivName () +
+		"this year. Fun and festivites were had by all, but the revellers seem to have " +
+		"brought some vermin with them...");
+		initialiseExtraMessageArray (1);
+		setExtraMessage ("The carnival has packed up and left, but there are noticeably more " +
+		"rats scurrying around the markets. The people of " + info.getKingdomName () + " are " +
+		"now looking to you to remedy this infestation.", 0);
+		initialiseButtonTexts (4);
+		setButtonText ("Hire a team of exterminators", 0);
+		setButtonText ("Demand that " + info.getTradeCivName() + " send a team of exterminators", 1);
+		setButtonText ("Ignore the problem", 2);
+		setButtonText ("Release nests of snakes in tactical locations", 3); 
+	}
+	public override void option1 () {
+		gameController.setMoney (gameController.getMoney () - 20);
+		gameController.getOpinionManagement ().incrementFavour (1);
+		displayFeedback ("It was a little costly, but people were pleased once the vermin was gone.");
+	}
+	public override void option2 () {
+		string tradeCiv = gameController.getCharData ().getTradeCivName();
+		displayFeedback ("After a long period of arguing, " + tradeCiv + " agreed to pay for the clean up. " +
+			"Your own people were relieved to finally have the problem sorted, though they seemed to resent the delay.");
+	}
+	public override void option3 () {
+		gameController.getOpinionManagement ().incrementFavour (-2);
+		displayFeedback ("Resourceful and cunning, your people eventually managed to clear up the infestation by " +
+		"themselves. Your unhelpfulness did not go unnoticed however...");
+	}
+	public override void option4 () {
+		gameController.getOpinionManagement ().incrementFavour (-1);
+		gameController.getYearManagement ().addSpecialEventInXYears (new Event_SnakeInfestation(), 1);
+		displayFeedback ("The rodent problem quickly disappeared! Your people still seemed a little unhappy for " +
+			"some reason...");
+	}
+}
+
+[System.Serializable]
+public class Event_SnakeInfestation : SpecialEvent {
+	public Event_SnakeInfestation () {
+		string complain = gameController.getCharData ().getComplainName ();
+		setMessage (complain + ", a prominent member of the community, has come to you with a complaint. " +
+		"It appears that the snakes you released last year, to solve a rodent problem, " +
+		"have become a problem themselves. Nests of snakes have been appearing all over the city, " +
+		"and many people are now dealing with nasty bites.");
+		initialiseButtonTexts (3);
+		setButtonText ("Hire a team of capable snake-removers", 0);
+		setButtonText ("Ignore the problem", 1);
+		setButtonText ("Release an even larger number of mongooses", 2);
+	}
+	public override void onTrigger () {
+		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement ();
+		specialEventManagement.incrementComplaintsHeard ();
+	}
+	public override void option1 () {
+		gameController.setMoney (gameController.getMoney () - 50);
+		gameController.getOpinionManagement ().incrementFavour (1);
+		displayFeedback ("It cost a lot of money, but people were very relieved once the snakes were gone.");
+	}
+	public override void option2 () {
+		gameController.getOpinionManagement ().incrementFavour (-2);
+		displayFeedback ("Your people soon learned to live alongside the snakes. They did not seem happy about it however.");
+	}
+	public override void option3 () {
+		gameController.getYearManagement ().addSpecialEventInXYears (new Event_MongooseDisease(), 1);
+		displayFeedback ("The mongooses soon culled the snake population, presumably solving the problem forever.");
+	}
+}
+
+[System.Serializable]
+public class Event_MongooseDisease: SpecialEvent {
+	public Event_MongooseDisease () {
+		string complain = gameController.getCharData ().getComplainName ();
+		setMessage (complain + ", a prominent member of the community, has a new complaint. " +
+		"The mongooses you released last year, to curb the growing snake population, have become " +
+		"wild and angry! Several people have been bitten and hospitalised.");
+		initialiseExtraMessageArray (1);
+		setExtraMessage ("Even worse, the victims seem to have contracted a strange disease from the bites. " +
+		"They giggle loudly at night, and crave the taste of snake blood! It is distressing, to say the least.", 0);
+		initialiseButtonTexts (3);
+		setButtonText ("Have the mongooses rounded up, and the victims treated by the best doctors", 0);
+		setButtonText ("Ignore the problem", 1);
+		setButtonText ("Appease the mongooses by hiring one as a Royal Advisor", 2);
+	}
+	public override void onTrigger () {
+		ManageSpecialEvents specialEventManagement = gameController.getSpecialEventManagement ();
+		specialEventManagement.incrementComplaintsHeard ();
+	}
+	public override void option1 () {
+		gameController.setMoney (gameController.getMoney () - 50);
+		gameController.getOpinionManagement ().incrementFavour (1);
+		exit ();
+	}
+	public override void option2 () {
+		gameController.getOpinionManagement ().incrementFavour (-2);
+		displayFeedback ("The people seemed very displeased.");
+	}
+	public override void option3 () {
+		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
+		advisorManagement.getAdvisors () [ManageAdvisors.MONGOOSE] = new Advisor ();
+		advisorManagement.getAdvisors () [ManageAdvisors.MONGOOSE].setName ("Mongoose");
+		advisorManagement.getAdvisors () [ManageAdvisors.MONGOOSE].setMilestone (new MongooseMilestone ());
+		displayFeedback ("The people s-... wait, what?");
+	}
+}
+
+[System.Serializable]
 public class Event_GettingRaided : SpecialEvent {
 	public Event_GettingRaided () {
 		setProbability (3);
@@ -911,7 +1023,7 @@ public class Event_ComplaintAboutTaxes : SpecialEvent {
 		string name = info.getComplainName ();
 		this.setMessage (name + ", a prominent member of the community, has " +
 			"come to lodge a complaint. \"Taxes are too high!\", " + info.getComplainPronouns () [0] +
-			" he says. \"Either lower taxes, so we can live more comfortably, or " +
+			" says. \"Either lower taxes, so we can live more comfortably, or " +
 			"put more money into improving the quality of life for the average citizen!\"");
 		initialiseExtraMessageArray (0);
 		initialiseButtonTexts (3);
@@ -1028,7 +1140,7 @@ public class Event_CheeseSickness : SpecialEvent {
 			"these creatures can live inside your body and eat away any excess cheese!", 1);
 		setExtraMessage ("Pleased to have the world's finest medical team at your side, you move the tank " +
 			"into your quarters, so that you can drink from it regularly.", 2);
-		setExtraMessage ("One of your chefs also suggests switching to a diet of snake cheese. This would be more" +
+		setExtraMessage ("One of your chefs also suggests switching to a diet of snake cheese. This would be more " +
 			"expensive to import, but is said to be much healthier than our goat cheese.", 3);
 		initialiseButtonTexts (2);
 		setButtonText ("Stick with the goat cheese diet", 0);

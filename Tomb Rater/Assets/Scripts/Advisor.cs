@@ -22,6 +22,9 @@ public class Advisor {
 		"olomon", "euben", "eborah", "arbara", "illiam", "atheryn", "amuel", "ampbell"};
 		return name1 [Random.Range (0, name1.Length)] + name2 [Random.Range (0, name2.Length)];
 	}
+	public void setName (string str) {
+		name = str;
+	}
 
 	public string getSpeech () {
 		return milestone.getDescription ();

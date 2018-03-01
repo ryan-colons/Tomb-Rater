@@ -9,6 +9,7 @@ public class ManageAdvisors {
 	public const int NECRO = 3;
 	public const int PARTY = 4;
 	public const int TEMPLE = 5;
+	public const int MONGOOSE = 6;
 
 	private int goldPerTurn = 0;
 	//percent chance of succeeding in a (normal) military event
@@ -20,7 +21,7 @@ public class ManageAdvisors {
 	private Advisor[] advisors;
 
 	public ManageAdvisors () {
-		advisors = new Advisor[6];
+		advisors = new Advisor[7];
 		advisors [ECONOMY] = new Advisor ();
 		advisors [MILITARY] = new Advisor ();
 		advisors [GUILDS] = new Advisor ();
