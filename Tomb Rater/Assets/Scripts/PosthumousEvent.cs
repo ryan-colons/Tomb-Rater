@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PosthumousEvent {
 	private int probability = 5;
 	private bool reuse = false;
@@ -24,7 +25,7 @@ public class PosthumousEvent {
 }
 
 // ANY TIME
-
+[System.Serializable]
 public class Post_Entropy : PosthumousEvent {
 	public Post_Entropy() {
 		setProbability (5);
@@ -36,6 +37,7 @@ public class Post_Entropy : PosthumousEvent {
 	}
 }
 
+[System.Serializable]
 public class Post_AmateurTombRobbers : PosthumousEvent {
 	public Post_AmateurTombRobbers () {
 		setProbability (2);
@@ -56,6 +58,7 @@ public class Post_AmateurTombRobbers : PosthumousEvent {
 	}
 }
 
+[System.Serializable]
 public class Post_ExpertTombRobbers : PosthumousEvent {
 	public Post_ExpertTombRobbers () {
 		setProbability (1);
@@ -76,7 +79,7 @@ public class Post_ExpertTombRobbers : PosthumousEvent {
 }
 
 // EARLY
-
+[System.Serializable]
 public class Post_ExcitingNewReign : PosthumousEvent {
 	public Post_ExcitingNewReign () {
 		setProbability (4);
@@ -89,6 +92,7 @@ public class Post_ExcitingNewReign : PosthumousEvent {
 	}
 }
 
+[System.Serializable]
 public class Post_Vandalism : PosthumousEvent {
 	public Post_Vandalism () {
 		setReuse (true);
@@ -105,6 +109,7 @@ public class Post_Vandalism : PosthumousEvent {
 	}
 }
 
+[System.Serializable]
 public class Post_MassVisitation : PosthumousEvent {
 	public Post_MassVisitation () {
 		setProbability (4);
@@ -124,7 +129,7 @@ public class Post_MassVisitation : PosthumousEvent {
 }
 
 // MID
-
+[System.Serializable]
 public class Post_NewTomb : PosthumousEvent {
 	public Post_NewTomb () {
 		setProbability (4);
@@ -144,6 +149,7 @@ public class Post_NewTomb : PosthumousEvent {
 	}
 }
 
+[System.Serializable]
 public class Post_BloodJarHaunting : PosthumousEvent {
 	// only if you have the blood jar treasure installed in your tomb
 	public Post_BloodJarHaunting () {
@@ -158,7 +164,7 @@ public class Post_BloodJarHaunting : PosthumousEvent {
 }
 
 // LATE
-
+[System.Serializable]
 public class Post_ArrivalOfElves : PosthumousEvent {
 	public Post_ArrivalOfElves () {
 		setProbability (10000);
@@ -171,7 +177,7 @@ public class Post_ArrivalOfElves : PosthumousEvent {
 }
 
 // REALLY LATE
-
+[System.Serializable]
 public class Post_Apocalypse : PosthumousEvent {
 	public Post_Apocalypse () {
 		setProbability (10000);
@@ -185,6 +191,7 @@ public class Post_Apocalypse : PosthumousEvent {
 	}
 }
 
+[System.Serializable]
 public class Post_BeetlesRemember : PosthumousEvent {
 	public Post_BeetlesRemember () {
 		setProbability (1);

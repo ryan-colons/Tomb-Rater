@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class SaveData {
 
-	/* THINGS TO SAVE
-	 * GameController
-	 * CharData
-	 *   -names
-	 * SpecialEventManagement
-	 *   -possible event list
-	 */
 	// CharData
 	public int age;
 	public string name, title, kingdom;
@@ -21,6 +15,7 @@ public class SaveData {
 	public int money;
 	public PathToDeath healthDeathPath;
 	public PathToDeath revolutionDeathPath;
+	public bool buildTutorialNeeded;
 
 	// TombRater
 	public List<PosthumousEvent> early;
@@ -67,6 +62,7 @@ public class SaveData {
 		this.money = game.getMoney ();
 		this.healthDeathPath = game.getHealth ();
 		this.revolutionDeathPath = game.getRevolution ();
+		this.buildTutorialNeeded = game.buildTutorialNeeded ();
 
 		TombRater rater = game.getTombRater ();
 		List<PosthumousEvent>[] array = rater.getLists ();
@@ -119,6 +115,7 @@ public class SaveData {
 		game.setMoney (this.money);
 		game.setHealth (this.healthDeathPath);
 		game.setRevolution (this.revolutionDeathPath);
+		game.setBuildTutorialNeeded (buildTutorialNeeded);
 
 		TombRater rater = game.getTombRater ();
 		List<PosthumousEvent>[] listArray = new List<PosthumousEvent>[] {

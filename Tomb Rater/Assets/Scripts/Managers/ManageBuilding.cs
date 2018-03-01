@@ -213,6 +213,7 @@ public class ManageBuilding {
 	}
 }
 
+[System.Serializable]
 public class BuildTile {
 
 	//the room that this is part of
@@ -251,9 +252,10 @@ public enum WallsToShow {
 	NONE
 }
 
+[System.Serializable]
 public class RoomSection {
 	private WallsToShow walls;
-	private Sprite decorationSprite = null;
+	private string decorationSpriteName = null;
 
 	public WallsToShow getWalls () {
 		return walls;
@@ -262,10 +264,10 @@ public class RoomSection {
 		this.walls = w;
 	}
 
-	public Sprite getDecorationSprite () {
-		return decorationSprite;
+	public string getDecorationSprite () {
+		return decorationSpriteName;
 	}
-	public void setDecorationSprite (Sprite spr) {
-		this.decorationSprite = spr;
+	public void setDecorationSprite (string sprName) {
+		this.decorationSpriteName = sprName;
 	}
 }

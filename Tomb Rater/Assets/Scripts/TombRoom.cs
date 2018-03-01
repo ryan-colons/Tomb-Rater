@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class TombRoom {
 
 	private string name;
@@ -67,6 +68,7 @@ public class TombRoom {
 }
 
 //*ROOMS************************************************************
+[System.Serializable]
 public class Room_Hallway : TombRoom {
 	public Room_Hallway () {
 		setName ("Hallway");
@@ -75,6 +77,7 @@ public class Room_Hallway : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_MuralHallway : TombRoom {
 	public Room_MuralHallway () {
 		setName ("Hallway");
@@ -86,6 +89,7 @@ public class Room_MuralHallway : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_BurialChamber : TombRoom {
 	public Room_BurialChamber () {
 		setName ("Burial Chamber");
@@ -95,6 +99,7 @@ public class Room_BurialChamber : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_TreasureVault : TombRoom {
 	public Room_TreasureVault() {
 		setName ("Treasure Vault");
@@ -104,6 +109,7 @@ public class Room_TreasureVault : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_ServantBurialChamber : TombRoom {
 	public Room_ServantBurialChamber () {
 		setName ("Servant Burial Chamber");
@@ -118,6 +124,7 @@ public class Room_ServantBurialChamber : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_FalseBurialChamber : TombRoom {
 	public Room_FalseBurialChamber () {
 		setName ("False Burial Chamber");
@@ -127,6 +134,7 @@ public class Room_FalseBurialChamber : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_HallOfHeroes : TombRoom {
 	public Room_HallOfHeroes () {
 		setName ("Hall of Heroes");
@@ -137,6 +145,7 @@ public class Room_HallOfHeroes : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_DungeonOfMockery : TombRoom {
 	public Room_DungeonOfMockery () {
 		setName ("Dungeon of Mockery");
@@ -146,6 +155,7 @@ public class Room_DungeonOfMockery : TombRoom {
 	}
 }
 
+[System.Serializable]
 public class Room_Tavern : TombRoom {
 	public Room_Tavern () {
 		setName ("Tavern");
@@ -156,6 +166,7 @@ public class Room_Tavern : TombRoom {
 	// method called during tomb evaluation
 }
 
+[System.Serializable]
 public class Room_SpeakeasyEntrance : TombRoom {
 	public Room_SpeakeasyEntrance () {
 		setName ("Speakeasy Entrance");

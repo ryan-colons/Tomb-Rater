@@ -26,6 +26,7 @@ public class GameLoader : MonoBehaviour {
 	}
 
 	public void continueGame () {
+		gameController.createManagers ();
 		if (gameController.load ()) {
 			gameController.loadScene ("menu");
 		}

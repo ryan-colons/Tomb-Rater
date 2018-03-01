@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class AdvisorMilestone {
 
 	public static GameController gameController;
@@ -72,7 +73,7 @@ public class AdvisorMilestone {
  * 150g - gain treasure from a guild of your choice (special event)
  * 300g - add murals to all your hallways (existing and future)
  */
-
+[System.Serializable]
 public class GM_UnlockMarble : AdvisorMilestone {
 	public GM_UnlockMarble () {
 		setThreshold (50);
@@ -88,6 +89,7 @@ public class GM_UnlockMarble : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class GM_GuildTreasure : AdvisorMilestone {
 	public GM_GuildTreasure () {
 		CharacterData info = gameController.getCharData ();
@@ -103,6 +105,7 @@ public class GM_GuildTreasure : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class GM_AnotherGuildTreasure : AdvisorMilestone {
 	public GM_AnotherGuildTreasure () {
 		CharacterData info = gameController.getCharData ();
@@ -118,6 +121,7 @@ public class GM_AnotherGuildTreasure : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class GM_AddMurals : AdvisorMilestone {
 	public GM_AddMurals () {
 		setThreshold (150);
@@ -147,6 +151,7 @@ public class GM_AddMurals : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class GM_ForeignGuildTreasure : AdvisorMilestone {
 	public GM_ForeignGuildTreasure () {
 		CharacterData info = gameController.getCharData ();
@@ -163,6 +168,7 @@ public class GM_ForeignGuildTreasure : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class GM_FundNewGuild : AdvisorMilestone {
 	public GM_FundNewGuild () {
 		CharacterData info = gameController.getCharData ();
@@ -179,6 +185,7 @@ public class GM_FundNewGuild : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class GM_FundAnotherNewGuild : AdvisorMilestone {
 	public GM_FundAnotherNewGuild () {
 		CharacterData info = gameController.getCharData ();
@@ -195,6 +202,7 @@ public class GM_FundAnotherNewGuild : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class GM_GeneratedMilestone : AdvisorMilestone {
 	public GM_GeneratedMilestone () {
 		CharacterData info = gameController.getCharData ();
@@ -211,6 +219,7 @@ public class GM_GeneratedMilestone : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class EM_BuildBoats : AdvisorMilestone {
 	public EM_BuildBoats () {
 		setThreshold (50);
@@ -226,6 +235,7 @@ public class EM_BuildBoats : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class EM_ImproveMines : AdvisorMilestone {
 	public EM_ImproveMines () {
 		setThreshold (50);
@@ -241,6 +251,7 @@ public class EM_ImproveMines : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class EM_OpenTradeRoute : AdvisorMilestone {
 	public EM_OpenTradeRoute () {
 		setThreshold (50);
@@ -259,6 +270,7 @@ public class EM_OpenTradeRoute : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class EM_GeneratedMilestone : AdvisorMilestone {
 	private string[] investments = new string[] {
 		"eagle feather pillows",
@@ -290,6 +302,7 @@ public class EM_GeneratedMilestone : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class MM_FortifyWalls : AdvisorMilestone {
 	public MM_FortifyWalls () {
 		setThreshold (50);
@@ -306,6 +319,7 @@ public class MM_FortifyWalls : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class MM_RaidRival : AdvisorMilestone {
 	public MM_RaidRival () {
 		setThreshold (50);
@@ -327,6 +341,7 @@ public class MM_RaidRival : AdvisorMilestone {
 	}
 }
 	
+[System.Serializable]
 public class MM_CaptureMine : AdvisorMilestone {
 	public MM_CaptureMine () {
 		setThreshold (100);
@@ -348,6 +363,7 @@ public class MM_CaptureMine : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class MM_GeneratedMilestone : AdvisorMilestone {
 	private string[] raidLocations = new string[]{
 		"a rival encampment"
@@ -378,6 +394,7 @@ public class MM_GeneratedMilestone : AdvisorMilestone {
 	}
 }
 	
+[System.Serializable]
 public class NM_DabbleNecromancy : AdvisorMilestone {
 	public NM_DabbleNecromancy () {
 		setThreshold (75);
@@ -395,6 +412,7 @@ public class NM_DabbleNecromancy : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class NM_ZombieWorkers : AdvisorMilestone {
 	public NM_ZombieWorkers () {
 		setThreshold (75);
@@ -419,6 +437,7 @@ public class NM_ZombieWorkers : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class NM_BecomeLich : AdvisorMilestone {
 	public NM_BecomeLich () {
 		setThreshold (100);
@@ -436,6 +455,7 @@ public class NM_BecomeLich : AdvisorMilestone {
 	}
 }
 	
+[System.Serializable]
 public class PM_ThrowParty : AdvisorMilestone {
 	public PM_ThrowParty () {
 		setThreshold (50);
@@ -451,6 +471,7 @@ public class PM_ThrowParty : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class PM_TombTavern : AdvisorMilestone {
 	public PM_TombTavern () {
 		CharacterData info = gameController.getCharData ();
@@ -475,6 +496,7 @@ public class PM_TombTavern : AdvisorMilestone {
 	}
 }
 
+[System.Serializable]
 public class PM_BecomeALegend : AdvisorMilestone {
 	public PM_BecomeALegend () {
 		setThreshold (50);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class SpecialEvent {
 
 	public static SpecialEventUI eventUI;
@@ -141,7 +142,7 @@ public class SpecialEvent {
 }
 
 // COMPLETELY FIXED EVENTS
-
+[System.Serializable]
 public class Event_Introduction : SpecialEvent {
 	public Event_Introduction () {
 		CharacterData info = gameController.getCharData ();
@@ -167,13 +168,16 @@ public class Event_Introduction : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_TombBuildingTutorial : SpecialEvent {
 	public Event_TombBuildingTutorial () {
 		this.setMessage ("Well met, Your Highness! I am here to discuss your plans for " +
 			"the construction of your tomb.");
 
 		initialiseExtraMessageArray (1);
-		this.setExtraMessage ("", 0);
+		this.setExtraMessage ("The Tomb will be dug into the side of the Iron Mountain. " +
+			"I will work with you to decide the layout and decorations of the interior rooms. " +
+			"Shall we begin?", 0);
 
 		initialiseButtonTexts (1);
 		this.setButtonText ("Yes, let's go.", 0);
@@ -183,9 +187,18 @@ public class Event_TombBuildingTutorial : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_MilitaryAdvisorTutorial : SpecialEvent {
 	public Event_MilitaryAdvisorTutorial (Advisor militaryAdvisor) {
-		this.setMessage ("");
+		CharacterData info = gameController.getCharData ();
+		this.setMessage ("Your Majesty, building a Tomb is a costly project for anyone. " +
+		"To construct a Tomb worthy of a " + info.getPlayerTitle () + " like yourself " +
+		"will be a very expensive endeavour. Fortunately, there is much wealth in the world, " +
+		"for those with the strength to take it...");
+		initialiseExtraMessageArray (1);
+		this.setExtraMessage ("I am your Military Advisor. Speak to me to fund our soldiers " +
+		"and supply our barracks. I will help you defend " + info.getKingdomName () + " " +
+		"and plunder our enemies!", 0);
 		initialiseButtonTexts (1);
 		this.setButtonText ("Continue", 0);
 	}
@@ -197,9 +210,12 @@ public class Event_MilitaryAdvisorTutorial : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_EconomicAdvisorTutorial : SpecialEvent {
 	public Event_EconomicAdvisorTutorial (Advisor economicAdvisor) {
-		this.setMessage ("");
+		CharacterData info = gameController.getCharData ();
+		this.setMessage ("Your Highness, I am your Economic Advisor. Talk to me " +
+		"about investing money and expanding the reach of " + info.getKingdomName () + ".");
 		initialiseButtonTexts (1);
 		this.setButtonText ("Continue", 0);
 	}
@@ -211,6 +227,7 @@ public class Event_EconomicAdvisorTutorial : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_GuildAdvisorTutorial : SpecialEvent {
 	public Event_GuildAdvisorTutorial (Advisor guildAdvisor) {
 		CharacterData info = gameController.getCharData ();
@@ -233,6 +250,7 @@ public class Event_GuildAdvisorTutorial : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_SpecialEventTest : SpecialEvent {
 	public Event_SpecialEventTest () {
 		this.setMessage ("This is just a test, to make sure the Special Event " +
@@ -248,7 +266,8 @@ public class Event_SpecialEventTest : SpecialEvent {
 }
 
 // SEMI FIXED EVENTS
-	
+
+[System.Serializable]
 public class Event_GuildTreasure : SpecialEvent {
 	public Event_GuildTreasure () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -283,6 +302,7 @@ public class Event_GuildTreasure : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_ForeignGuildTreasure : SpecialEvent {
 	public Event_ForeignGuildTreasure () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -315,6 +335,7 @@ public class Event_ForeignGuildTreasure : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_FoundNewGuild : SpecialEvent {
 	public Event_FoundNewGuild () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -361,6 +382,7 @@ public class Event_FoundNewGuild : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_TempleAdvisorTutorial : SpecialEvent {
 	public Event_TempleAdvisorTutorial () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -379,6 +401,7 @@ public class Event_TempleAdvisorTutorial : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_TempleConflict : SpecialEvent {
 	public Event_TempleConflict () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -418,6 +441,7 @@ public class Event_TempleConflict : SpecialEvent {
 	}
 }
 	
+[System.Serializable]
 public class Event_PartyAdvisorTutorial : SpecialEvent {
 	public Event_PartyAdvisorTutorial () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -451,6 +475,7 @@ public class Event_PartyAdvisorTutorial : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_PeopleLoveParties : SpecialEvent {
 	public Event_PeopleLoveParties () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -469,6 +494,7 @@ public class Event_PeopleLoveParties : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_NecromancyAdvisorTutorial : SpecialEvent {
 	public Event_NecromancyAdvisorTutorial () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -498,6 +524,7 @@ public class Event_NecromancyAdvisorTutorial : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_NecromancerDabblingGifts : SpecialEvent {
 	public Event_NecromancerDabblingGifts () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -523,7 +550,8 @@ public class Event_NecromancerDabblingGifts : SpecialEvent {
 		displayFeedback ("They nod and leave the room in silence.");
 	}
 }
-	
+
+[System.Serializable]
 public class Event_PeopleFearNecromancy : SpecialEvent {
 	public Event_PeopleFearNecromancy () {
 		this.setMessage ("Controversy has arisen around the recently founded Society of Morticians. " +
@@ -544,6 +572,7 @@ public class Event_PeopleFearNecromancy : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_NecromancerRitualsAreWeird : SpecialEvent {
 	public Event_NecromancerRitualsAreWeird () {
 		this.setReuse (false);
@@ -583,6 +612,7 @@ public class Event_NecromancerRitualsAreWeird : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_BecomeLich : SpecialEvent {
 	public Event_BecomeLich () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -606,6 +636,7 @@ public class Event_BecomeLich : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_LichFlavour : SpecialEvent {
 	private string[] flavours = new string[] {
 		"Today you drank several glasses of a delicious beverage " +
@@ -628,6 +659,7 @@ public class Event_LichFlavour : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_LichDeath : SpecialEvent {
 	public Event_LichDeath () {
 		setReuse (true);
@@ -669,6 +701,7 @@ public class Event_LichDeath : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_FoundAnotherNewGuild : SpecialEvent {
 	public Event_FoundAnotherNewGuild () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -724,6 +757,7 @@ public class Event_FoundAnotherNewGuild : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_ImmigratingArtists : SpecialEvent {
 	public Event_ImmigratingArtists () {
 		CharacterData info = gameController.getCharData ();
@@ -738,7 +772,8 @@ public class Event_ImmigratingArtists : SpecialEvent {
 		exit ();
 	}
 }
-
+	
+[System.Serializable]
 public class Event_IncurableTerminalIllness : SpecialEvent {
 
 	public Event_IncurableTerminalIllness () {
@@ -759,6 +794,7 @@ public class Event_IncurableTerminalIllness : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_Death : SpecialEvent {
 	public Event_Death (string deathSummary) {
 		this.setMessage ("You have died. " + deathSummary);
@@ -772,6 +808,7 @@ public class Event_Death : SpecialEvent {
 	}
 }
 	
+[System.Serializable]
 public class Event_TradeOpportunity : SpecialEvent {
 	public Event_TradeOpportunity () {
 		this.setMessage ("A band of traders from " + gameController.getTradeCivName () + " has come. " +
@@ -807,6 +844,7 @@ public class Event_TradeOpportunity : SpecialEvent {
 
 // RANDOM EVENTS
 
+[System.Serializable]
 public class Event_GettingRaided : SpecialEvent {
 	public Event_GettingRaided () {
 		setProbability (3);
@@ -863,6 +901,7 @@ public class Event_GettingRaided : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_ComplaintAboutTaxes : SpecialEvent {
 	public Event_ComplaintAboutTaxes () {
 		setProbability (5);
@@ -898,6 +937,7 @@ public class Event_ComplaintAboutTaxes : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_YetAnotherComplaint : SpecialEvent {
 	public Event_YetAnotherComplaint () {
 		setProbability (2);
@@ -953,7 +993,7 @@ public class Event_YetAnotherComplaint : SpecialEvent {
 
 
 // HEALTH EVENTS
-
+[System.Serializable]
 public class Event_EatingLotsOfCheese : SpecialEvent {
 	public Event_EatingLotsOfCheese () {
 		CharacterData info = gameController.getCharData ();
@@ -973,6 +1013,7 @@ public class Event_EatingLotsOfCheese : SpecialEvent {
 	public override void option3 () {exit ();}
 }
 
+[System.Serializable]
 public class Event_CheeseSickness : SpecialEvent {
 	public Event_CheeseSickness () {
 		setMessage ("At breakfast one morning, while reaching for a second bowl of " +
@@ -1005,6 +1046,7 @@ public class Event_CheeseSickness : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_OveractiveParasites : SpecialEvent {
 	public Event_OveractiveParasites () {
 		setMessage ("You have been feeling nauseous and tired lately. " +
@@ -1036,6 +1078,7 @@ public class Event_OveractiveParasites : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_TerminalIllness : SpecialEvent {
 	public Event_TerminalIllness () {
 		setMessage ("Lately you have noticed that the veins in your " +
@@ -1072,7 +1115,7 @@ public class Event_TerminalIllness : SpecialEvent {
 }
 
 // REVOLUTION EVENTS
-
+[System.Serializable]
 public class Event_Unpopular : SpecialEvent {
 	public Event_Unpopular () {
 		CharacterData info = gameController.getCharData ();
@@ -1088,6 +1131,7 @@ public class Event_Unpopular : SpecialEvent {
 	public override void option2 () { exit ();}
 }
 
+[System.Serializable]
 public class Event_Protests : SpecialEvent {
 	public Event_Protests () {
 		CharacterData info = gameController.getCharData ();
@@ -1115,6 +1159,7 @@ public class Event_Protests : SpecialEvent {
 	}
 }
 
+[System.Serializable]
 public class Event_AssassinationPrevented : SpecialEvent{
 	public Event_AssassinationPrevented () {
 		setMessage ("One day, your guards find a group of strangers lurking " +
@@ -1149,6 +1194,7 @@ public class Event_AssassinationPrevented : SpecialEvent{
 	}
 }
 
+[System.Serializable]
 public class Event_AssassinationSuccessful : SpecialEvent {
 	public Event_AssassinationSuccessful () {
 		setMessage ("Walking back to your throne from the kitchen after a delicious " +

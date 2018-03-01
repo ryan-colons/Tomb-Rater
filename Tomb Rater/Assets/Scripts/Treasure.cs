@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Treasure {
 
 	private string name;
 	private string desc;
-	private Sprite sprite = Resources.Load ("Treasure Sprites/default_treasure", typeof(Sprite)) as Sprite;
+	private string sprite = "default_treasure";
 	private int baseValue = 5;
 	private List<TreasureType> typeList;
 
@@ -27,10 +28,13 @@ public class Treasure {
 	}
 
 	public void setSprite (string sprName) {
-		sprite = Resources.Load ("Treasure Sprites/" + sprName, typeof(Sprite)) as Sprite;
+		sprite = sprName;
 	} 
 	public Sprite getSprite () {
-		return this.sprite;
+		return Resources.Load ("Treasure Sprites/" + sprite, typeof(Sprite)) as Sprite;
+	}
+	public string getSpriteName () {
+		return sprite;
 	}
 
 	public void setBaseValue (int newValue) {
@@ -69,6 +73,7 @@ public enum TreasureType {
 }
 
 /* This was just made for testing, not really good enough for the actual game. */
+[System.Serializable]
 public class Tre_Pawn : Treasure {
 	public Tre_Pawn () {
 		setName ("Pawn");
@@ -77,6 +82,7 @@ public class Tre_Pawn : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_Mural : Treasure {
 	public Tre_Mural () {
 		setName ("Mural");
@@ -84,6 +90,7 @@ public class Tre_Mural : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_Candelabra : Treasure {
 	public Tre_Candelabra () {
 		setName ("Candelabra");
@@ -92,6 +99,7 @@ public class Tre_Candelabra : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_Sarcophagus : Treasure {
 	public Tre_Sarcophagus () {
 		setName ("Sarcophagus");
@@ -101,6 +109,7 @@ public class Tre_Sarcophagus : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_Tapestry : Treasure {
 	public Tre_Tapestry () {
 		setName ("Tapestry");
@@ -108,6 +117,7 @@ public class Tre_Tapestry : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_StatueOfSomeone : Treasure {
 	private string personName;
 	public void setPersonName (string str) {
@@ -121,6 +131,7 @@ public class Tre_StatueOfSomeone : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_DartTrap : Treasure {
 	public Tre_DartTrap () {
 		setName ("Dart Trap");
@@ -129,6 +140,7 @@ public class Tre_DartTrap : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_CurseSapling : Treasure {
 	public Tre_CurseSapling () {
 		setName ("Curse Sapling");
@@ -138,6 +150,7 @@ public class Tre_CurseSapling : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_RubySarcophagus : Treasure {
 	public Tre_RubySarcophagus () {
 		setName ("Ruby Sarcophagus");
@@ -147,6 +160,7 @@ public class Tre_RubySarcophagus : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_ChestOfGreed : Treasure {
 	public Tre_ChestOfGreed () {
 		setName ("Chest of Greed");
@@ -156,6 +170,7 @@ public class Tre_ChestOfGreed : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_FountainOfSilver : Treasure {
 	public Tre_FountainOfSilver () {
 		setName ("Fountain of Silver");
@@ -165,6 +180,7 @@ public class Tre_FountainOfSilver : Treasure {
 	}
 }
 	
+[System.Serializable]
 public class Tre_ClockworkDrums : Treasure {
 	public Tre_ClockworkDrums () {
 		setName ("Clockwork Drums");
@@ -173,6 +189,7 @@ public class Tre_ClockworkDrums : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_BlackLightCandle : Treasure {
 	public Tre_BlackLightCandle () {
 		setName ("Candle of Black Light");
@@ -180,6 +197,7 @@ public class Tre_BlackLightCandle : Treasure {
 	}
 }
 
+[System.Serializable]
 public class Tre_CryptHorn : Treasure {
 	public Tre_CryptHorn () {
 		setName ("Crypt Horn");
@@ -189,7 +207,7 @@ public class Tre_CryptHorn : Treasure {
 }
 
 // jacuzzi
-
+[System.Serializable]
 public class Tre_BlackenedAlarmBells : Treasure {
 	public Tre_BlackenedAlarmBells () {
 		setName ("Blackened Alarm Bells");
@@ -201,6 +219,7 @@ public class Tre_BlackenedAlarmBells : Treasure {
 	// do stuff after dead
 }
 
+[System.Serializable]
 public class Tre_BloodJar : Treasure {
 	public Tre_BloodJar () {
 		setName ("Blood Jar");

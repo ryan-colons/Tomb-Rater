@@ -36,7 +36,6 @@ public class GameController : MonoBehaviour {
 		buildTutorial = true;
 
 		charData = new CharacterData ();
-
 	}
 
 	// this is called from the introductory event

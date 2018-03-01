@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class BuildMaterial {
 	private string name;
 	private int costPerTile;
@@ -29,6 +30,7 @@ public class BuildMaterial {
 	}
 }
 
+[System.Serializable]
 public class Mat_Marble : BuildMaterial {
 	public Mat_Marble () {
 		setName ("Marble Brick");
@@ -36,6 +38,7 @@ public class Mat_Marble : BuildMaterial {
 	}
 }
 
+[System.Serializable]
 public class Mat_Clay : BuildMaterial {
 	public Mat_Clay () {
 		setName ("Clay Brick");
@@ -43,6 +46,7 @@ public class Mat_Clay : BuildMaterial {
 	}
 }
 
+[System.Serializable]
 public class Mat_Wood : BuildMaterial {
 	public Mat_Wood () {
 		setName ("Oak");

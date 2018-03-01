@@ -39,11 +39,6 @@ public class BuildingMenu : MonoBehaviour {
 		return tileMap [x, y];
 	}
 	public MapTile getMapTileAtCoord (int x, int y) {
-		// THIS CAN BE NULL
-		//   oh
-		//   no
-		//
-		Debug.Log ("Getting " + tileMap [x, y]);
 		return getTileAtCoord (x, y).GetComponent<MapTile> ();
 	}
 
@@ -349,7 +344,7 @@ public class BuildingMenu : MonoBehaviour {
 			return;
 		}
 				
-		section.setDecorationSprite (currentlyPlacing.getSprite ());
+		section.setDecorationSprite (currentlyPlacing.getSpriteName ());
 		room.getTreasureList ().Add (currentlyPlacing);
 		ManageTreasure treasureManagement = gameController.getTreasureManagement ();
 		treasureManagement.getTreasureList ().Remove (currentlyPlacing);
