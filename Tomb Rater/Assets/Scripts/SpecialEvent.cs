@@ -716,18 +716,18 @@ public class Event_FoundAnotherNewGuild : SpecialEvent {
 		} else {
 			this.setExtraMessage ("A new religion has begun to grow here. The followers of the Badger Prince wish to " +
 			"found a temple. The subterranean nature of your tomb building project appeals to them.", 0);
-			this.setButtonText ("Found the Temple of the Badger Prince", 0);
+			this.setButtonText ("Found the Temple of the Badger Prince (JK unimplemented)", 0);
 		}
 		if (advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE] == null) {
 			this.setExtraMessage ("A new religion has begun to grow here. The followers of the Badger Prince wish to " +
 			"found a temple. The subterranean nature of your tomb building project appeals to them.", 1);
-			this.setButtonText ("Found the Temple of the Badger Prince", 1);
+			this.setButtonText ("Found the Temple of the Badger Prince (JK unimplemented)", 1);
 		} else {
 			this.setExtraMessage ("A cohort of bards from across the world have gathered together. They want to form a guild " +
 			"based around partying every day, 'going hard', and something called 'nangs'.", 1);
 			this.setButtonText ("Found the Rave Syndicate", 1);
 		}
-		this.setExtraMessage ("Which of these groups would you most like to support?", 3);
+		this.setExtraMessage ("Which of these groups would you most like to support?", 2);
 	}
 	public override void option1 () {
 		ManageAdvisors advisorManagement = gameController.getAdvisorManagement ();
@@ -739,6 +739,8 @@ public class Event_FoundAnotherNewGuild : SpecialEvent {
 			advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE] = new Advisor ();
 			//set first milestone for badger advisor
 			//set tutorial for advisor also
+			// currently return bc Temple advisor is unimplemented :(
+			return;
 		}
 		exit();
 	}
@@ -748,6 +750,8 @@ public class Event_FoundAnotherNewGuild : SpecialEvent {
 			advisorManagement.getAdvisors () [ManageAdvisors.TEMPLE] = new Advisor ();
 			//set first milestone for badger advisor
 			//set tutorial for advisor also
+			// currently return bc Temple advisor is unimplemented :(
+			return;
 		} else {
 			advisorManagement.getAdvisors () [ManageAdvisors.PARTY] = new Advisor ();
 			//set first milestone for party advisor
