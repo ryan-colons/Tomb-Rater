@@ -86,28 +86,35 @@ public class TestRunner : MonoBehaviour {
 	public bool testSpecialEventPicking () {
 		ManageSpecialEvents specialEventManagement = new ManageSpecialEvents ();
 
+		TEST_Event impossible = new TEST_Event (true, 0);
 		TEST_Event leastLikely = new TEST_Event (true, 1);
 		TEST_Event likely = new TEST_Event (true, 2);
 		TEST_Event mostLikely = new TEST_Event (true, 4);
 
+		specialEventManagement.addPossibleEvent (impossible);
 		specialEventManagement.addPossibleEvent (leastLikely);
 		specialEventManagement.addPossibleEvent (likely);
 		specialEventManagement.addPossibleEvent (mostLikely);
 
-		int least = 0, middle = 0, most = 0;
+		int never = 0, least = 0, middle = 0, most = 0;
 		for (int i = 0; i < 10000; i++) {
 			SpecialEvent chosenEvent = specialEventManagement.chooseSpecialEventRandomly ();
-			if (chosenEvent == leastLikely)
+			if (chosenEvent == impossible)
+				never++;
+			else if (chosenEvent == leastLikely)
 				least++;
 			else if (chosenEvent == likely)
 				middle++;
 			else if (chosenEvent == mostLikely)
 				most++;
 		}
+		/*
+		Debug.Log ("Never: " + never);
 		Debug.Log ("Least: " + least);
 		Debug.Log ("Middle: " + middle);
 		Debug.Log ("Most: " + most);
-		return least <= middle && middle <= most;
+		*/
+		return least <= middle && middle <= most && never == 0;
 	}
 
 }
