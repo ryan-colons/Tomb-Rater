@@ -49,8 +49,8 @@ public class AdvisorButton : MonoBehaviour {
 		//set slider
 		Slider paymentSlider = canvas.transform.Find("Panel/Payment Slider").GetComponent<Slider>();
 		paymentSlider.minValue = 0;
-		paymentSlider.maxValue = gameController.getMoney ();
-		paymentSlider.value = advisor.getPayment ();
+		paymentSlider.maxValue = advisor.getMilestone ().getThreshold ();
+		paymentSlider.value = getPayment ();
 	}
 
 	public void closeCanvas () {

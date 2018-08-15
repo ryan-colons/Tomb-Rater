@@ -8,9 +8,6 @@ public class ManageTreasure {
 
 	public ManageTreasure () {
 		treasureList = new List<Treasure> ();
-		treasureList.Add (new Tre_Pawn ());
-		treasureList.Add (new Tre_Pawn ());
-		treasureList.Add (new Tre_Pawn ());
 	}
 
 	public List<Treasure> getTreasureList () {

@@ -1062,7 +1062,7 @@ public class Event_YetAnotherComplaint : SpecialEvent {
 		string name = info.getComplainName ();
 		this.setMessage (name + ", a prominent member of the community, has " +
 			"come to lodge a complaint. \"It's too rainy these days!\", " + info.getComplainPronouns () [0] +
-			"says. \"You need to put more money into awnings, public umbrellas and " +
+			" says. \"You need to put more money into awnings, public umbrellas and " +
 			"raincoats. What else do we pay taxes for?\"");
 		initialiseExtraMessageArray (1);
 		this.setExtraMessage ("\"What do you think?\"", 0);

@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
 	private ManageOpinion opinionManagement;
 	private ManageSpecialEvents specialEventManagement;
 
-	private int money = 5000;
+	private int money = 80;
 
 	private CharacterData charData;
 	private PathToDeath healthPathToDeath;
